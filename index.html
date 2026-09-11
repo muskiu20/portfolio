@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jordan Lee — Design &amp; Development Portfolio</title>
+<meta name="description" content="Independent design and development practice in Lisbon — hand-coded marketing sites and product interfaces for small, focused teams." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,700;0,800;1,400&family=Inter:wght@400;500;600&family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="grain-overlay" aria-hidden="true"></div>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <a class="mark" href="#top">Jordan Lee</a>
+  <div class="header-right">
+    <span class="local-time" id="localTime">Local time — <span id="clock">--:--</span></span>
+    <a class="cta" href="#footer-contact">Contact</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <p class="eyebrow hero-fade">Design &amp; development — Lisbon</p>
+      <h1><span class="line1 hero-fade">Interfaces that hold</span><span class="line2 hero-fade">under real use.</span></h1>
+      <p class="hero-fade">I design and build marketing sites and product interfaces for founders who need something that works on day one, not just in the mockup.</p>
+      <div class="meta-row hero-fade">
+        <span>Lisbon, Portugal</span>
+        <span>3 case studies</span>
+        <span>Available from October</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MARQUEE ============ -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track" id="marqueeTrack">
+      <!-- Content duplicated via JS for seamless loop; edit the base array below in the script -->
+    </div>
+  </div>
+
+  <!-- ============ CASE STUDY PREVIEW GRID ============ -->
+  <section id="previews">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="index">01 — preview</p>
+          <h2>a quick look at the work.</h2>
+        </div>
+        <p>Three projects, three different problems to hold.</p>
+      </div>
+
+      <div class="preview-grid reveal">
+        <!-- Repeat one .preview-card per case study (3–5 total) -->
+        <a class="preview-card" href="work/case-study-template.html">
+          <span class="thumb">Fieldnote — cover image</span>
+          <span class="info">
+            <h3>Fieldnote</h3>
+            <span class="sub">SaaS · Productivity</span>
+          </span>
+        </a>
+        <a class="preview-card" href="work/case-study-template.html">
+          <span class="thumb">Halyard — cover image</span>
+          <span class="info">
+            <h3>Halyard</h3>
+            <span class="sub">E-commerce · Marine hardware</span>
+          </span>
+        </a>
+        <a class="preview-card" href="work/case-study-template.html">
+          <span class="thumb">Loom &amp; Co. — cover image</span>
+          <span class="info">
+            <h3>Loom &amp; Co.</h3>
+            <span class="sub">Furniture studio · Editorial</span>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WORK GRID (case study list) ============ -->
+  <section id="work" class="theme-sheet">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="index">02 — work</p>
+          <h2>full case studies.</h2>
+        </div>
+        <p>Each one links to a full breakdown of type, build and process.</p>
+      </div>
+
+      <div class="work-list reveal">
+        <!-- Repeat one .work-row per case study (3–5 total), numbered 01–05 -->
+        <a class="work-row" href="work/case-study-template.html">
+          <span class="num">01</span>
+          <span class="title-block">
+            <h3>Fieldnote</h3>
+            <span>A field-logging tool for outdoor survey teams, rebuilt for one-handed use offline.</span>
+          </span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="work-row" href="work/case-study-template.html">
+          <span class="num">02</span>
+          <span class="title-block">
+            <h3>Halyard</h3>
+            <span>A marine hardware retailer's catalogue, restructured around how sailors actually search.</span>
+          </span>
+          <span class="arrow">→</span>
+        </a>
+        <a class="work-row" href="work/case-study-template.html">
+          <span class="num">03</span>
+          <span class="title-block">
+            <h3>Loom &amp; Co.</h3>
+            <span>A furniture studio's first site, built to hold large product photography without slowing down.</span>
+          </span>
+          <span class="arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GRAPHICS / VISUAL WORK GALLERY ============ -->
+  <section id="graphics">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="index">03 — graphics</p>
+          <h2>visual work outside the web.</h2>
+        </div>
+        <p>Posters, identity and print — the work that never shipped as a site.</p>
+      </div>
+
+      <div class="gallery-grid reveal">
+        <!-- Repeat one .gallery-item per piece, add as many as you have -->
+        <div class="gallery-item">Fieldnote<br>Poster series, 2025</div>
+        <div class="gallery-item">Halyard<br>Packaging insert, 2024</div>
+        <div class="gallery-item">Loom &amp; Co.<br>Exhibition catalogue, 2025</div>
+        <div class="gallery-item">Self-initiated<br>Type specimen, 2024</div>
+        <div class="gallery-item">Self-initiated<br>Risograph print, 2023</div>
+        <div class="gallery-item">Studio Norte<br>Conference badge system, 2024</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIALS ============ -->
+  <section id="testimonials">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="index">04 — words</p>
+          <h2>from people i've worked with.</h2>
+        </div>
+      </div>
+
+      <div class="testimonial-grid reveal">
+        <div class="testimonial">
+          <p class="quote">"Jordan questioned half our sitemap before writing a line of code — what shipped was smaller and better than what we asked for."</p>
+          <p class="who">Priya Nandan — Founder, Fieldnote</p>
+        </div>
+        <div class="testimonial">
+          <p class="quote">"We'd been through two agencies before this. First time the build matched the mockup exactly."</p>
+          <p class="who">Tomas Reyes — Operations Lead, Halyard</p>
+        </div>
+        <div class="testimonial">
+          <p class="quote">"Fast, opinionated, and right more often than not. I'd hand over the next project blind."</p>
+          <p class="who">Ingrid Voss — Creative Director, Loom &amp; Co.</p>
+        </div>
+        <div class="testimonial">
+          <p class="quote">"The kind of collaborator who tells you when your idea is the weaker one."</p>
+          <p class="who">Marcus Ho — Product Manager, Fieldnote</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUESTIONS (FAQ accordion) ============ -->
+  <section id="questions">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="index">05 — questions</p>
+          <h2>before you ask.</h2>
+        </div>
+      </div>
+
+      <div class="faq-list reveal">
+        <!-- Repeat one .faq-item per question; native <details> handles the toggle -->
+        <details class="faq-item">
+          <summary>What do I actually get?</summary>
+          <p>A live, deployed site — not a folder of files. You get the source code, hosting handed off or set up together, and a short handover call.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do you work outside English?</summary>
+          <p>Yes — most recently an English/Portuguese bilingual build with both scripts held on one baseline.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Do I choose the design?</summary>
+          <p>You choose from a small set of real, working homepages rather than static mockups. Everything underneath the one you pick is my call.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What do you need from me to start?</summary>
+          <p>A sense of who lands on the site and what you need them to do, any existing brand assets, and a deadline. I can propose the rest.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESS ============ -->
+  <section id="process">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <p class="index">06 — process</p>
+          <h2>how a project runs.</h2>
+        </div>
+      </div>
+
+      <div class="process-list reveal">
+        <div class="process-step">
+          <span class="step-num">01</span>
+          <div>
+            <h3>Brief</h3>
+            <p>You tell me what the site has to do and who it's for. If the brief is thin, I'll make a call and tell you what I decided.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">02</span>
+          <div>
+            <h3>Direction</h3>
+            <p>I build two or three real homepages, not mockups, drawn from your world rather than a style menu.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">03</span>
+          <div>
+            <h3>Build</h3>
+            <p>I take the one you pick and build out every page by hand, tested at desktop and phone width.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <span class="step-num">04</span>
+          <div>
+            <h3>Ship</h3>
+            <p>It goes live with a real favicon, link preview and analytics, then I run one more pass to catch what the first screen missed.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER (carries contact + quick links) ============ -->
+<footer class="site-footer" id="footer-contact">
+  <canvas class="pool-canvas" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <nav class="footer-links" aria-label="Section quick links">
+      <a href="#previews">preview — case studies ↓</a>
+      <a href="#work">work — 3 case studies ↓</a>
+      <a href="#graphics">graphics — visual work ↓</a>
+      <a href="#testimonials">words — testimonials ↓</a>
+      <a href="#questions">questions — before you ask ↓</a>
+      <a href="#process">process — how it runs ↓</a>
+    </nav>
+
+    <div class="footer-contact">
+      <a href="mailto:hello@jordanlee.studio">hello@jordanlee.studio →</a>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Jordan Lee</span>
+      <a href="#top">back to top ↑</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---------- Scroll-reveal ----------
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+  // ---------- Local time readout ----------
+  // REPLACE 'Europe/Lisbon' with your own timezone
+  function updateClock() {
+    const el = document.getElementById('clock');
+    if (!el) return;
+    const now = new Date();
+    el.textContent = new Intl.DateTimeFormat('en-GB', {
+      hour: '2-digit', minute: '2-digit', hour12: false,
+      timeZone: 'Europe/Lisbon'
+    }).format(now);
+  }
+  updateClock();
+  setInterval(updateClock, 15000);
+
+  // ---------- Marquee ----------
+  // REPLACE this array with your own tags/skills/typefaces/whatever fits your thesis
+  const marqueeItems = [
+    'Type systems', 'Design engineering', 'Motion', 'Accessibility', 'Prototyping', 'Design systems'
+  ];
+  const track = document.getElementById('marqueeTrack');
+  if (track) {
+    const build = () => marqueeItems.map(t => `<span>${t}</span>`).join('');
+    track.innerHTML = build() + build(); // duplicated once for seamless loop
+  }
+
+  // ---------- Motion: canvas signatures ----------
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------- Hero load-in animation ----------
+  // Restrained fade + slide-up, staggered per line; disabled entirely under reduced motion.
+  if (!reduceMotion) {
+    document.querySelectorAll('#top .hero-fade').forEach((el, i) => {
+      setTimeout(() => el.classList.add('is-visible'), i * 130);
+    });
+  } else {
+    document.querySelectorAll('#top .hero-fade').forEach((el) => el.classList.add('is-visible'));
+  }
+
+  function initPoolCanvas(canvas) {
+    const ctx = canvas.getContext('2d');
+    const host = canvas.parentElement;
+    let w, h, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let mouse = { x: -9999, y: -9999 };
+
+    function resize() {
+      w = canvas.clientWidth; h = canvas.clientHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    host.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top;
+    });
+    host.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+    const gap = 22;
+    let t = 0;
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (let y = gap / 2; y < h; y += gap) {
+        for (let x = gap / 2; x < w; x += gap) {
+          const dx = x - mouse.x, dy = y - mouse.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const influence = Math.max(0, 1 - dist / 220);
+          const r = 1.2 + influence * 3.2 + Math.sin(t + x * 0.02 + y * 0.02) * 0.3;
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(217,86,60,${0.15 + influence * 0.5})`;
+          ctx.arc(x, y, r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      if (!reduceMotion) { t += 0.02; requestAnimationFrame(draw); }
+    }
+    draw();
+  }
+
+  document.querySelectorAll('.pool-canvas').forEach(initPoolCanvas);
+</script>
+
+</body>
+</html>
