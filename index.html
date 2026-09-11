@@ -344,6 +344,12 @@
     const cv = band.querySelector('canvas');
     if (!cv || !cv.getContext) return;
     const ctx = cv.getContext('2d');
+    // Pointer listeners go on the whole hero, not just .pleat: .pleat is an
+    // absolutely-positioned background layer sitting *behind* .wrap (the
+    // text), so hovering the headline/paragraph — most of the hero's visual
+    // area — would otherwise never reach a listener on .pleat itself (mouse
+    // events bubble up the tree, not sideways between siblings).
+    const eventHost = document.getElementById('top') || band;
 
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const fine = window.matchMedia('(hover: hover)').matches;
@@ -469,13 +475,13 @@
       kick();
     }
 
-    band.addEventListener('pointermove', (e) => {
+    eventHost.addEventListener('pointermove', (e) => {
       if (reduce || !fine) return;
       const b = band.getBoundingClientRect();
       cursorX = (e.clientX - b.left) / b.width;
       kick();
     }, { passive: true });
-    band.addEventListener('pointerleave', () => { cursorX = -1; });
+    eventHost.addEventListener('pointerleave', () => { cursorX = -1; });
 
     build();
 
