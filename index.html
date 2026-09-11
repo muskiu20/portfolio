@@ -28,6 +28,7 @@
 
   <!-- ============ HERO ============ -->
   <section class="hero" id="top">
+    <div class="pleat" aria-hidden="true"><canvas></canvas></div>
     <div class="wrap">
       <p class="eyebrow hero-fade">Design &amp; development — Lisbon</p>
       <h1><span class="line1 hero-fade">Interfaces that hold</span><span class="line2 hero-fade">under real use.</span></h1>
@@ -330,6 +331,193 @@
   } else {
     document.querySelectorAll('#top .hero-fade').forEach((el) => el.classList.add('is-visible'));
   }
+
+  // ---------- Hero background: pleated reveal ----------
+  // A wordmark is drawn complete on a hidden canvas, then covered by vertical
+  // "pleats" in the accent color. Pleats nearest the cursor lift and slide
+  // aside (touch/no-pointer: scroll drives a travelling reveal band instead),
+  // uncovering slices of the wordmark underneath — cloth pulled back, not a
+  // fade. Fully static under prefers-reduced-motion.
+  (function () {
+    const band = document.querySelector('#top .pleat');
+    if (!band) return;
+    const cv = band.querySelector('canvas');
+    if (!cv || !cv.getContext) return;
+    const ctx = cv.getContext('2d');
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const fine = window.matchMedia('(hover: hover)').matches;
+    const WORDMARK = 'jordan lee';
+
+    let N = 34;
+    let W = 0, H = 0, dpr = 1, narrow = false;
+    const mark = document.createElement('canvas');
+    let MW = 0, MH = 0;
+    let bx = [], bw = [], lift = null;
+    let open = 0, scroll = 0, phase = 0, cursorX = -1;
+    let visible = false, running = false, raf = 0;
+
+    function build() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = band.clientWidth, h = band.clientHeight;
+      if (!w || !h) return;
+      W = w; H = h;
+      narrow = W <= 820;
+      N = Math.max(8, Math.min(40, Math.round(W / 42)));
+      cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+      cv.style.width = W + 'px'; cv.style.height = H + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      lift = new Float32Array(N);
+
+      bx = []; bw = [];
+      const raw = []; let sum = 0, i;
+      for (i = 0; i < N; i++) {
+        const v = 0.68 + 0.62 * Math.abs(Math.sin(i * 1.73 + 0.4));
+        raw.push(v); sum += v;
+      }
+      let x = 0;
+      for (i = 0; i < N; i++) {
+        const wPleat = raw[i] / sum * W;
+        bx.push(x); bw.push(wPleat); x += wPleat;
+      }
+
+      const size = narrow ? Math.min(W * 0.215, H * 0.15) : Math.min(W * 0.085, H * 0.22);
+      let m = mark.getContext('2d');
+      m.font = '600 ' + size + 'px "Instrument Sans", system-ui, sans-serif';
+      MW = Math.ceil(m.measureText(WORDMARK).width) + 8;
+      MH = Math.ceil(size * 1.24);
+      mark.width = Math.round(MW * dpr); mark.height = Math.round(MH * dpr);
+      m = mark.getContext('2d');
+      m.setTransform(dpr, 0, 0, dpr, 0, 0);
+      m.font = '600 ' + size + 'px "Instrument Sans", system-ui, sans-serif';
+      m.fillStyle = '#EAE8E1';
+      m.textBaseline = 'middle';
+      m.fillText(WORDMARK, 4, MH / 2);
+    }
+
+    function draw() {
+      ctx.fillStyle = '#0D0D0C';
+      ctx.fillRect(0, 0, W, H);
+      if (!MW) return;
+
+      const spread = 0.40 + 0.60 * open;
+      const sw = MW / N, dw = sw * spread, totalW = dw * N;
+      const x0 = narrow ? (W - totalW) / 2 : W * 0.985 - totalW;
+      // Lowered vs. the 0.60 reference value: our stacked hero copy (eyebrow +
+      // two-line headline + paragraph + meta row) runs taller than the source
+      // site's, so the reveal needs to sit further down to stay clear of it.
+      const y0 = narrow ? H * 0.90 - MH / 2 : H * 0.82 - MH / 2;
+      let i;
+
+      for (i = 0; i < N; i++) {
+        const dx = x0 + i * dw;
+        ctx.save();
+        ctx.beginPath(); ctx.rect(dx, 0, Math.ceil(dw) + 1, H); ctx.clip();
+        ctx.drawImage(mark, Math.round(i * sw * dpr), 0,
+          Math.round(sw * dpr), mark.height, dx, y0, dw + 1, MH);
+        ctx.restore();
+      }
+
+      for (i = 0; i < N; i++) {
+        const facing = 0.5 + 0.5 * Math.sin(i * 0.8 + phase);
+        const l = lift[i];
+        const a = 0.97 - 0.92 * l;
+        if (a <= 0.012) continue;
+        const slide = l * bw[i] * 0.62;
+        const px = bx[i] + slide, pwid = bw[i] - slide + 1;
+        if (pwid <= 0) continue;
+        const s1 = 0.50 + 0.58 * facing, s2 = s1 * 1.16, s3 = s1 * 0.86;
+        const g = ctx.createLinearGradient(px, 0, px + pwid, 0);
+        g.addColorStop(0, 'rgba(' + (196 * s1 | 0) + ',' + (62 * s1 | 0) + ',' + (38 * s1 | 0) + ',' + a.toFixed(3) + ')');
+        g.addColorStop(0.62, 'rgba(' + (196 * s2 | 0) + ',' + (62 * s2 | 0) + ',' + (38 * s2 | 0) + ',' + a.toFixed(3) + ')');
+        g.addColorStop(1, 'rgba(' + (196 * s3 | 0) + ',' + (62 * s3 | 0) + ',' + (38 * s3 | 0) + ',' + a.toFixed(3) + ')');
+        ctx.fillStyle = g;
+        ctx.fillRect(px, 0, pwid, H);
+        ctx.fillStyle = 'rgba(13,13,12,' + (0.26 * (1 - l)).toFixed(3) + ')';
+        ctx.fillRect(px, 0, 1, H);
+      }
+    }
+
+    function loop() {
+      if (!visible || !lift) { running = false; return; }
+      open += (scroll - open) * 0.07;
+      phase += 0.005 + 0.010 * open;
+
+      const sweepX = fine ? cursorX : (scroll * 1.25 - 0.12);
+      const base = fine ? scroll * 0.34 : 0;
+
+      for (let i = 0; i < N; i++) {
+        const c = (bx[i] + bw[i] / 2) / W;
+        let want = base;
+        if (sweepX >= 0) {
+          const d = Math.abs(c - sweepX);
+          want = Math.min(1, want + Math.max(0, 0.98 - d * (fine ? 4.6 : 3.1)));
+        }
+        lift[i] += (want - lift[i]) * (want > lift[i] ? 0.16 : 0.045);
+      }
+      draw();
+      raf = requestAnimationFrame(loop);
+    }
+    function kick() {
+      if (!running && visible) { running = true; raf = requestAnimationFrame(loop); }
+    }
+
+    function onScroll() {
+      const b = band.getBoundingClientRect();
+      if (!b.height) return;
+      scroll = Math.max(0, Math.min(1, (-b.top) / (b.height * 0.72)));
+      kick();
+    }
+
+    band.addEventListener('pointermove', (e) => {
+      if (reduce || !fine) return;
+      const b = band.getBoundingClientRect();
+      cursorX = (e.clientX - b.left) / b.width;
+      kick();
+    }, { passive: true });
+    band.addEventListener('pointerleave', () => { cursorX = -1; });
+
+    build();
+
+    function setStatic() {
+      if (!lift) return;
+      open = 0.8; phase = 0.5;
+      for (let q = 0; q < N; q++) lift[q] = 0.66;
+      draw();
+    }
+
+    if (reduce) {
+      setStatic();
+    } else {
+      draw();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver((es) => {
+          es.forEach((e) => {
+            visible = e.isIntersecting;
+            if (!visible) { cancelAnimationFrame(raf); running = false; }
+            else {
+              if (!lift) { build(); draw(); }
+              kick();
+            }
+          });
+        }, { threshold: 0 }).observe(band);
+      } else { visible = true; }
+      onScroll();
+    }
+
+    window.addEventListener('resize', () => {
+      build();
+      if (reduce) { setStatic(); } else { draw(); kick(); }
+    }, { passive: true });
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => {
+        build();
+        if (reduce) { setStatic(); } else { draw(); kick(); }
+      });
+    }
+  })();
 
   function initPoolCanvas(canvas) {
     const ctx = canvas.getContext('2d');

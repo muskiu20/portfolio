@@ -206,17 +206,28 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 
 /* ---------- Homepage hero override ----------
-   Per hero-section-prompt.md: light monochrome, no accent color, no
-   canvas/parallax — restraint via type and whitespace only. Scoped to
-   #top so the case-study hero (shares .hero) stays on the dark system. */
+   Background recreates drowningdot.com's hero exactly: a hidden wordmark on
+   an offscreen canvas, covered by vertical accent-colored "pleats" that lift
+   and slide aside near the cursor (scroll-driven sweep on touch), revealing
+   the wordmark underneath — see the pleat IIFE in index.html. Fixed height
+   covers the first fold on every screen size. Type treatment (Archivo,
+   lowercase, bold/italic contrast) kept from the prior pass; only colors
+   flip back to light-on-dark so text reads over the dark canvas. */
 #top.hero {
-  background: #FAFAF8;
+  min-height: 100vh;
+  min-height: 100dvh;
   padding: clamp(3.5rem, 13vw, 9rem) var(--gutter) clamp(2.5rem, 7vw, 5.5rem);
+  background: #0D0D0C;
 }
 #top.hero::after { content: none; }
+#top .pleat {
+  position: absolute; inset: 0; z-index: 0;
+  overflow: hidden;
+}
+#top .pleat canvas { display: block; }
 #top.hero .eyebrow {
   font-family: var(--font-mono);
-  color: #8A8A84;
+  color: #B9B6AC;
 }
 #top.hero h1 {
   font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
@@ -225,22 +236,22 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   line-height: 0.92;
   letter-spacing: -0.02em;
   text-transform: lowercase;
-  color: #0A0A0A;
+  color: #EAE8E1;
 }
-#top.hero h1 .line1 { display: block; font-weight: 800; font-style: normal; color: #0A0A0A; }
+#top.hero h1 .line1 { display: block; font-weight: 800; font-style: normal; color: #EAE8E1; }
 #top.hero h1 .line2 {
   display: block;
   font-style: italic;
   font-weight: 400;
-  color: #0A0A0A;
+  color: rgba(234, 232, 225, 0.6);
 }
 #top.hero p {
   font-family: "Inter", -apple-system, "Segoe UI", sans-serif;
-  color: #3A3A38;
+  color: #C9C7BE;
 }
 #top.hero .meta-row {
   font-family: var(--font-mono);
-  color: #8A8A84;
+  color: #8A877E;
 }
 
 /* Restrained load-in: fade + slide-up, staggered per line via JS class toggle */
