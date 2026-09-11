@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Fieldnote — Muskan Jain</title>
+<meta name="description" content="How Fieldnote's outdoor survey teams got a one-handed, offline-first field tool — and what it took to earn the redesign in the first place." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../styles.css" />
+</head>
+<body data-read-mode="short">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="cs-root">
+
+  <!-- ============ TOP NAV: back-link + breadcrumb, sticky ============ -->
+  <nav class="cs-topnav" id="topnav">
+    <div class="cs-topnav-inner">
+      <a class="cs-home" href="../index.html">← Portfolio</a>
+      <div class="cs-crumb">Case study · <b>Fieldnote</b></div>
+    </div>
+  </nav>
+
+  <main id="main" class="cs-main">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero cs-hero" id="hero-top">
+      <div class="cs-hero-toggle">
+        <div class="cs-hero-toggle-track" id="modeTrack" data-active="short">
+          <span class="cs-hero-toggle-thumb" aria-hidden="true"></span>
+          <button class="cs-hero-toggle-btn is-active" type="button" data-mode="short">Short Read</button>
+          <button class="cs-hero-toggle-btn" type="button" data-mode="story">Story Mode</button>
+        </div>
+        <button class="cs-hero-toggle-ai" type="button" data-mode="ai">AI Summary</button>
+      </div>
+
+      <div class="wrap">
+        <p class="eyebrow">Case Study · 01</p>
+        <h1>Redesigning for one hand,<br /><em>in the field.</em></h1>
+        <p>How a logging tool built for desks got rebuilt for people who can't put anything down — and why earning that redesign took longer than designing it.</p>
+
+        <dl class="cs-meta">
+          <div>
+            <dt>Timeline</dt>
+            <dd>7 weeks, one release</dd>
+          </div>
+          <div>
+            <dt>Team</dt>
+            <dd>3 (2 engineers + PM)</dd>
+          </div>
+          <div>
+            <dt>Role</dt>
+            <dd>Product Designer</dd>
+          </div>
+          <div>
+            <dt>Surface</dt>
+            <dd>Native app · field ops</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============ AI SUMMARY (shown only in AI-summary reading mode) ============ -->
+    <section class="cs-panel cs-section cs-ai-summary-panel" data-panel="true">
+      <div class="cs-tag">
+        <span class="cs-tag-bar" aria-hidden="true"></span>
+        <span class="cs-tag-num">—</span>
+        <span>AI summary</span>
+      </div>
+      <h2>The condensed version.</h2>
+      <div class="cs-text">
+        <p><strong>Problem:</strong> Fieldnote's logging form was designed for a desk, but survey teams used it standing in mud, in gloves, in bad light — so they filled it in later from memory, which defeated the point of the tool. <strong>Solution:</strong> I earned the mandate to rebuild the form as a one-handed, thumb-reachable flow with offline-first sync, then spent most of the project negotiating what to cut with support, sales, and engineering rather than designing new screens. <strong>Impact:</strong> Same-day logging went from roughly a third of surveys to the large majority of them within the first month, and the pattern built for one team's forms got reused twice more without a design request.</p>
+        <p>The throughline: <strong>the redesign's hardest problem was never the interface — it was getting permission to touch it, and then getting three teams to agree on what "simple" meant.</strong> The visuals were the easy 20%. The alignment, the evidence-gathering, and the patience to wait on one idea until the timing was right were the actual work.</p>
+      </div>
+    </section>
+
+    <!-- ============ 01 — QUICK SUMMARY ============ -->
+    <section class="cs-panel cs-section" data-panel="true">
+      <div class="cs-tag">
+        <span class="cs-tag-bar" aria-hidden="true"></span>
+        <span class="cs-tag-num">01</span>
+        <span>Quick Summary</span>
+      </div>
+      <h2>Problem, solution, and the impact that followed.</h2>
+      <div class="cs-triad">
+        <div class="cs-triad-row">
+          <div class="cs-triad-tag"><span class="cs-triad-mark">Problem</span></div>
+          <p>The field form was built like an office form — dense, two-handed, and useless in the conditions surveyors actually worked in. Most logging happened hours later, from memory.</p>
+        </div>
+        <div class="cs-triad-row">
+          <div class="cs-triad-tag"><span class="cs-triad-mark">Solution</span></div>
+          <p>A one-handed, thumb-reachable entry flow with offline queueing, built only after I could show the cost of the old one in numbers stakeholders couldn't wave off.</p>
+        </div>
+        <div class="cs-triad-row">
+          <div class="cs-triad-tag"><span class="cs-triad-mark">Impact</span></div>
+          <p>Same-day logging rose from roughly a third of surveys to the large majority within a month, and the flow pattern shipped twice more without anyone asking for it.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 02 — EARNING THE MANDATE ============ -->
+    <section class="cs-panel cs-section" data-panel="true">
+      <div class="cs-tag">
+        <span class="cs-tag-bar" aria-hidden="true"></span>
+        <span class="cs-tag-num">02</span>
+        <span>Earning the Mandate</span>
+      </div>
+      <h2>Nobody asked for a redesign.</h2>
+
+      <div class="cs-short-only">
+        <div class="cs-text">
+          <p>Nobody had scoped a redesign, so I built the case for one myself: I pulled 200 field sessions, showed that most logging happened hours after the fact, and traded a full rebuild for a scoped one-handed flow. <strong>The fight wasn't about the interface — it was about getting three months of roadmap reshuffled on evidence I'd gathered without being asked to.</strong></p>
+        </div>
+      </div>
+
+      <div class="cs-full-only">
+        <h3 class="cs-subh">The opening</h3>
+        <div class="cs-text">
+          <p>Fieldnote's roadmap for the quarter was already set — two integrations and a billing overhaul, nothing touching the core logging form. I hadn't been asked to look at it. But onboarding calls kept surfacing the same complaint in different words: people loved the idea of the app and stopped using the form within a week. <strong>Nobody had connected that pattern to the form itself, because nobody had gone and watched someone actually fill one out in the field.</strong></p>
+        </div>
+
+        <h3 class="cs-subh">Making the case</h3>
+        <div class="cs-text">
+          <p>So I went and watched. I sat in on four site visits with two survey crews and timed how the form actually got used against how it was designed to be used. The gap was the whole story: the form assumed two free hands, a stable surface, and good light. Surveyors had a clipboard, one glove off, and maybe ninety seconds before the next reading. <strong>They weren't logging in the field at all — they were logging from memory, back at the truck, sometimes a full day later.</strong></p>
+          <p>I pulled 200 anonymized sessions from the logs and timestamped each entry against the survey it referred to. <strong>68% of entries were logged more than two hours after the observation they described</strong>, and accuracy complaints from clients tracked almost exactly with that delay. That was the number that moved the roadmap conversation — not a mockup, not a rewritten form, just a chart showing that the product's core promise, accurate field data, was being quietly defeated by its own interface.</p>
+          <ol>
+            <li>Surveyor observes a defect on-site, hands full, gloves on.</li>
+            <li>Defers logging — no time, no free hand, screen unreadable in sunlight.</li>
+            <li>Continues the route; observation held in memory or a paper note.</li>
+            <li>Returns to the truck at end of shift, sometimes hours later.</li>
+            <li>Logs from memory, reconstructing details rather than recording them.</li>
+          </ol>
+          <p>Five steps between an observation and a record of it, with the accuracy of the record decaying at every one. <strong>The redesign I eventually pitched collapsed that to a single step: log where you're standing, one thumb, before you've moved on.</strong></p>
+        </div>
+
+        <figure class="cs-figure">
+          <div class="cs-figure-frame">Diagram: the five-step "log from memory" journey mapped against the one-step "log in place" flow, timestamps annotated at each stage</div>
+          <figcaption>Diagram: the five-step memory-logging journey the 200-session audit surfaced, set against the single-step flow proposed in the two-week prototype.</figcaption>
+        </figure>
+
+        <h3 class="cs-subh">The mandate</h3>
+        <div class="cs-text">
+          <p>I didn't ask for a redesign in that meeting — I asked for two weeks to prototype a fix, scoped tightly enough that it wouldn't touch the quarter's committed work. <strong>Scoping it small was the actual unlock: leadership could say yes to two weeks of exploration without reopening the whole roadmap.</strong> That two-week prototype is what eventually became the mandate for the real seven-week build.</p>
+        </div>
+
+        <div class="cs-lesson">
+          <p>You rarely get handed a redesign — you build the case for one out of a problem that already exists but hasn't been named yet. <strong>Evidence scoped small enough to say yes to is worth more than a pitch scoped to be right.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 03 — COLLABORATION ============ -->
+    <section class="cs-panel cs-section" data-panel="true">
+      <div class="cs-tag">
+        <span class="cs-tag-bar" aria-hidden="true"></span>
+        <span class="cs-tag-num">03</span>
+        <span>Collaboration</span>
+      </div>
+      <h2>Three teams, one form.</h2>
+
+      <div class="cs-short-only">
+        <div class="cs-text">
+          <p>Support wanted every field validated before submit; engineering wanted a rebuild I didn't have time for; sales wanted custom fields per client. I resolved all three with the same move — showing, not arguing: a real offline-sync demo and a client-config layer instead of a fork. <strong>None of the three fights got settled by who outranked whom — they got settled by whoever brought the working prototype.</strong></p>
+        </div>
+      </div>
+
+      <div class="cs-full-only">
+        <div class="cs-text">
+          <p>The prototype worked. The problem was that three teams now had opinions about what "worked" should mean, and none of them agreed with each other or with me.</p>
+        </div>
+
+        <h3 class="cs-subh">Support wanted a stricter form, not a faster one</h3>
+        <div class="cs-text">
+          <p>Support's instinct was reasonable on its face: bad data was worse than slow data, so validate everything before it could be submitted. But strict validation was exactly what made the old form unusable in the field — you can't fix a dropdown error with one thumb and a glove on. <strong>I built a real offline-sync demo instead of arguing the point</strong>: log now with soft validation, sync when connectivity returns, flag anomalies for a five-second review at that point instead of blocking entry in the moment. Watching it queue and resolve in real time did more than any deck would have — support signed off in the same meeting.</p>
+        </div>
+
+        <h3 class="cs-subh">Sales wanted per-client custom fields</h3>
+        <div class="cs-text">
+          <p>Sales had three enterprise clients asking for custom fields on the form, and the easy answer — fork the form per client — would have quietly killed the offline-sync work, since every fork needed its own sync logic. <strong>I proposed a config layer instead: one form, one sync path, fields toggled per client from a settings table engineering already had.</strong> It shipped two of the three requested fields in week one of the build and made the third a five-minute config change instead of a new release.</p>
+        </div>
+
+        <figure class="cs-figure">
+          <div class="cs-figure-frame">Diagram: forked-form architecture (one codebase per client) vs. the shared config-layer architecture that shipped</div>
+          <figcaption>Diagram: the forked-per-client architecture sales initially wanted, compared against the single form with a client-config layer that actually shipped.</figcaption>
+        </figure>
+
+        <div class="cs-text">
+          <p><strong>Neither fight was won by seniority — they were won by having a working thing to point at</strong> instead of a stronger opinion. A demo that already runs is a hard thing to argue against; a mockup is an easy thing to keep redesigning in a meeting.</p>
+        </div>
+
+        <div class="cs-lesson">
+          <p>Cross-team disagreement isn't a design failure to smooth over — it's the actual site of the design work. <strong>Bring the thing that already runs, not the argument for why it should.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 04 — A PATTERN THAT SCALED ============ -->
+    <section class="cs-panel cs-section" data-panel="true">
+      <div class="cs-tag">
+        <span class="cs-tag-bar" aria-hidden="true"></span>
+        <span class="cs-tag-num">04</span>
+        <span>A Pattern That Scaled</span>
+      </div>
+      <h2>The second time took two days.</h2>
+
+      <div class="cs-short-only">
+        <div class="cs-text">
+          <p>Six weeks after the field-form redesign shipped, the inspections team needed the same one-handed, offline-first pattern for their own checklist — and got it in two days, not seven weeks, because the config layer and sync logic already existed. <strong>The first redesign wasn't just a form fix; it was reusable infrastructure that happened to be shaped like a form.</strong></p>
+        </div>
+      </div>
+
+      <div class="cs-full-only">
+        <div class="cs-row">
+          <div class="cs-text">
+            <p>The inspections team ran a parallel checklist product with almost the same field conditions — gloved hands, bad light, delayed logging — but I hadn't touched their flow and hadn't been asked to. Six weeks after the survey-form redesign shipped, their PM asked, half-joking, whether "the Fieldnote fix" could be copied over.</p>
+            <p><strong>It could, almost entirely as-is.</strong> The offline-sync engine didn't care what fields it was queueing. The client-config layer already supported toggling fields per team. The one-handed layout was a component, not a one-off screen.</p>
+          </div>
+          <div class="cs-figure" style="margin: 0;">
+            <div class="cs-figure-frame">Diagram: the reused sync engine and config layer feeding two separate front-end flows — survey form and inspection checklist</div>
+          </div>
+        </div>
+        <div class="cs-text">
+          <p>What had taken seven weeks the first time — because half of that time was spent earning the mandate and negotiating the three fights — took two days the second time, because the mandate and the architecture were already sitting there. The only new work was the checklist-specific field set, which their own PM configured directly through the settings table without needing engineering time.</p>
+        </div>
+
+        <div class="cs-lesson">
+          <p>A well-scoped fight for one team's problem quietly becomes infrastructure for the next team's, if you build the underlying pattern instead of just the screen in front of you. <strong>The redesign that took seven weeks was actually two products' worth of work, paid for once.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 05 — THE IDEA WE WAITED ON ============ -->
+    <section class="cs-panel cs-section" data-panel="true">
+      <div class="cs-tag">
+        <span class="cs-tag-bar" aria-hidden="true"></span>
+        <span class="cs-tag-num">05</span>
+        <span>The Idea We Waited On</span>
+      </div>
+      <h2>Patience, shipped.</h2>
+
+      <div class="cs-short-only">
+        <div class="cs-text">
+          <p>During the original audit I'd proposed voice-logging as a true hands-free option, and it got shelved for scope reasons — correctly, since the team didn't have appetite for it yet. It shipped nine months later, once the transcription infrastructure it needed already existed from unrelated work. <strong>Waiting on an idea until the infrastructure catches up isn't giving up on it — it's the only way it ships without a fight.</strong></p>
+        </div>
+      </div>
+
+      <div class="cs-full-only">
+        <div class="cs-text">
+          <p>During the original field audit, one surveyor had said something I kept coming back to: even a one-thumb tap flow assumed a hand was free at all, and half the time neither hand was. The honest fix was voice — describe the observation, transcribe it, review later. I sketched it, tested a rough version with two crews, and the qualitative signal was strong.</p>
+          <p><strong>I didn't fight for it, because the case for waiting was better than the case for shipping it then.</strong> Voice logging needed transcription infrastructure the config layer didn't have yet, and pushing it into the same release as the one-handed redesign would have reopened exactly the scope conversation I'd just closed. I wrote it up, attached the test recordings, and let it sit.</p>
+        </div>
+
+        <figure class="cs-figure">
+          <div class="cs-figure-frame">Timeline: the nine-month gap between the shelved voice-logging proposal and the unrelated transcription feature that made it possible</div>
+          <figcaption>Timeline: the nine months between shelving voice-logging and the unrelated project that quietly built the infrastructure it needed.</figcaption>
+        </figure>
+
+        <div class="cs-text">
+          <p>Nine months later, an unrelated project added transcription support for customer-service notes. <strong>The infrastructure I'd been waiting on showed up for a completely different reason</strong>, and voice-logging for Fieldnote became a two-week feature instead of a new initiative, because the hard, expensive part had already been justified and built by someone else's problem.</p>
+        </div>
+
+        <div class="cs-lesson">
+          <p>Not every good idea needs to win its fight immediately. <strong>Some ideas are better served by a well-documented pause than a battle you'd have to win twice.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 06 — THE END ============ -->
+    <section class="cs-panel cs-section" data-panel="true">
+      <div class="cs-tag">
+        <span class="cs-tag-bar" aria-hidden="true"></span>
+        <span class="cs-tag-num">06</span>
+        <span>The End</span>
+      </div>
+      <h2>The alignment <em>was</em> the design.</h2>
+      <div class="cs-text">
+        <p>None of the four stories above are really about the form. The form itself — one-handed, offline-first, config-driven — is the kind of design decision that looks almost obvious in hindsight, the sort of thing a portfolio slide makes look inevitable. It wasn't. <strong>Getting to build it took a self-initiated audit, three separate stakeholder fights resolved with working prototypes instead of arguments, and one idea that only shipped because I was willing to let it wait nine months.</strong></p>
+        <p><strong>The alignment, the persuasion, and the patience aren't preliminaries to the design. They are the design.</strong> The screens were the easy 20% — and they only got to exist because the other 80% got done first.</p>
+      </div>
+    </section>
+
+    <!-- ============ OTHER PROJECTS + FOOTER ============ -->
+    <div class="cs-pageend">
+      <div class="cs-other-projects">
+        <h2 class="cs-other-heading" style="font-family: var(--cs-serif); font-weight: 400; font-size: clamp(1.75rem, 4vw, 2.5rem); color: var(--cs-ink); text-transform: none; letter-spacing: -0.015em;">Keep reading.</h2>
+        <div class="cs-other-grid">
+          <a class="cs-other-card" data-other-card="true" href="fieldnote.html">
+            <div class="cs-other-info">
+              <span class="cs-other-eyebrow">Case study · 02 · Halyard</span>
+              <h3 class="cs-other-title">A catalogue rebuilt around how sailors search.</h3>
+            </div>
+            <div class="cs-other-image" aria-hidden="true"></div>
+          </a>
+          <a class="cs-other-card" data-other-card="true" href="fieldnote.html">
+            <div class="cs-other-info">
+              <span class="cs-other-eyebrow">Case study · 03 · Loom &amp; Co.</span>
+              <h3 class="cs-other-title">Large product photography that never slows down.</h3>
+            </div>
+            <div class="cs-other-image" aria-hidden="true"></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ============ FOOTER — matches the portfolio landing page ============ -->
+<footer class="site-footer cs-site-footer">
+  <div class="footer-main">
+    <canvas class="pool-canvas" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="footer-bottom">
+        <span>© 2026 Muskan Jain</span>
+        <div class="footer-bottom-contact">
+          <a href="mailto:hello@muskanjain.studio">hello@muskanjain.studio</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---------- Panel lift ----------
+  // A panel isn't revealed once and left alone — it re-checks its own
+  // position against the viewport on every scroll tick, so it lifts as it
+  // passes through the upper two-thirds of the screen and settles back flush
+  // once it's scrolled on past. Other-project cards use the same idea, keyed
+  // off their vertical center instead of their top/bottom edges. Both run
+  // off one shared scroll/resize handler, called once immediately so the
+  // page is already correct before the first scroll event fires.
+  (function () {
+    const panels = document.querySelectorAll('.cs-panel');
+    const otherCards = document.querySelectorAll('.cs-other-card');
+    if (!panels.length && !otherCards.length) return;
+
+    let ticking = false;
+
+    function apply() {
+      const vh = window.innerHeight;
+
+      panels.forEach((panel) => {
+        const rect = panel.getBoundingClientRect();
+        const inBand = rect.top < vh * 0.45 && rect.bottom > vh * 0.05;
+        panel.classList.toggle('is-lifted', inBand);
+      });
+
+      otherCards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        card.classList.toggle('is-lifted', center > 0 && center < vh);
+      });
+
+      ticking = false;
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(apply);
+    }
+
+    apply();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+  })();
+
+  // ---------- Sticky top nav: gains a hairline once the page has scrolled,
+  // and loses it again if you scroll back to the very top. ----------
+  (function () {
+    const nav = document.getElementById('topnav');
+    if (!nav) return;
+    function update() { nav.classList.toggle('is-scrolled', window.scrollY > 8); }
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+  })();
+
+  // ---------- Reading-mode toggle: Short Read / Story Mode slide together;
+  // AI Summary is a separate, de-emphasized third mode. ----------
+  (function () {
+    const track = document.getElementById('modeTrack');
+    const aiBtn = document.querySelector('.cs-hero-toggle-ai');
+    if (!track || !aiBtn) return;
+    const pillBtns = track.querySelectorAll('.cs-hero-toggle-btn');
+
+    function setMode(mode) {
+      document.body.dataset.readMode = mode;
+      if (mode === 'short' || mode === 'story') {
+        track.dataset.active = mode;
+        pillBtns.forEach((b) => b.classList.toggle('is-active', b.dataset.mode === mode));
+        aiBtn.classList.remove('is-active');
+      } else {
+        aiBtn.classList.add('is-active');
+      }
+    }
+
+    pillBtns.forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
+    aiBtn.addEventListener('click', () => setMode('ai'));
+  })();
+
+  // ---------- Footer ripple canvas (same effect as the portfolio landing page) ----------
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function initPoolCanvas(canvas) {
+    const ctx = canvas.getContext('2d');
+    const host = canvas.parentElement;
+    let w, h, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let mouse = { x: -9999, y: -9999 };
+
+    function resize() {
+      w = canvas.clientWidth; h = canvas.clientHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    host.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top;
+    });
+    host.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+    const gap = 22;
+    let t = 0;
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (let y = gap / 2; y < h; y += gap) {
+        for (let x = gap / 2; x < w; x += gap) {
+          const dx = x - mouse.x, dy = y - mouse.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const influence = Math.max(0, 1 - dist / 220);
+          const r = 1.2 + influence * 3.2 + Math.sin(t + x * 0.02 + y * 0.02) * 0.3;
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(217,86,60,${0.15 + influence * 0.5})`;
+          ctx.arc(x, y, r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      if (!reduceMotion) { t += 0.02; requestAnimationFrame(draw); }
+    }
+    draw();
+  }
+  document.querySelectorAll('.pool-canvas').forEach(initPoolCanvas);
+</script>
+
+</body>
+</html>
