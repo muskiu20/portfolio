@@ -294,6 +294,27 @@
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
+  // ---------- Header contrast over light sections ----------
+  // The header has no background of its own, so its text needs to darken
+  // whenever a .theme-sheet (light) section is scrolled in behind it.
+  (function () {
+    const header = document.querySelector('.site-header');
+    const lightSections = document.querySelectorAll('.theme-sheet');
+    if (!header || !lightSections.length) return;
+    function updateHeaderTheme() {
+      const h = header.offsetHeight;
+      let onLight = false;
+      lightSections.forEach((sec) => {
+        const r = sec.getBoundingClientRect();
+        if (r.top <= h && r.bottom >= 0) onLight = true;
+      });
+      header.classList.toggle('on-light', onLight);
+    }
+    updateHeaderTheme();
+    window.addEventListener('scroll', updateHeaderTheme, { passive: true });
+    window.addEventListener('resize', updateHeaderTheme);
+  })();
+
   // ---------- Local time readout ----------
   // REPLACE 'Europe/Lisbon' with your own timezone
   function updateClock() {
