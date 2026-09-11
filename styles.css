@@ -46,7 +46,7 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -117,7 +117,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
    No background/blur/border of its own — it reads as part of whatever
    section sits behind it (the hero, on load) rather than a distinct bar. */
 .site-header {
-  position: sticky; top: 0; z-index: 30;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 30;
   display: flex; align-items: center; justify-content: space-between;
   padding: 1.1rem var(--gutter);
   background: transparent;
