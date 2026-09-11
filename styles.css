@@ -229,18 +229,19 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 /* CSS fallback matching the canvas's base layer exactly — shown briefly
    before the pleat script paints, and as the degraded result if it can't
    run at all (no canvas support, JS disabled). Violet and black only,
-   alternating, so the rust pleats read as the sole accent rather than
+   alternating top to bottom, violet at top settling to black at the
+   bottom — so the rust pleats read as the sole accent rather than
    competing with a second warm hue underneath them. */
 .hero-gradient {
   background: linear-gradient(
-    90deg,
+    180deg,
     #53438B 0%,
     #0D0D0C 17%,
     #392B60 33%,
     #0D0D0C 50%,
     #231437 67%,
     #0D0D0C 83%,
-    #8E7FB8 100%
+    #0D0D0C 100%
   );
 }
 #top .pleat {

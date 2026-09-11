@@ -390,7 +390,7 @@
     // between builds).
     const GRADIENT_STOPS = [
       [0.00, '#53438B'], [0.17, '#0D0D0C'], [0.33, '#392B60'], [0.50, '#0D0D0C'],
-      [0.67, '#231437'], [0.83, '#0D0D0C'], [1.00, '#8E7FB8']
+      [0.67, '#231437'], [0.83, '#0D0D0C'], [1.00, '#0D0D0C']
     ];
 
     function build() {
@@ -405,7 +405,7 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       lift = new Float32Array(N);
 
-      baseGradient = ctx.createLinearGradient(0, 0, W, 0);
+      baseGradient = ctx.createLinearGradient(0, 0, 0, H);
       GRADIENT_STOPS.forEach(([pos, color]) => baseGradient.addColorStop(pos, color));
 
       bx = []; bw = [];
