@@ -223,9 +223,29 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   min-height: 100vh;
   min-height: 100dvh;
   padding: clamp(3.5rem, 13vw, 9rem) var(--gutter) clamp(2.5rem, 7vw, 5.5rem);
-  background: #0D0D0C;
 }
 #top.hero::after { content: none; }
+
+/* CSS fallback matching the canvas's base layer exactly — shown briefly
+   before the pleat script paints, and as the degraded result if it can't
+   run at all (no canvas support, JS disabled). */
+.hero-gradient {
+  background: linear-gradient(
+    90deg,
+    #53438B 0%,
+    #392B60 9%,
+    #231437 18%,
+    #4E1621 27%,
+    #861E0F 36%,
+    #B92500 45%,
+    #CB2900 55%,
+    #DC2C00 64%,
+    #DC3C11 73%,
+    #D85E3B 82%,
+    #D49074 91%,
+    #F6F4F0 100%
+  );
+}
 #top .pleat {
   position: absolute; inset: 0; z-index: 0;
   overflow: hidden;

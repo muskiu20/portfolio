@@ -27,7 +27,7 @@
 <main id="main">
 
   <!-- ============ HERO ============ -->
-  <section class="hero" id="top">
+  <section class="hero hero-gradient" id="top">
     <div class="pleat" aria-hidden="true"><canvas></canvas></div>
     <div class="wrap">
       <p class="eyebrow hero-fade">Design &amp; development — Lisbon</p>
@@ -383,6 +383,16 @@
     let bx = [], bw = [], lift = null;
     let open = 0, scroll = 0, phase = 0, cursorX = -1;
     let visible = false, running = false, raf = 0;
+    let baseGradient = null;
+
+    // Base layer behind the pleats — rebuilt only on resize (createLinearGradient
+    // is cheap but pointless to redo every animation frame since W/H are static
+    // between builds).
+    const GRADIENT_STOPS = [
+      [0.00, '#53438B'], [0.09, '#392B60'], [0.18, '#231437'], [0.27, '#4E1621'],
+      [0.36, '#861E0F'], [0.45, '#B92500'], [0.55, '#CB2900'], [0.64, '#DC2C00'],
+      [0.73, '#DC3C11'], [0.82, '#D85E3B'], [0.91, '#D49074'], [1.00, '#F6F4F0']
+    ];
 
     function build() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -395,6 +405,9 @@
       cv.style.width = W + 'px'; cv.style.height = H + 'px';
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       lift = new Float32Array(N);
+
+      baseGradient = ctx.createLinearGradient(0, 0, W, 0);
+      GRADIENT_STOPS.forEach(([pos, color]) => baseGradient.addColorStop(pos, color));
 
       bx = []; bw = [];
       const raw = []; let sum = 0, i;
@@ -423,7 +436,7 @@
     }
 
     function draw() {
-      ctx.fillStyle = '#0D0D0C';
+      ctx.fillStyle = baseGradient || '#0D0D0C';
       ctx.fillRect(0, 0, W, H);
       if (!MW) return;
 
