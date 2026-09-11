@@ -171,6 +171,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   overflow: hidden;
   padding: clamp(3.5rem, 12vw, 9rem) var(--gutter) clamp(2.5rem, 6vw, 5rem);
 }
+/* No seam into whatever section follows the hero directly — both are the
+   same near-black tone, so the hairline that normally separates adjacent
+   sections would just read as a stray line rather than a real boundary. */
+.hero + section { border-top: none; }
 .hero::after {
   content: "";
   position: absolute; inset: 0;
@@ -551,8 +555,14 @@ section + section { border-top: 1px solid var(--line); }
 .site-footer {
   position: relative; overflow: hidden;
   border-top: 1px solid var(--line);
-  padding: clamp(2.5rem, 6vw, 4rem) 0 2rem;
+  padding: 0 0 2rem;
 }
+/* The marquee sits flush at the very top of the footer (no border of its
+   own — the footer's border-top already marks that seam), with the usual
+   footer top-spacing moved onto .wrap so the links/contact block below it
+   still gets proper clearance. */
+.site-footer .marquee-strip { border-top: none; }
+.site-footer > .wrap { padding-top: clamp(2.5rem, 6vw, 4rem); }
 .site-footer .pool-canvas {
   position: absolute; left: 0; right: 0; bottom: 0;
   width: 100%; height: 60%;
