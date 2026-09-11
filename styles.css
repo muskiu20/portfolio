@@ -343,6 +343,61 @@ section + section { border-top: 1px solid var(--line); }
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
+/* ---------- Voice (type-swap demo) ---------- */
+.voice-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+.voice-headline {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin: 0 0 1.25rem;
+  color: var(--ink);
+  transition: font-family 0.15s var(--ease), font-weight 0.15s var(--ease);
+}
+.voice-headline .line1, .voice-headline .line2 { display: block; }
+.voice-headline.is-sans { letter-spacing: -0.02em; }
+.voice-sub { color: var(--muted); max-width: 40ch; margin: 0; }
+
+.voice-right { border-top: 1px solid var(--line); }
+.voice-row {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 1.5rem; flex-wrap: wrap;
+  padding: 1.3rem 0; border-bottom: 1px solid var(--line);
+  cursor: default;
+  transition: border-color 0.25s var(--ease);
+}
+.voice-row:hover, .voice-row:focus-visible { border-color: var(--accent); outline: none; }
+.voice-sample {
+  font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+  color: var(--muted);
+  transition: color 0.2s var(--ease), font-weight 0.2s var(--ease);
+}
+.voice-font-serif { font-family: var(--font-serif); }
+.voice-font-sans { font-family: "Instrument Sans", "Helvetica Neue", Arial, sans-serif; font-weight: 700; }
+.voice-font-mono { font-family: var(--font-mono); }
+.voice-row:hover .voice-sample, .voice-row:focus-visible .voice-sample { color: var(--ink); }
+.voice-label {
+  font-family: var(--font-mono); font-size: 0.75rem;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--muted); flex: none;
+  transition: color 0.2s var(--ease);
+}
+.voice-row:hover .voice-label, .voice-row:focus-visible .voice-label { color: var(--accent-soft); }
+
+@media (max-width: 900px) {
+  .voice-grid { grid-template-columns: 1fr; }
+  .voice-left { margin-bottom: 0.5rem; }
+}
+@media (max-width: 640px) {
+  .voice-row { flex-direction: column; align-items: flex-start; gap: 0.35rem; padding: 1rem 0; }
+}
+
 /* ---------- Case Study Preview Grid ---------- */
 .preview-grid {
   display: grid;

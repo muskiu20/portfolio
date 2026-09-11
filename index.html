@@ -48,6 +48,32 @@
     </div>
   </div>
 
+  <!-- ============ VOICE (type-swap demo) ============ -->
+  <section id="voice">
+    <div class="wrap">
+      <div class="voice-grid">
+        <div class="voice-left reveal">
+          <h2 class="voice-headline" id="voiceHeadline"><span class="line1">same words,</span><span class="line2">new voice.</span></h2>
+          <p class="voice-sub">Three typefaces from the kit I actually ship with — hover a row to see the headline change.</p>
+        </div>
+        <div class="voice-right reveal">
+          <div class="voice-row" data-font="serif" tabindex="0">
+            <span class="voice-sample voice-font-serif">same words, new voice.</span>
+            <span class="voice-label">Editorial serif</span>
+          </div>
+          <div class="voice-row" data-font="sans" tabindex="0">
+            <span class="voice-sample voice-font-sans">same words, new voice.</span>
+            <span class="voice-label">Grotesque display</span>
+          </div>
+          <div class="voice-row" data-font="mono" tabindex="0">
+            <span class="voice-sample voice-font-mono">same words, new voice.</span>
+            <span class="voice-label">Monospace utility</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ CASE STUDY PREVIEW GRID ============ -->
   <section id="previews">
     <div class="wrap">
@@ -263,6 +289,7 @@
   <canvas class="pool-canvas" aria-hidden="true"></canvas>
   <div class="wrap">
     <nav class="footer-links" aria-label="Section quick links">
+      <a href="#voice">voice — hover to see it change ↓</a>
       <a href="#previews">preview — case studies ↓</a>
       <a href="#work">work — 3 case studies ↓</a>
       <a href="#graphics">graphics — visual work ↓</a>
@@ -342,6 +369,35 @@
 
   // ---------- Motion: canvas signatures ----------
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---------- Voice: hover a row, the headline re-renders in that typeface ----------
+  (function () {
+    const rows = document.querySelectorAll('.voice-row');
+    const headline = document.getElementById('voiceHeadline');
+    if (!rows.length || !headline) return;
+
+    const FONT_MAP = {
+      serif: { family: 'var(--font-serif)', weight: '400' },
+      sans: { family: '"Instrument Sans", "Helvetica Neue", Arial, sans-serif', weight: '700' },
+      mono: { family: 'var(--font-mono)', weight: '500' }
+    };
+    const DEFAULT = FONT_MAP.serif;
+
+    function setFont(key) {
+      const f = FONT_MAP[key] || DEFAULT;
+      headline.style.fontFamily = f.family;
+      headline.style.fontWeight = f.weight;
+      headline.classList.toggle('is-sans', key === 'sans');
+    }
+
+    rows.forEach((row) => {
+      const key = row.dataset.font;
+      row.addEventListener('mouseenter', () => setFont(key));
+      row.addEventListener('mouseleave', () => setFont(null));
+      row.addEventListener('focus', () => setFont(key));
+      row.addEventListener('blur', () => setFont(null));
+    });
+  })();
 
   // ---------- Hero load-in animation ----------
   // Restrained fade + slide-up, staggered per line; disabled entirely under reduced motion.
