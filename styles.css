@@ -774,6 +774,13 @@ section + section { border-top: 1px solid var(--line); }
 /* ---------- Panel: the one repeating shape every section is built from ---------- */
 .cs-panel {
   position: relative;
+  /* .cs-panel elements are <section>s, so without this they'd inherit the
+     site-wide `section { color: var(--ink) }` rule meant for the dark
+     landing page — near-white text on this panel's white background.
+     Setting it explicitly here means any unwrapped text (not inside a
+     .cs-text/.cs-triad-row with its own color rule) still gets a sane,
+     readable default instead of silently depending on one. */
+  color: var(--cs-ink-soft);
   background: var(--cs-paper);
   border-radius: var(--cs-radius);
   padding: var(--cs-pad-y) var(--cs-pad-x);
