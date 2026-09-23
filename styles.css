@@ -909,16 +909,48 @@ section + section { border-top: 1px solid var(--line); }
   .cs-row { grid-template-columns: 1fr; }
 }
 
-/* Quick-summary stack: Problem / Solution / Impact, separated by hairlines */
+/* Quick-summary stack: Problem / Solution / Impact, each a numbered-label /
+   content grid row, separated by hairlines. The label column carries a
+   small mono numeral beside an italic serif word (01 Problem, 02 Solution,
+   03 Impact) rather than a plain uppercase tag above the text. */
 .cs-triad { display: flex; flex-direction: column; gap: 18px; }
-.cs-triad-row { padding-top: 28px; }
+.cs-triad-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 32px;
+  padding-top: 32px;
+}
 .cs-triad-row:first-child { padding-top: 0; border-top: none; }
 .cs-triad-row:not(:first-child) { border-top: 1px solid var(--cs-rule); }
-.cs-triad-tag { display: flex; align-items: baseline; gap: 12px; margin-bottom: 0.6rem; }
+.cs-triad-tag { display: flex; align-items: baseline; gap: 10px; }
 .cs-triad-mark {
   font-family: var(--cs-sans); font-size: 11px;
-  letter-spacing: 0.18em; text-transform: uppercase; color: var(--cs-ink-faint);
+  letter-spacing: 0.12em; color: var(--cs-ink-faint);
 }
+.cs-triad-label {
+  font-family: var(--cs-serif); font-style: italic; font-weight: 400;
+  font-size: 1.75rem; color: var(--cs-ink); margin: 0;
+}
+@media (max-width: 640px) {
+  .cs-triad-row { grid-template-columns: 1fr; gap: 10px; }
+}
+
+/* Numbered card list used inside a triad row (Solution's moves, Impact's
+   before/after points) — a bordered, rounded row per item instead of a
+   plain bullet, each with its own small leading numeral. */
+.cs-card-list { list-style: none; margin: 1rem 0 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.cs-card-list li {
+  display: flex; gap: 14px; align-items: flex-start;
+  border: 1px solid var(--cs-rule); border-radius: 10px;
+  padding: 14px 16px;
+  background: var(--cs-paper);
+}
+.cs-card-num {
+  font-family: var(--cs-sans); font-size: 11px; letter-spacing: 0.12em;
+  color: var(--cs-ink-faint); flex: none; padding-top: 0.2em;
+}
+.cs-card-text { font-size: 1rem; line-height: 1.6; color: var(--cs-ink-soft); }
+.cs-card-text strong { color: var(--cs-ink); font-weight: 600; }
 
 /* Full-width figure with literal caption */
 .cs-figure { margin: 28px 0; }

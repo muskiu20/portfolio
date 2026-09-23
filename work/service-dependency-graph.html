@@ -88,23 +88,39 @@
       <h2>Problem, solution, and the impact being tested.</h2>
       <div class="cs-triad">
         <div class="cs-triad-row">
-          <div class="cs-triad-tag"><span class="cs-triad-mark">Problem</span></div>
+          <div class="cs-triad-tag">
+            <span class="cs-triad-mark">01</span>
+            <h4 class="cs-triad-label">Problem</h4>
+          </div>
           <p>Specmatic Insights includes a Service Dependency Graph that shows how services connect to each other through API contracts — not infrastructure, but logical provider–consumer relationships. At the scale the product needed to support (roughly 100–5000 services, with only 12–24 visible on screen at once), the existing graph broke down. Controls competed for space with the graph itself, navigation aids were either missing or permanently on screen regardless of need, and there was no fast way to find a specific service or understand where you were relative to the rest of the system.</p>
         </div>
         <div class="cs-triad-row">
-          <div class="cs-triad-tag"><span class="cs-triad-mark">Solution</span></div>
-          <p>The reframe was <strong>from "show every control, all the time" to "show the graph, and let controls earn their place on screen."</strong> Search, filters, a directional pad, and a minimap all still exist — but instead of living in a fixed toolbar, they appear based on what the user is actually doing: zoomed in, working with a large graph, or trying to escape the constraints of the page.</p>
+          <div class="cs-triad-tag">
+            <span class="cs-triad-mark">02</span>
+            <h4 class="cs-triad-label">Solution</h4>
+          </div>
+          <div>
+            <p>The reframe was <strong>from "show every control, all the time" to "show the graph, and let controls earn their place on screen."</strong> Three moves carried that through:</p>
+            <ol class="cs-card-list">
+              <li><span class="cs-card-num">01</span><span class="cs-card-text"><strong>Simplify the toolbar</strong> — cut from 8+ competing controls down to the 7 that map directly to finding, understanding, or navigating a service.</span></li>
+              <li><span class="cs-card-num">02</span><span class="cs-card-text"><strong>Make navigation contextual</strong> — the directional pad and minimap appear only once zoom and node-count cross a threshold, instead of being always-on or missing entirely.</span></li>
+              <li><span class="cs-card-num">03</span><span class="cs-card-text"><strong>Treat fullscreen as exploration</strong> — the same navigation controls and an explicit exit path carry through from dashboard card to fullscreen.</span></li>
+            </ol>
+          </div>
         </div>
         <div class="cs-triad-row">
-          <div class="cs-triad-tag"><span class="cs-triad-mark">Impact</span></div>
+          <div class="cs-triad-tag">
+            <span class="cs-triad-mark">03</span>
+            <h4 class="cs-triad-label">Impact</h4>
+          </div>
           <div>
             <p>This design was handed off for usability and QA testing, so what follows are the concrete before→after design changes, not tested metrics:</p>
-            <ul>
-              <li>Toolbar actions cut from 8+ competing controls (View dropdown, Prev, Next, Export, and more) down to the 7 that directly support finding, understanding, or navigating a service.</li>
-              <li>Directional navigation and the minimap moved from either "always visible" or "not present" to <strong>conditional</strong>, appearing only above a zoom/node-count threshold.</li>
-              <li>Graph promoted from a bounded dashboard card to a fullscreen-capable primary workspace, without losing the surrounding Insights dashboard context.</li>
-              <li>Search given a deliberate, reduced footprint (~20% narrower) so it reads as a fast path to a service rather than a dominant toolbar element competing with the graph.</li>
-            </ul>
+            <ol class="cs-card-list">
+              <li><span class="cs-card-num">01</span><span class="cs-card-text"><strong>Toolbar cut from 8+ controls to 7</strong> — View dropdown, Prev, Next, and Export removed; what's left maps directly to finding, understanding, or navigating a service.</span></li>
+              <li><span class="cs-card-num">02</span><span class="cs-card-text"><strong>Navigation moved from binary to conditional</strong> — the directional pad and minimap now appear only above a zoom/node-count threshold, instead of always-on or missing.</span></li>
+              <li><span class="cs-card-num">03</span><span class="cs-card-text"><strong>Graph promoted to a fullscreen-capable workspace</strong> — without losing the surrounding Insights dashboard context.</span></li>
+              <li><span class="cs-card-num">04</span><span class="cs-card-text"><strong>Search narrowed by ~20%</strong> — reads as a fast path to a service rather than a dominant toolbar element competing with the graph.</span></li>
+            </ol>
           </div>
         </div>
       </div>
