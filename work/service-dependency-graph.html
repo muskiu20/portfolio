@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Service Dependency Graph — Muskan Jain</title>
+<meta name="description" content="Rebuilding how engineers navigate thousands of API contract dependencies without losing their place — a one-week redesign of Specmatic Insights' Service Dependency Graph." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+<link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+<link rel="stylesheet" href="../styles.css" />
+</head>
+<body data-read-mode="short">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="cs-root">
+
+  <!-- ============ TOP NAV: back-link + breadcrumb, sticky ============ -->
+  <nav class="cs-topnav" id="topnav">
+    <div class="cs-topnav-inner">
+      <a class="cs-home" href="../">← Portfolio</a>
+      <div class="cs-crumb">Case study · <b>Service Dependency Graph</b></div>
+    </div>
+  </nav>
+
+  <main id="main" class="cs-main">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero cs-hero" id="hero-top">
+      <div class="cs-hero-toggle">
+        <div class="cs-hero-toggle-track" id="modeTrack" data-active="short">
+          <span class="cs-hero-toggle-thumb" aria-hidden="true"></span>
+          <button class="cs-hero-toggle-btn is-active" type="button" data-mode="short">Short Read</button>
+          <button class="cs-hero-toggle-btn" type="button" data-mode="story">Story Mode</button>
+        </div>
+        <button class="cs-hero-toggle-ai" type="button" data-mode="ai">AI Summary</button>
+      </div>
+
+      <div class="wrap">
+        <p class="eyebrow">Case Study · 01</p>
+        <h1>Redesigning the<br /><em>Service Dependency Graph.</em></h1>
+        <p>Rebuilding how engineers navigate thousands of API contract dependencies without losing their place.</p>
+
+        <dl class="cs-meta">
+          <div>
+            <dt>Timeline</dt>
+            <dd>1 week</dd>
+          </div>
+          <div>
+            <dt>Team</dt>
+            <dd>Solo (design), handed off to engineering + QA</dd>
+          </div>
+          <div>
+            <dt>Role</dt>
+            <dd>Product Designer</dd>
+          </div>
+          <div>
+            <dt>Surface</dt>
+            <dd>Enterprise B2B · API contract observability</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ============ AI SUMMARY (shown only in AI-summary reading mode) ============ -->
+    <section class="cs-panel cs-section cs-ai-summary-panel" data-panel="true">
+      <div class="cs-tag">
+        <span class="cs-tag-bar" aria-hidden="true"></span>
+        <span class="cs-tag-num">—</span>
+        <span>AI summary</span>
+      </div>
+      <h2>The condensed version.</h2>
+      <div class="cs-text">
+        <p><strong>Problem:</strong> Specmatic Insights' Service Dependency Graph shows how up to 5,000 services connect through API contracts, with only 12–24 visible on screen at once — but the existing graph broke down at that scale. Controls competed for space with the graph itself, navigation aids were either missing or permanently on screen regardless of need, and there was no fast way to find a specific service or understand where you were relative to the rest of the system. <strong>Solution:</strong> The reframe was from "show every control, all the time" to "show the graph, and let controls earn their place on screen" — search, filters, a directional pad, and a minimap all still exist, but now appear based on what the user is actually doing rather than living in a fixed toolbar. <strong>Impact:</strong> This design was handed off for usability and QA testing, so what follows are concrete before→after design changes rather than tested metrics — toolbar actions cut from 8+ competing controls to the 7 that directly support finding, understanding, or navigating a service, and the graph promoted from a bounded dashboard card to a fullscreen-capable primary workspace.</p>
+        <p>The throughline: <strong>the real work was deciding which controls hadn't earned their place on screen, not making the existing ones prettier.</strong> Conditional UI — navigation aids that appear only once the graph's complexity justifies them — did more for the interface than any single new feature would have.</p>
+      </div>
+    </section>
+
+    <!-- ============ 01 — QUICK SUMMARY ============ -->
+    <section class="cs-panel cs-section" data-panel="true">
+      <div class="cs-tag">
+        <span class="cs-tag-bar" aria-hidden="true"></span>
+        <span class="cs-tag-num">01</span>
+        <span>Quick Summary</span>
+      </div>
+      <h2>Problem, solution, and the impact being tested.</h2>
+      <div class="cs-triad">
+        <div class="cs-triad-row">
+          <div class="cs-triad-tag"><span class="cs-triad-mark">Problem</span></div>
+          <p>Specmatic Insights includes a Service Dependency Graph that shows how services connect to each other through API contracts — not infrastructure, but logical provider–consumer relationships. At the scale the product needed to support (roughly 100–5000 services, with only 12–24 visible on screen at once), the existing graph broke down. Controls competed for space with the graph itself, navigation aids were either missing or permanently on screen regardless of need, and there was no fast way to find a specific service or understand where you were relative to the rest of the system.</p>
+        </div>
+        <div class="cs-triad-row">
+          <div class="cs-triad-tag"><span class="cs-triad-mark">Solution</span></div>
+          <p>The reframe was <strong>from "show every control, all the time" to "show the graph, and let controls earn their place on screen."</strong> Search, filters, a directional pad, and a minimap all still exist — but instead of living in a fixed toolbar, they appear based on what the user is actually doing: zoomed in, working with a large graph, or trying to escape the constraints of the page.</p>
+        </div>
+        <div class="cs-triad-row">
+          <div class="cs-triad-tag"><span class="cs-triad-mark">Impact</span></div>
+          <div>
+            <p>This design was handed off for usability and QA testing, so what follows are the concrete before→after design changes, not tested metrics:</p>
+            <ul>
+              <li>Toolbar actions cut from 8+ competing controls (View dropdown, Prev, Next, Export, and more) down to the 7 that directly support finding, understanding, or navigating a service.</li>
+              <li>Directional navigation and the minimap moved from either "always visible" or "not present" to <strong>conditional</strong>, appearing only above a zoom/node-count threshold.</li>
+              <li>Graph promoted from a bounded dashboard card to a fullscreen-capable primary workspace, without losing the surrounding Insights dashboard context.</li>
+              <li>Search given a deliberate, reduced footprint (~20% narrower) so it reads as a fast path to a service rather than a dominant toolbar element competing with the graph.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 02 — CONTEXT ============ -->
+    <section class="cs-panel cs-section" data-panel="true">
+      <div class="cs-tag">
+        <span class="cs-tag-bar" aria-hidden="true"></span>
+        <span class="cs-tag-num">02</span>
+        <span>Context</span>
+      </div>
+      <h2>The scale wasn't hypothetical.</h2>
+
+      <div class="cs-short-only">
+        <div class="cs-text">
+          <p>Specmatic helps engineering teams verify that services actually communicate the way their API contracts say they will — and the Service Dependency Graph is the part of Insights that shows which services depend on which. It's used by developers, architects, QA, SREs, and engineers new to a codebase alike, each for a different job: find a service, assess blast radius, scope regression tests, or just get oriented. <strong>The intended scale — 100–5000 services, only ~12–24 visible at once — was the baseline from day one, not an edge case, which meant the graph's problems were structural, not cosmetic.</strong></p>
+        </div>
+      </div>
+
+      <div class="cs-full-only">
+        <div class="cs-text">
+          <ol>
+            <li><strong>What the product does.</strong> Specmatic helps engineering teams work with API contracts and verify that services actually communicate the way those contracts say they will. Insights is the visibility layer on top of that — and the Service Dependency Graph is the part of Insights that shows which services depend on which, a logical contract-relationship graph, not a runtime infrastructure map.</li>
+            <li><strong>Who relies on it.</strong> Not one type of user — backend/API developers, contract owners, platform engineers, architects, EMs, QA/test teams, DevEx/governance teams, SREs, and engineers new to a codebase all use this graph, each with a different job: find a service, assess blast radius, scope regression tests, understand ownership, or just get oriented in an unfamiliar system.</li>
+            <li><strong>Why the complexity is real, not invented.</strong> The intended scale is 100–5000 services with only ~12–24 visible at a time. That's not a hypothetical edge case — it's the baseline the graph has to work at from day one, which means "more services" reliably means "more relationships, more visual noise, harder navigation."</li>
+            <li><strong>Why this needed a redesign, not a visual refresh.</strong> The existing graph's problems weren't cosmetic. Nodes could exist with no visible relationships and no explanation why. The canvas didn't use its own space efficiently. Controls were permanently present regardless of whether the current view needed them. These are structural, information-hierarchy problems — repainting the same toolbar wouldn't have fixed any of them.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 03 — MOVE 1: SIMPLIFYING THE TOOLBAR ============ -->
+    <section class="cs-panel cs-section" data-panel="true">
+      <div class="cs-tag">
+        <span class="cs-tag-bar" aria-hidden="true"></span>
+        <span class="cs-tag-num">03</span>
+        <span>Simplifying the Toolbar</span>
+      </div>
+      <h2>Controls should earn their place.</h2>
+
+      <div class="cs-short-only">
+        <div class="cs-text">
+          <p>The toolbar carried a View dropdown, Prev/Next, and Export — controls unrelated to actually finding or understanding a service, competing for space with search, filters, and the graph itself. Instead of restyling the clutter, I removed anything that didn't map directly to find → understand → navigate → orient → focus, cutting the toolbar from 8+ controls to the 7 that earn their place, and narrowing search by roughly 20% so it reads as a fast path rather than a dominant element. <strong>The fix wasn't fitting the controls in more neatly — it was deciding which ones didn't belong there at all.</strong></p>
+        </div>
+      </div>
+
+      <div class="cs-full-only">
+        <h3 class="cs-subh">What the legacy approach made users do</h3>
+        <div class="cs-text">
+          <p>The original graph toolbar carried a View dropdown, Previous and Next buttons, and an Export action — all competing for the same visual space as the graph itself, alongside search, filters, and the graph controls that actually mattered for navigation. A user opening the graph to answer "what does this service depend on?" had to visually filter out four controls that had nothing to do with that question before they could even start.</p>
+        </div>
+
+        <h3 class="cs-subh">The obvious fix, considered and rejected</h3>
+        <div class="cs-text">
+          <p>The easy move here would have been a visual refresh — restyle the same toolbar, tighten the spacing, call it done. That was set aside quickly: the problem wasn't that the controls looked cluttered, it was that they <em>were</em> cluttered with the wrong things. Restyling doesn't fix a control competing for space it hasn't earned.</p>
+        </div>
+
+        <h3 class="cs-subh">The reframe</h3>
+        <div class="cs-text">
+          <p>The real question wasn't "how do we fit these controls in more neatly" — it was <strong>"does this control directly help the user understand or navigate the dependency graph?"</strong> Anything that didn't clear that bar came out entirely, rather than being made smaller.</p>
+        </div>
+
+        <h3 class="cs-subh">The result</h3>
+        <div class="cs-text">
+          <p>View dropdown, Previous, Next, and Export were removed outright. What remained — total service count, search, zoom, fit, reset, filters, and the graph itself — earned its place because each one maps directly to a step in the actual user task (find → understand → navigate → orient → focus). Search was kept but narrowed by roughly 20%, sized as a fast path to a specific service rather than a dominant toolbar element. Filters were rebuilt as compact, canvas-anchored elements instead of a toolbar row, so the graph — not the chrome around it — stays the dominant visual element.</p>
+        </div>
+
+        <figure class="cs-figure">
+          <div class="cs-figure-frame">Screenshot: legacy toolbar vs. simplified toolbar</div>
+          <figcaption>The legacy toolbar (View dropdown, Prev/Next, Export competing with search and filters) compared against the simplified version — 7 controls, each mapped to a step in the actual task.</figcaption>
+        </figure>
+
+        <div class="cs-lesson">
+          <p>Removing a control outright is a stronger move than restyling it. <strong>The question isn't how to fit everything in more neatly — it's what hasn't earned its place at all.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 04 — MOVE 2: CONTEXTUAL NAVIGATION ============ -->
+    <section class="cs-panel cs-section" data-panel="true">
+      <div class="cs-tag">
+        <span class="cs-tag-bar" aria-hidden="true"></span>
+        <span class="cs-tag-num">04</span>
+        <span>Contextual Navigation</span>
+      </div>
+      <h2>When does a nav aid earn its space?</h2>
+
+      <div class="cs-short-only">
+        <div class="cs-text">
+          <p>Navigation aids didn't track user context — a directional pad sat on screen regardless of zoom level, and no minimap existed at any zoom level. Instead of making both permanent, I made them conditional: the directional pad appears once the user is zoomed in, and the minimap only above 150% zoom <em>and</em> 50+ nodes — the two conditions under which someone is actually likely to lose spatial context. <strong>The question wasn't whether a nav aid should exist, but when it earns the screen space it takes.</strong></p>
+        </div>
+      </div>
+
+      <div class="cs-full-only">
+        <h3 class="cs-subh">What the legacy approach made users do</h3>
+        <div class="cs-text">
+          <p>In the current build, navigation aids don't yet track the user's actual context. A directional control sits on screen at all times regardless of zoom level, and there's no minimap at any zoom level — so on a small graph the interface still carries navigation weight it doesn't need, while on a large, deeply-zoomed graph, there's nothing to answer "where am I relative to the rest of the system?"</p>
+        </div>
+
+        <h3 class="cs-subh">The obvious fix, considered and rejected</h3>
+        <div class="cs-text">
+          <p>The default pattern most graph tools reach for is a permanent minimap, always in the corner. That was ruled out — for a graph that's frequently small or simple, a permanent minimap is a second navigation layer the user doesn't need yet, and it takes up canvas space that could go to the graph itself.</p>
+        </div>
+
+        <h3 class="cs-subh">The reframe</h3>
+        <div class="cs-text">
+          <p>The guiding question became <strong>"when does a navigation aid actually justify the screen space it takes?"</strong> — not "should this feature exist," but "when should it appear." That produced two explicit, testable conditions instead of an always-on/never-on binary: the 4-key directional pad appears only once the user is sufficiently zoomed in, positioned just above the bottom toolbar with Down directly under Up so it reads as a deliberate controller, not a scattered set of arrows. The minimap appears only when zoom exceeds 150% <em>and</em> the graph has more than 50 nodes — the two conditions under which a user is genuinely likely to lose spatial context.</p>
+        </div>
+
+        <h3 class="cs-subh">The result</h3>
+        <div class="cs-text">
+          <p>Both aids go from either permanently present or entirely absent to conditionally available exactly when the graph's complexity justifies them — small and simple graphs stay clean, while large, zoomed-in graphs get the orientation support they need without that support existing as visual noise the rest of the time.</p>
+        </div>
+
+        <figure class="cs-figure">
+          <div class="cs-figure-frame">Screenshot: directional pad + minimap appearing at threshold</div>
+          <figcaption>The directional pad and minimap, appearing once zoom and node-count cross their respective thresholds — orientation support exactly when the graph's complexity justifies it.</figcaption>
+        </figure>
+
+        <div class="cs-lesson">
+          <p>Conditional UI needs an explicit, testable threshold — not a vague "show it when it's needed." <strong>A fuzzy rule is unbuildable and unreviewable; zoom &gt;150% and &gt;50 nodes is neither.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 05 — MOVE 3: FULLSCREEN AS AN EXPLORATION MODE ============ -->
+    <section class="cs-panel cs-section" data-panel="true">
+      <div class="cs-tag">
+        <span class="cs-tag-bar" aria-hidden="true"></span>
+        <span class="cs-tag-num">05</span>
+        <span>Fullscreen as an Exploration Mode</span>
+      </div>
+      <h2>An exploration mode, not a magnification setting.</h2>
+
+      <div class="cs-short-only">
+        <div class="cs-text">
+          <p>The graph was bound by the surrounding page, so real exploration — following a long dependency chain, comparing spread-out clusters — meant working in a canvas smaller than the problem it represented. Simply enlarging the canvas wasn't enough without carrying navigation controls and a clear exit path into it, so fullscreen became a deliberate escalation path: Normal → Graph section → Fullscreen, with the same bottom navigation, fit, and reset controls as the standard view. <strong>Fullscreen needed to be an exploration mode, not just a magnification setting.</strong></p>
+        </div>
+      </div>
+
+      <div class="cs-full-only">
+        <h3 class="cs-subh">What the legacy approach made users do</h3>
+        <div class="cs-text">
+          <p>The graph was bound by the surrounding webpage. Any real exploration — following a long dependency chain, comparing spread-out clusters — meant working inside a canvas that was smaller than the problem it was trying to represent, with no way to reclaim more space.</p>
+        </div>
+
+        <h3 class="cs-subh">The obvious fix, considered and rejected</h3>
+        <div class="cs-text">
+          <p>The straightforward version of "give it more room" is simply making the graph bigger — expand the card, shrink the surrounding page. That alone wasn't enough: making the canvas bigger without carrying navigation controls (fit, reset, zoom) and a clear exit path into that bigger view just relocates the original problem into a larger box.</p>
+        </div>
+
+        <h3 class="cs-subh">The reframe</h3>
+        <div class="cs-text">
+          <p>The distinction that mattered was <strong>fullscreen as an exploration mode, not a magnification setting.</strong> Going fullscreen needed to preserve every navigation aid the user relies on in the normal view — bottom navigation, fit, reset — and needed an unambiguous way back out, rather than trapping the user in an enlarged canvas with no clear exit.</p>
+        </div>
+
+        <h3 class="cs-subh">The result</h3>
+        <div class="cs-text">
+          <p>The graph now supports Normal webpage → Graph section → Fullscreen graph as a deliberate escalation path. The Insights dashboard context stays intact until the user chooses to leave it, and fullscreen carries the same bottom navigation and recovery controls (fit/reset) as the standard view, with an explicit way to exit back to the dashboard.</p>
+        </div>
+
+        <figure class="cs-figure">
+          <div class="cs-figure-frame">Screenshot: graph section → fullscreen transition</div>
+          <figcaption>The escalation path from dashboard card to fullscreen — every navigation control carried through, with an explicit way back out.</figcaption>
+        </figure>
+
+        <div class="cs-lesson">
+          <p>More screen space only helps if the controls and the exit path travel with it. <strong>A bigger canvas that strands the user is the same problem in a larger box.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 06 — WHAT THE CURRENT BUILD STILL GETS WRONG ============ -->
+    <section class="cs-panel cs-section" data-panel="true">
+      <div class="cs-tag">
+        <span class="cs-tag-bar" aria-hidden="true"></span>
+        <span class="cs-tag-num">06</span>
+        <span>Open Gaps</span>
+      </div>
+      <h2>Naming the gaps honestly.</h2>
+      <div class="cs-text">
+        <p>Reviewing the live graph against these decisions surfaced gaps worth naming honestly, since this design has been handed to testing rather than treated as finished:</p>
+        <ul>
+          <li>Several service nodes (in the current data set: <code>inventory-sync-service</code>, <code>catalog-service</code>, <code>customer-service</code>, and others) render with <strong>no visible edges at all</strong>, with nothing in the UI explaining whether that's a real absence of dependencies or a data-loading gap — a meaningful trust issue in a graph whose entire purpose is showing relationships.</li>
+          <li>The directional pad currently renders before any zoom interaction happens, which doesn't yet match the "appears only when zoomed in" rule it was designed around — worth confirming whether this is a build gap or an intentional simplification for the test build.</li>
+          <li>There's no visible zoom-level indicator, and no breadcrumb showing which repo/contract path is currently in scope — both of which matter for a user trying to confirm they're looking at the right dataset.</li>
+        </ul>
+      </div>
+      <div class="cs-lesson">
+        <p>Flagging these here rather than glossing over them is part of what this design is being tested for.</p>
+      </div>
+    </section>
+
+    <!-- ============ 07 — TEAM DYNAMICS ============ -->
+    <section class="cs-panel cs-section" data-panel="true">
+      <div class="cs-tag">
+        <span class="cs-tag-bar" aria-hidden="true"></span>
+        <span class="cs-tag-num">07</span>
+        <span>Team Dynamics</span>
+      </div>
+      <h2>Left open, on purpose.</h2>
+      <div class="cs-text">
+        <p><em>This section is intentionally left open. The real friction moment — a disagreement, a decision that got walked back, or a constraint worked within — belongs here once it's written up, rather than being filled with something invented.</em></p>
+      </div>
+    </section>
+
+    <!-- ============ 08 — CONCLUSION ============ -->
+    <section class="cs-panel cs-section" data-panel="true">
+      <div class="cs-tag">
+        <span class="cs-tag-bar" aria-hidden="true"></span>
+        <span class="cs-tag-num">08</span>
+        <span>Conclusion</span>
+      </div>
+      <h2>Craft lessons, and one deeper one.</h2>
+      <div class="cs-text">
+        <p><strong>Craft lessons</strong></p>
+        <ul>
+          <li>Removing a control outright is a stronger move than restyling it — the toolbar simplification only worked because it started from "does this help the core task," not "how do we fit this in more neatly."</li>
+          <li>Conditional UI needs an explicit, testable threshold (zoom &gt;150% and &gt;50 nodes), not a vague "show it when it's needed" — a fuzzy rule is unbuildable and unreviewable.</li>
+          <li>A graph's canvas efficiency matters as much as its controls — a beautifully simplified toolbar still fails the user if the graph underneath doesn't use its own space well, which is exactly what testing needs to catch here.</li>
+        </ul>
+      </div>
+      <div class="cs-lesson">
+        <p><strong>One deeper lesson.</strong> Progressive disclosure is easy to state as a principle and easy to violate by accident — the directional pad rendering before any zoom happened is a reminder that a design principle only holds if it's checked against the actual build, not just the intended interaction model.</p>
+      </div>
+    </section>
+
+    <!-- ============ EXTRAS ============ -->
+    <section class="cs-panel cs-section" data-panel="true">
+      <div class="cs-tag">
+        <span class="cs-tag-bar" aria-hidden="true"></span>
+        <span class="cs-tag-num">—</span>
+        <span>Extras</span>
+      </div>
+      <h2>A few things worth naming.</h2>
+      <div class="cs-text">
+        <ul>
+          <li><strong>Competitive research as a design input, not inspiration mining.</strong> Reviewed Cortex, OpsLevel, Port, Backstage, Datadog, Kiali, LeanIX, Ardoq, Structurizr, and others specifically for navigation patterns, ownership display, and scalability approaches — not for visual style.</li>
+          <li><strong>Contract-intelligence opportunities identified but not yet built.</strong> Provider vs. consumer distinction, contract health status, and breaking-change impact surfaced as clear next-step opportunities during competitive research, scoped out of this first pass to keep the week focused on navigation and structure.</li>
+          <li><strong>A reusable progressive-disclosure pattern.</strong> The threshold-based approach to the minimap and directional pad (show only above a defined complexity threshold) is a pattern that could generalize to other dense-data views in Insights beyond this graph.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ OTHER PROJECTS + FOOTER ============
+    <div class="cs-pageend">
+      <div class="cs-other-projects">
+        <h2 class="cs-other-heading" style="font-family: var(--cs-serif); font-weight: 400; font-size: clamp(1.75rem, 4vw, 2.5rem); color: var(--cs-ink); text-transform: none; letter-spacing: -0.015em;">Keep reading.</h2>
+        <div class="cs-other-grid">
+          Hidden until a second real case study exists to link to.
+        </div>
+      </div>
+    </div>
+    ============ -->
+
+  </main>
+</div>
+
+<!-- ============ FOOTER — matches the portfolio landing page ============ -->
+<footer class="site-footer cs-site-footer">
+  <div class="footer-main">
+    <canvas class="pool-canvas" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <div class="footer-bottom">
+        <span>© 2026 Muskan Jain</span>
+        <div class="footer-bottom-contact">
+          <a href="mailto:hello@muskanjain.studio">hello@muskanjain.studio</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---------- Panel lift ----------
+  // A panel isn't revealed once and left alone — it re-checks its own
+  // position against the viewport on every scroll tick, so it lifts as it
+  // passes through the upper two-thirds of the screen and settles back flush
+  // once it's scrolled on past. Other-project cards use the same idea, keyed
+  // off their vertical center instead of their top/bottom edges. Both run
+  // off one shared scroll/resize handler, called once immediately so the
+  // page is already correct before the first scroll event fires.
+  (function () {
+    const panels = document.querySelectorAll('.cs-panel');
+    const otherCards = document.querySelectorAll('.cs-other-card');
+    if (!panels.length && !otherCards.length) return;
+
+    let ticking = false;
+
+    function apply() {
+      const vh = window.innerHeight;
+
+      panels.forEach((panel) => {
+        const rect = panel.getBoundingClientRect();
+        const inBand = rect.top < vh * 0.45 && rect.bottom > vh * 0.05;
+        panel.classList.toggle('is-lifted', inBand);
+      });
+
+      otherCards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const center = rect.top + rect.height / 2;
+        card.classList.toggle('is-lifted', center > 0 && center < vh);
+      });
+
+      ticking = false;
+    }
+
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(apply);
+    }
+
+    apply();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+  })();
+
+  // ---------- Sticky top nav: gains a hairline once the page has scrolled,
+  // and loses it again if you scroll back to the very top. ----------
+  (function () {
+    const nav = document.getElementById('topnav');
+    if (!nav) return;
+    function update() { nav.classList.toggle('is-scrolled', window.scrollY > 8); }
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+  })();
+
+  // ---------- Reading-mode toggle: Short Read / Story Mode slide together;
+  // AI Summary is a separate, de-emphasized third mode. ----------
+  (function () {
+    const track = document.getElementById('modeTrack');
+    const aiBtn = document.querySelector('.cs-hero-toggle-ai');
+    if (!track || !aiBtn) return;
+    const pillBtns = track.querySelectorAll('.cs-hero-toggle-btn');
+
+    function setMode(mode) {
+      document.body.dataset.readMode = mode;
+      if (mode === 'short' || mode === 'story') {
+        track.dataset.active = mode;
+        pillBtns.forEach((b) => b.classList.toggle('is-active', b.dataset.mode === mode));
+        aiBtn.classList.remove('is-active');
+      } else {
+        aiBtn.classList.add('is-active');
+      }
+    }
+
+    pillBtns.forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
+    aiBtn.addEventListener('click', () => setMode('ai'));
+  })();
+
+  // ---------- Footer ripple canvas (same effect as the portfolio landing page) ----------
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function initPoolCanvas(canvas) {
+    const ctx = canvas.getContext('2d');
+    const host = canvas.parentElement;
+    let w, h, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let mouse = { x: -9999, y: -9999 };
+
+    function resize() {
+      w = canvas.clientWidth; h = canvas.clientHeight;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    host.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top;
+    });
+    host.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+    const gap = 22;
+    let t = 0;
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (let y = gap / 2; y < h; y += gap) {
+        for (let x = gap / 2; x < w; x += gap) {
+          const dx = x - mouse.x, dy = y - mouse.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const influence = Math.max(0, 1 - dist / 220);
+          const r = 1.2 + influence * 3.2 + Math.sin(t + x * 0.02 + y * 0.02) * 0.3;
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(217,86,60,${0.15 + influence * 0.5})`;
+          ctx.arc(x, y, r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      if (!reduceMotion) { t += 0.02; requestAnimationFrame(draw); }
+    }
+    draw();
+  }
+  document.querySelectorAll('.pool-canvas').forEach(initPoolCanvas);
+</script>
+
+</body>
+</html>
