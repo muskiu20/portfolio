@@ -967,6 +967,38 @@ section + section { border-top: 1px solid var(--line); }
   font-family: var(--cs-sans); font-size: 0.78rem; color: var(--cs-ink-faint); line-height: 1.5;
 }
 
+/* Clickable variant of .cs-figure-frame that links out to a live prototype
+   (e.g. Preview section's Figma embed — Figma blocks actual iframe embedding
+   on external sites, so this opens the prototype in a new tab instead). */
+.cs-figure-frame.cs-figure-link {
+  aspect-ratio: 16 / 10;
+  flex-direction: column;
+  gap: 14px;
+  color: var(--cs-ink-dim);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+.cs-figure-frame.cs-figure-link:hover,
+.cs-figure-frame.cs-figure-link:focus-visible {
+  background: var(--cs-paper);
+  border-color: var(--cs-ink-faint);
+  color: var(--cs-ink);
+}
+.cs-figure-link-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px;
+  border: 1px solid var(--cs-rule); border-radius: 50%;
+  transition: border-color 0.15s ease;
+}
+.cs-figure-frame.cs-figure-link:hover .cs-figure-link-icon,
+.cs-figure-frame.cs-figure-link:focus-visible .cs-figure-link-icon {
+  border-color: currentColor;
+}
+.cs-figure-link-text {
+  font-family: var(--cs-sans); font-size: 0.85rem; letter-spacing: 0.01em;
+}
+
 /* Reflective "lesson" line that closes a section */
 .cs-lesson { margin-top: 2.5rem; padding-top: 1.75rem; border-top: 1px solid var(--cs-rule); }
 .cs-lesson p {
