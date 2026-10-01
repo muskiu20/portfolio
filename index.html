@@ -208,13 +208,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Marquee sits last, at the very end of the page. -->
-  <div class="marquee-strip" aria-hidden="true">
-    <div class="marquee-track" id="marqueeTrack">
-      <!-- Content duplicated via JS for seamless loop; edit the base array below in the script -->
-    </div>
-  </div>
 </footer>
 
 <script>
@@ -263,17 +256,6 @@
   }
   updateClock();
   setInterval(updateClock, 15000);
-
-  // ---------- Marquee ----------
-  // REPLACE this array with your own tags/skills/typefaces/whatever fits your thesis
-  const marqueeItems = [
-    'Type systems', 'Design engineering', 'Motion', 'Accessibility', 'Prototyping', 'Design systems'
-  ];
-  const track = document.getElementById('marqueeTrack');
-  if (track) {
-    const build = () => marqueeItems.map(t => `<span>${t}</span>`).join('');
-    track.innerHTML = build() + build(); // duplicated once for seamless loop
-  }
 
   // ---------- Graphics: takes grid + fullscreen viewer ----------
   (function () {

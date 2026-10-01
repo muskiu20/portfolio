@@ -290,36 +290,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 #top .hero-fade.is-visible { opacity: 1; transform: translateY(0); }
 
-/* ---------- Marquee ---------- */
-.marquee-strip {
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  overflow: hidden;
-  white-space: nowrap;
-  padding: 1.1rem 0;
-  background: var(--paper);
-}
-.marquee-track {
-  display: inline-flex;
-  animation: marquee 28s linear infinite;
-}
-.marquee-track span {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 400;
-  font-size: clamp(1.15rem, 2.5vw, 1.7rem);
-  letter-spacing: -0.01em;
-  padding: 0 2.25rem;
-  color: var(--ink);
-  transition: color 0.25s var(--ease);
-}
-.marquee-track span:hover { color: var(--accent-soft); }
-.marquee-track span::after { content: "—"; margin-left: 2.25rem; color: var(--accent); font-style: normal; }
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
 /* ---------- Section shell ---------- */
 section { padding: var(--section-gap) 0; background: var(--paper); color: var(--ink); transition: background 0.4s var(--ease), color 0.4s var(--ease); }
 section + section { border-top: 1px solid var(--line); }
@@ -655,9 +625,8 @@ section + section { border-top: 1px solid var(--line); }
 .site-footer {
   border-top: 1px solid var(--line);
 }
-/* Everything but the marquee lives in here, so the pool canvas (absolutely
-   positioned, anchored to this wrapper's own bottom) stays confined to the
-   links/contact block and never bleeds into the marquee sitting after it. */
+/* Pool canvas is absolutely positioned, anchored to this wrapper's own
+   bottom, so it stays confined to the links/contact block. */
 .footer-main {
   position: relative; overflow: hidden;
   padding: 0 0 2rem;
@@ -669,9 +638,9 @@ section + section { border-top: 1px solid var(--line); }
   z-index: 0; opacity: 0.85;
   pointer-events: none;
 }
-/* Case-study footer is much shorter (no marquee/links/big email line below
-   it), so the ripple should cover its full height, not just the bottom 60%
-   tuned for the taller landing-page footer. */
+/* Case-study footer is much shorter (no links/big email line below it), so
+   the ripple should cover its full height, not just the bottom 60% tuned
+   for the taller landing-page footer. */
 .cs-site-footer .pool-canvas { top: 0; bottom: auto; height: 100%; }
 
 .footer-links { display: flex; flex-wrap: wrap; gap: 1.5rem 2.5rem; margin-bottom: 2.5rem; }
