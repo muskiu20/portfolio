@@ -584,19 +584,77 @@ section + section { border-top: 1px solid var(--line); }
 /* ---------- Testimonials ---------- */
 .testimonial-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: clamp(1.5rem, 3vw, 2.5rem);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: clamp(1.25rem, 3vw, 2rem);
 }
-.testimonial { border-left: 2px solid var(--accent); padding-left: 1.25rem; }
-.testimonial p.quote {
-  font-family: var(--font-serif); font-weight: 400;
-  font-size: 1.4rem; font-style: italic; line-height: 1.35; margin: 0 0 1rem;
-  color: var(--ink);
+
+.testimonial-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  border-radius: 20px;
+  border: 1.5px solid var(--accent);
+  background: rgba(234, 232, 225, 0.06); /* grey — a faint wash of --ink over --paper */
+  overflow: hidden;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  padding: 0;
+  text-align: left;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: background 0.35s var(--ease), border-color 0.35s var(--ease);
 }
-.testimonial .who {
+.testimonial-card:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 3px; }
+
+/* Normal state — illustrated avatar standing in for a real photo */
+.testimonial-media { position: absolute; inset: 0; transition: opacity 0.3s var(--ease); }
+.testimonial-avatar { width: 100%; height: 100%; display: block; }
+.testimonial-avatar .avatar-head,
+.testimonial-avatar .avatar-shoulders { fill: var(--ink-soft); opacity: 0.5; }
+
+/* Hover state — dot face-map fades in and drifts toward the row's centre */
+.testimonial-facemap {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  opacity: 0;
+  transition: opacity 0.35s var(--ease), transform 0.5s var(--ease);
+}
+.testimonial-facemap circle { fill: var(--accent-soft); }
+.testimonial-card:hover .testimonial-facemap,
+.testimonial-card:focus-visible .testimonial-facemap { opacity: 1; }
+.testimonial-card[data-face="right"]:hover .testimonial-facemap,
+.testimonial-card[data-face="right"]:focus-visible .testimonial-facemap { transform: translateX(6%); }
+.testimonial-card[data-face="left"]:hover .testimonial-facemap,
+.testimonial-card[data-face="left"]:focus-visible .testimonial-facemap { transform: translateX(-6%); }
+.testimonial-card[data-face="center"]:hover .testimonial-facemap,
+.testimonial-card[data-face="center"]:focus-visible .testimonial-facemap { transform: translateX(0); }
+
+/* Click state — card flips to an off-white panel with the quote */
+.testimonial-reveal {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease);
+}
+.testimonial-quote {
+  font-family: var(--font-serif); font-weight: 400; font-style: italic;
+  font-size: 1.05rem; line-height: 1.4;
+  color: var(--ink-on-sheet);
+  margin-bottom: 1rem;
+}
+.testimonial-byline {
   font-family: var(--font-label); font-size: 0.78rem;
-  text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--muted-on-sheet);
 }
+.testimonial-byline strong { color: var(--ink-on-sheet); font-weight: 600; }
+
+.testimonial-card.is-active { background: var(--sheet); border-color: var(--sheet); }
+.testimonial-card.is-active .testimonial-media { opacity: 0; }
+.testimonial-card.is-active .testimonial-reveal { opacity: 1; pointer-events: auto; }
 
 /* ---------- Process (numbered rows intensify like a proof sheet) ---------- */
 .process-list { counter-reset: step; border-top: 1px solid var(--accent); }
