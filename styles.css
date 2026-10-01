@@ -581,21 +581,26 @@ section + section { border-top: 1px solid var(--line); }
   .lightbox { flex-direction: column; padding: 1.5rem 1rem; overflow-y: auto; }
 }
 
-/* ---------- Testimonials ---------- */
+/* ---------- Testimonials ----------
+   Cards fan out like a hand of stacked cards (ref: truus.co "call us if you
+   need" row) — overlapping, alternating tilt, lifting to front on interaction. */
 .testimonial-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: clamp(1.25rem, 3vw, 2rem);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 1.5rem 0 1rem;
 }
 
 .testimonial-card {
   position: relative;
   display: block;
-  width: 100%;
+  width: 240px;
   aspect-ratio: 3 / 4;
+  margin-left: -3rem;
   border-radius: 20px;
   border: 1.5px solid var(--accent);
   background: rgba(234, 232, 225, 0.06); /* grey — a faint wash of --ink over --paper */
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
   overflow: hidden;
   cursor: pointer;
   font: inherit;
@@ -604,9 +609,26 @@ section + section { border-top: 1px solid var(--line); }
   text-align: left;
   -webkit-appearance: none;
   appearance: none;
-  transition: background 0.35s var(--ease), border-color 0.35s var(--ease);
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform 0.35s var(--ease), background 0.35s var(--ease), border-color 0.35s var(--ease);
+}
+.testimonial-card:first-child { margin-left: 0; }
+.testimonial-card:nth-child(1) { --tilt: -4deg; z-index: 1; }
+.testimonial-card:nth-child(2) { --tilt: 0deg; z-index: 2; }
+.testimonial-card:nth-child(3) { --tilt: 4deg; z-index: 3; }
+.testimonial-card:hover,
+.testimonial-card:focus-visible,
+.testimonial-card.is-active {
+  transform: rotate(0deg) translateY(-14px);
+  z-index: 10;
 }
 .testimonial-card:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 3px; }
+
+@media (max-width: 640px) {
+  .testimonial-grid { flex-direction: column; align-items: center; }
+  .testimonial-card { margin-left: 0; margin-top: -2rem; --tilt: 0deg; }
+  .testimonial-card:first-child { margin-top: 0; }
+}
 
 /* Normal state — illustrated avatar standing in for a real photo */
 .testimonial-media { position: absolute; inset: 0; transition: opacity 0.3s var(--ease); }
@@ -614,13 +636,15 @@ section + section { border-top: 1px solid var(--line); }
 .testimonial-avatar .avatar-head,
 .testimonial-avatar .avatar-shoulders { fill: var(--ink-soft); opacity: 0.5; }
 
-/* Hover state — dot face-map fades in and drifts toward the row's centre */
+/* Hover state — the same halftone dot screen used on the graphics tiles
+   (.takes-dots) fades in over the face and drifts toward the row's centre. */
 .testimonial-facemap {
   position: absolute; inset: 0; width: 100%; height: 100%;
+  background-image: radial-gradient(var(--accent-soft) 30%, transparent 32%);
+  background-size: 3px 3px;
   opacity: 0;
   transition: opacity 0.35s var(--ease), transform 0.5s var(--ease);
 }
-.testimonial-facemap circle { fill: var(--accent-soft); }
 .testimonial-card:hover .testimonial-facemap,
 .testimonial-card:focus-visible .testimonial-facemap { opacity: 1; }
 .testimonial-card[data-face="right"]:hover .testimonial-facemap,
