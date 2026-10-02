@@ -313,10 +313,16 @@ section + section { border-top: 1px solid var(--line); }
   font-size: clamp(2rem, 4.5vw, 3.75rem);
   letter-spacing: -0.01em;
   margin: 0.35rem 0 0;
-  max-width: 20ch;
+  max-width: 34ch;
+  white-space: nowrap;
   color: var(--ink);
 }
-.section-head p { color: var(--muted); max-width: 38ch; margin: 0; }
+.section-head p { color: var(--muted); max-width: 46ch; margin: 0; }
+@media (max-width: 640px) {
+  /* Single-line heading is a desktop nicety — let it wrap naturally once
+     the column is too narrow to fit it, rather than overflowing. */
+  .section-head h2 { white-space: normal; max-width: none; }
+}
 
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
