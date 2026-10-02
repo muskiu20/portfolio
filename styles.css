@@ -613,7 +613,7 @@ section + section { border-top: 1px solid var(--line); }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(2rem, 5vw, 4.5rem);
+  padding: 56px clamp(2rem, 5vw, 4.5rem);
 }
 .testimonial-quote-icon {
   font-family: var(--font-serif);
@@ -624,7 +624,7 @@ section + section { border-top: 1px solid var(--line); }
 }
 .testimonial-quote {
   font-family: var(--font-serif); font-weight: 400; font-style: italic;
-  font-size: clamp(0.91rem, 1.6vw, 1.3rem); line-height: 1.4; /* 30% smaller than before */
+  font-size: clamp(1rem, 1.76vw, 1.43rem); line-height: 1.4; /* 30% smaller, then +10% */
   color: var(--ink);
   margin: 0 0 1.75rem;
 }
@@ -652,6 +652,10 @@ section + section { border-top: 1px solid var(--line); }
   -webkit-mask-position: center;
   mask-position: center;
 }
+/* RJ 1.png's canvas is much taller/narrower than PG's and SK's, so under
+   mask-size:contain it fits width-first and reads noticeably smaller —
+   scale it up to match the others' visual weight. */
+.testimonial-slide:nth-child(2) .testimonial-photo { transform: scale(1.25); }
 
 @media (max-width: 760px) {
   .testimonial-carousel { min-height: 620px; }
