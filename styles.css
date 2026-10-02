@@ -191,6 +191,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
    same near-black tone, so the hairline that normally separates adjacent
    sections would just read as a stray line rather than a real boundary. */
 .hero + section { border-top: none; }
+#graphics + #testimonials { border-top: none; }
 .hero::after {
   content: "";
   position: absolute; inset: 0;
@@ -498,7 +499,6 @@ section + section { border-top: 1px solid var(--line); }
 /* ---------- AI Experiments: project list ----------
    Simple row list — heading on the left, diagonal arrow on the right.
    Placeholder rows until real experiments are written up. */
-.ai-list { border-top: 1px solid var(--line); }
 .ai-list-row {
   display: flex; flex-direction: column; gap: 1rem;
   padding: 1.5rem 0;
@@ -512,8 +512,8 @@ section + section { border-top: 1px solid var(--line); }
   gap: 1.5rem;
 }
 .ai-list-title {
-  font-family: var(--font-serif); font-weight: 400; font-size: clamp(1.3rem, 2.8vw, 1.85rem);
-  color: var(--muted);
+  font-family: var(--font-serif); font-weight: 400; font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+  color: var(--ink);
   transition: color 0.25s var(--ease);
 }
 .ai-list-row:hover .ai-list-title { color: var(--ink); }
@@ -530,11 +530,11 @@ section + section { border-top: 1px solid var(--line); }
 }
 .ai-list-chips { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 .ai-list-chip {
-  font-family: var(--font-label); font-size: 0.72rem;
+  font-family: var(--font-label); font-size: 0.62rem;
   text-transform: uppercase; letter-spacing: 0.05em;
-  padding: 0.4rem 0.9rem;
-  border: 1px solid var(--line); border-radius: 999px;
-  color: var(--muted);
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--accent); border-radius: 999px;
+  color: var(--ink);
 }
 
 /* ---------- Graphics Gallery: "takes" grid ----------
@@ -779,7 +779,7 @@ section + section { border-top: 1px solid var(--line); }
 .footer-main {
   position: relative; overflow: hidden;
   min-height: 80vh; min-height: 80dvh; /* 66.67vh + 20% */
-  display: flex; align-items: center;
+  display: flex; align-items: flex-start; /* content sits at the top, under the existing top padding */
   padding: clamp(2.5rem, 6vw, 4rem) 0 2rem;
   /* .theme-sheet only redefines the --paper/--ink custom properties — the
      generic `section { background; color; }` rule is what normally reads
@@ -803,7 +803,7 @@ section + section { border-top: 1px solid var(--line); }
   padding: 0.6rem 1.3rem; /* reduced from 0.95rem 1.6rem */
   border: 1px solid var(--line);
   border-radius: 32px;
-  font-family: var(--font-label); font-size: 1.05rem; /* increased from 0.88rem */
+  font-family: var(--font-label); font-size: 1.05rem; font-weight: 700;
   color: var(--ink);
   transition: border-color 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease);
 }
@@ -834,9 +834,16 @@ section + section { border-top: 1px solid var(--line); }
 .footer-links a:hover { border-color: var(--accent-soft); color: var(--accent-soft); transform: translateX(3px); }
 
 .footer-bottom {
+  /* Pinned to the footer's own box (not the in-flow content above), sitting
+     right where the pool-canvas dot band starts — not a fixed-offset guess. */
+  position: absolute;
+  left: 0; right: 0; bottom: 22%;
+  z-index: 2;
+  max-width: 1400px; margin: 0 auto;
+  padding-left: var(--gutter); padding-right: var(--gutter);
+  box-sizing: border-box;
   display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
   font-family: var(--font-label); font-size: 1rem; color: var(--muted);
-  margin-top: 100px; /* generous negative space from the heading/buttons above */
 }
 .footer-bottom a { color: var(--muted); transition: color 0.25s var(--ease); }
 .footer-bottom a:hover { color: var(--accent-soft); }
