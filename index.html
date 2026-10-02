@@ -107,11 +107,12 @@
   </section>
 
   <!-- ============ TESTIMONIALS ============
-       Cards are placeholders — illustrated avatars + sample quote text, not
-       real people — wired up and ready to swap for real testimonials:
-       normal = grey card, accent border; hover = dot face-map fades in and
-       drifts toward the row's centre; click = card flips to an off-white
-       panel showing the quote. ============ -->
+       One row: 3 interactive grey cards (photo fills bottom 3/4, top left as
+       negative space) with 2 plain accent cards sitting behind them between.
+       Grey cards: hover = dot halftone glows over the photo and the card's
+       outline lights up; click = flips to an off-white panel with the quote
+       (sample placeholder text — not real people yet). Accent cards have no
+       hover state at all. ============ -->
   <section id="testimonials">
     <div class="wrap">
       <div class="section-head reveal">
@@ -122,13 +123,10 @@
       </div>
 
       <div class="testimonial-grid reveal">
-        <button class="testimonial-card" type="button" data-face="right" aria-expanded="false" aria-label="Read testimonial — placeholder, Role at Company">
+        <button class="testimonial-card" type="button" aria-expanded="false" aria-label="Read testimonial — placeholder, Role at Company">
           <span class="testimonial-media">
-            <svg class="testimonial-avatar" viewBox="0 0 100 120" aria-hidden="true">
-              <ellipse class="avatar-head" cx="48" cy="44" rx="25" ry="29" />
-              <path class="avatar-shoulders" d="M12 120c0-23 16-37 36-37s36 14 36 37z" />
-            </svg>
-            <span class="testimonial-facemap" style="clip-path: ellipse(25% 24% at 48% 37%);" aria-hidden="true"></span>
+            <img class="testimonial-photo" src="Images/PG.png" alt="" />
+            <span class="testimonial-facemap" aria-hidden="true"></span>
           </span>
           <span class="testimonial-reveal">
             <span class="testimonial-quote">Swap this for a real quote whenever one's ready — the card is already wired up.</span>
@@ -136,19 +134,12 @@
           </span>
         </button>
 
-        <div class="testimonial-card testimonial-card--accent" aria-hidden="true">
-          <span class="testimonial-media">
-            <span class="testimonial-facemap" aria-hidden="true"></span>
-          </span>
-        </div>
+        <div class="testimonial-card testimonial-card--accent" aria-hidden="true"></div>
 
-        <button class="testimonial-card" type="button" data-face="center" aria-expanded="false" aria-label="Read testimonial — placeholder, Role at Company">
+        <button class="testimonial-card" type="button" aria-expanded="false" aria-label="Read testimonial — placeholder, Role at Company">
           <span class="testimonial-media">
-            <svg class="testimonial-avatar" viewBox="0 0 100 120" aria-hidden="true">
-              <ellipse class="avatar-head" cx="50" cy="46" rx="27" ry="30" />
-              <path class="avatar-shoulders" d="M13 120c0-24 17-38 37-38s37 14 37 38z" />
-            </svg>
-            <span class="testimonial-facemap" style="clip-path: ellipse(27% 25% at 50% 38%);" aria-hidden="true"></span>
+            <img class="testimonial-photo" src="Images/RJ.png" alt="" />
+            <span class="testimonial-facemap" aria-hidden="true"></span>
           </span>
           <span class="testimonial-reveal">
             <span class="testimonial-quote">Same card, same behaviour — just drop real words in here when they arrive.</span>
@@ -156,19 +147,12 @@
           </span>
         </button>
 
-        <div class="testimonial-card testimonial-card--accent" aria-hidden="true">
-          <span class="testimonial-media">
-            <span class="testimonial-facemap" aria-hidden="true"></span>
-          </span>
-        </div>
+        <div class="testimonial-card testimonial-card--accent" aria-hidden="true"></div>
 
-        <button class="testimonial-card" type="button" data-face="left" aria-expanded="false" aria-label="Read testimonial — placeholder, Role at Company">
+        <button class="testimonial-card" type="button" aria-expanded="false" aria-label="Read testimonial — placeholder, Role at Company">
           <span class="testimonial-media">
-            <svg class="testimonial-avatar" viewBox="0 0 100 120" aria-hidden="true">
-              <ellipse class="avatar-head" cx="54" cy="43" rx="26" ry="29" />
-              <path class="avatar-shoulders" d="M18 120c0-23 16-37 36-37s36 14 36 37z" />
-            </svg>
-            <span class="testimonial-facemap" style="clip-path: ellipse(26% 24% at 54% 36%);" aria-hidden="true"></span>
+            <img class="testimonial-photo" src="Images/SK.png" alt="" />
+            <span class="testimonial-facemap" aria-hidden="true"></span>
           </span>
           <span class="testimonial-reveal">
             <span class="testimonial-quote">Click another card and this one closes — only one stays open at a time.</span>

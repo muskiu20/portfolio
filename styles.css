@@ -623,21 +623,24 @@ section + section { border-top: 1px solid var(--line); }
 .testimonial-card:nth-child(3) { --tilt: -3deg; --dy: 6px; z-index: 4; }
 .testimonial-card:nth-child(4) { --tilt: 8deg; --dy: -8px; z-index: 2; }
 .testimonial-card:nth-child(5) { --tilt: -5deg; --dy: 4px; z-index: 3; }
-.testimonial-card:hover,
-.testimonial-card:focus-visible,
+/* Hover/active only applies to the 3 interactive (grey) cards — the accent
+   cards are plain and have no hover state at all. */
+.testimonial-card:not(.testimonial-card--accent):hover,
+.testimonial-card:not(.testimonial-card--accent):focus-visible,
 .testimonial-card.is-active {
   transform: rotate(0deg) translateY(-18px);
   z-index: 10;
+  border-color: var(--accent-soft);
+  box-shadow: 0 0 0 2px var(--accent-soft), 0 20px 44px rgba(0, 0, 0, 0.45);
 }
 .testimonial-card:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 3px; }
 
-/* Accent cards — plain (no avatar), not clickable, hover-only (<div>s) */
+/* Accent cards — plain solid colour, not clickable, no hover state (<div>s) */
 .testimonial-card--accent {
   background: var(--accent);
   border-color: var(--accent-soft);
   cursor: default;
 }
-.testimonial-card--accent .testimonial-facemap { background-image: radial-gradient(var(--ink) 30%, transparent 32%); }
 
 @media (max-width: 640px) {
   .testimonial-grid { flex-direction: column; align-items: center; }
@@ -645,29 +648,27 @@ section + section { border-top: 1px solid var(--line); }
   .testimonial-card:first-child { margin-top: 0; }
 }
 
-/* Normal state — illustrated avatar standing in for a real photo */
-.testimonial-media { position: absolute; inset: 0; transition: opacity 0.3s var(--ease); }
-.testimonial-avatar { width: 100%; height: 100%; display: block; }
-.testimonial-avatar .avatar-head,
-.testimonial-avatar .avatar-shoulders { fill: var(--paper); opacity: 0.4; }
+.testimonial-media { position: absolute; inset: 0; }
+/* Photo fills the bottom 3/4 of the card, leaving the top as negative space */
+.testimonial-photo {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  width: 100%; height: 75%;
+  object-fit: cover;
+  display: block;
+}
 
 /* Hover state — the same halftone dot screen used on the graphics tiles
-   (.takes-dots) fades in over the face and drifts toward the row's centre. */
+   (.takes-dots) fades in over the photo like a light source, and the card's
+   outline (above) brightens as if lit by it. */
 .testimonial-facemap {
   position: absolute; inset: 0; width: 100%; height: 100%;
   background-image: radial-gradient(var(--accent-soft) 30%, transparent 32%);
   background-size: 3px 3px;
   opacity: 0;
-  transition: opacity 0.35s var(--ease), transform 0.5s var(--ease);
+  transition: opacity 0.35s var(--ease);
 }
 .testimonial-card:hover .testimonial-facemap,
 .testimonial-card:focus-visible .testimonial-facemap { opacity: 1; }
-.testimonial-card[data-face="right"]:hover .testimonial-facemap,
-.testimonial-card[data-face="right"]:focus-visible .testimonial-facemap { transform: translateX(6%); }
-.testimonial-card[data-face="left"]:hover .testimonial-facemap,
-.testimonial-card[data-face="left"]:focus-visible .testimonial-facemap { transform: translateX(-6%); }
-.testimonial-card[data-face="center"]:hover .testimonial-facemap,
-.testimonial-card[data-face="center"]:focus-visible .testimonial-facemap { transform: translateX(0); }
 
 /* Click state — card flips to an off-white panel with the quote */
 .testimonial-reveal {
