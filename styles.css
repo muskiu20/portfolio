@@ -600,7 +600,7 @@ section + section { border-top: 1px solid var(--line); }
   margin-left: -4rem;
   border-radius: 20px;
   border: 1.5px solid var(--accent);
-  background: var(--muted); /* opaque — solid portfolio grey, not a translucent wash */
+  background: var(--paper); /* black */
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
   overflow: hidden;
   cursor: pointer;
@@ -649,12 +649,22 @@ section + section { border-top: 1px solid var(--line); }
 }
 
 .testimonial-media { position: absolute; inset: 0; }
-/* Photo fills the bottom 3/4 of the card, leaving the top as negative space */
+/* Illustration fills the bottom 3/4 of the card, leaving the top as negative
+   space. The source PNG is black line art on a transparent background, used
+   here as a mask so the strokes render in the accent colour instead. */
 .testimonial-photo {
   position: absolute; left: 0; right: 0; bottom: 0;
   width: 100%; height: 75%;
-  object-fit: cover;
   display: block;
+  background-color: var(--accent);
+  -webkit-mask-image: var(--photo);
+  mask-image: var(--photo);
+  -webkit-mask-size: cover;
+  mask-size: cover;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center bottom;
+  mask-position: center bottom;
 }
 
 /* Hover state — the same halftone dot screen used on the graphics tiles
