@@ -655,7 +655,7 @@ section + section { border-top: 1px solid var(--line); }
 /* RJ 1.png's canvas is much taller/narrower than PG's and SK's, so under
    mask-size:contain it fits width-first and reads noticeably smaller —
    scale it up to match the others' visual weight. */
-.testimonial-slide:nth-child(2) .testimonial-photo { transform: scale(1.25); }
+.testimonial-slide:nth-child(2) .testimonial-photo { transform: scale(1.0625); }
 
 @media (max-width: 760px) {
   .testimonial-carousel { min-height: 620px; }
