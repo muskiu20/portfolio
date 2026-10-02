@@ -215,7 +215,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .hero .meta-row {
   display: flex; gap: 2.5rem; flex-wrap: wrap;
   font-family: var(--font-label);
-  font-size: 0.78rem; color: #8A877E;
+  font-size: 0.78rem; color: #C9C7BE; /* was #8A877E — too dark/muddy against the red pleat background */
   text-transform: uppercase; letter-spacing: 0.06em;
 }
 
@@ -239,7 +239,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     the header-height measurement script). */
 }
 #top.hero::after { content: none; }
-#top .wrap { margin-top: var(--header-h, 64px); }
+#top .wrap {
+  margin-top: var(--header-h, 64px);
+  /* Anchor to the page's real left edge (just the gutter), rather than
+     sitting inside the generic .wrap's centered 1400px column — on wide
+     screens that column itself sits centered, making the content read as
+     centered even though the text inside it is left-aligned. */
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
 
 /* CSS fallback matching the canvas's base layer exactly — shown briefly
    before the pleat script paints, and as the degraded result if it can't
@@ -290,7 +299,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 #top.hero .meta-row {
   font-family: var(--font-label);
-  color: #8A877E;
+  color: #C9C7BE;
 }
 
 /* Restrained load-in: fade + slide-up, staggered per line via JS class toggle */
@@ -466,6 +475,37 @@ section + section { border-top: 1px solid var(--line); }
   transition: transform 0.25s var(--ease);
 }
 .work-row:hover .arrow { transform: translateX(4px); }
+
+/* ---------- AI Experiments: project list ----------
+   Simple row list — heading on the left, diagonal arrow on the right.
+   Placeholder rows until real experiments are written up. */
+.ai-list { border-top: 1px solid var(--line); }
+.ai-list-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--line);
+  cursor: default;
+  transition: border-color 0.25s var(--ease);
+}
+.ai-list-row:hover { border-color: var(--accent); }
+.ai-list-title {
+  font-family: var(--font-serif); font-weight: 400; font-size: clamp(1.3rem, 2.8vw, 1.85rem);
+  color: var(--muted);
+  transition: color 0.25s var(--ease);
+}
+.ai-list-row:hover .ai-list-title { color: var(--ink); }
+.ai-list-arrow {
+  display: flex; align-items: center; justify-content: center;
+  width: 2.5rem; height: 2.5rem; flex: none;
+  border: 1px solid var(--line); border-radius: 50%;
+  color: var(--muted);
+  transition: border-color 0.25s var(--ease), color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.ai-list-row:hover .ai-list-arrow {
+  border-color: var(--accent); color: var(--accent);
+  transform: translate(2px, -2px);
+}
 
 /* ---------- Graphics Gallery: "takes" grid ----------
    Edge-to-edge 3-up grid of clickable tiles. Hover reveals a title/tag
@@ -723,6 +763,7 @@ section + section { border-top: 1px solid var(--line); }
 .cs-site-footer .pool-canvas { top: 0; bottom: auto; height: 100%; }
 
 .footer-links { display: flex; flex-wrap: wrap; gap: 1.5rem 2.5rem; margin-bottom: 2.5rem; }
+.footer-bottom .footer-links { margin-bottom: 0; }
 .footer-links a {
   font-family: var(--font-label); font-size: 0.85rem;
   text-transform: uppercase; letter-spacing: 0.05em;
