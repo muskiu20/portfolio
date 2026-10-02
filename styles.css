@@ -230,7 +230,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 #top.hero {
   min-height: 100vh;
   min-height: 100dvh;
-  padding: 0 var(--gutter);
+  padding: 0; /* horizontal gutter now comes only from .wrap, matching every
+    other section — the base .hero rule's padding (which also added a
+    second gutter here) is fully overridden, not just its vertical part */
   display: flex;
   flex-direction: column;
   justify-content: center; /* equal space above/below, measured from the two
@@ -240,14 +242,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 #top.hero::after { content: none; }
 #top .wrap {
-  margin-top: var(--header-h, 64px);
-  /* Anchor to the page's real left edge (just the gutter), rather than
-     sitting inside the generic .wrap's centered 1400px column — on wide
-     screens that column itself sits centered, making the content read as
-     centered even though the text inside it is left-aligned. */
-  max-width: none;
-  margin-left: 0;
-  margin-right: 0;
+  margin-top: var(--header-h, 64px); /* balances the gap: header-bottom-to-content == content-to-viewport-bottom */
+  transform: translateY(-40px); /* then nudged up 40px as requested, as a direct visual offset */
+  /* #top.hero is a flex container (for vertical centering), and a flex
+     item with auto margins on the cross axis shrinks to its content size
+     instead of stretching — unlike .wrap in every other (non-flex) block-
+     flow section. width:100% restores the normal block behavior: stretch
+     to the container, then max-width caps it and the auto margins center
+     that capped box, exactly like everywhere else on the site. */
+  width: 100%;
 }
 
 /* CSS fallback matching the canvas's base layer exactly — shown briefly
@@ -295,7 +298,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   color: rgba(234, 232, 225, 0.6);
 }
 #top.hero p {
-  color: #C9C7BE;
+  color: #EAE8E1; /* match "decisions," (line1) */
 }
 #top.hero .meta-row {
   font-family: var(--font-label);
