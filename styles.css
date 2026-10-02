@@ -790,11 +790,12 @@ section + section { border-top: 1px solid var(--line); }
   transition: background 0.4s var(--ease), color 0.4s var(--ease);
 }
 .footer-main > .wrap { width: 100%; position: relative; z-index: 2; }
-/* Heading left, pills stacked on the right — top-aligned with each other,
-   and the pills' right edge lines up with .footer-bottom's right edge
-   (same max-width/gutter), which is where "back to top" sits. */
-.footer-top {
-  display: flex; align-items: flex-start; justify-content: space-between;
+/* Top row: heading left, widest (email) button right — bottom-aligned with
+   the heading. The rest stack below it, right-aligned, widest-to-narrowest
+   (LinkedIn, Resume), and the whole block's right edge lines up with
+   .footer-bottom's right edge (same max-width/gutter), where "back to top" sits. */
+.footer-top-row {
+  display: flex; align-items: flex-end; justify-content: space-between;
   flex-wrap: wrap; gap: 1.5rem 2rem;
 }
 .footer-heading {
@@ -803,15 +804,16 @@ section + section { border-top: 1px solid var(--line); }
   color: var(--ink);
   margin: 0;
 }
-/* Widest-to-narrowest top-to-bottom (email, LinkedIn, Resume), right-aligned
-   so each row's right edge stays flush while the left edge steps in. */
-.footer-pills { display: flex; flex-direction: column; align-items: flex-end; gap: 1rem; }
+.footer-pills-rest {
+  display: flex; flex-direction: column; align-items: flex-end; gap: 1rem;
+  margin-top: 1rem;
+}
 .footer-pill {
   display: inline-flex; align-items: center; gap: 0.85rem;
   padding: 0.6rem 1.3rem; /* reduced from 0.95rem 1.6rem */
   border: 1px solid var(--line);
   border-radius: 32px;
-  font-family: var(--font-label); font-size: 1.05rem; font-weight: 600;
+  font-family: var(--font-label); font-size: 1.05rem; font-weight: 500;
   color: var(--ink);
   transition: border-color 0.25s var(--ease), background 0.25s var(--ease), color 0.25s var(--ease);
 }

@@ -260,9 +260,10 @@
     <canvas class="pool-canvas" aria-hidden="true"></canvas>
     <div class="wrap">
       <div class="footer-top">
-        <p class="footer-heading">let's work together</p>
-        <!-- Stacked widest-to-narrowest: email, LinkedIn, Resume. -->
-        <div class="footer-pills">
+        <!-- Top (widest) button bottom-aligns with the heading; the rest
+             stack below it, widest-to-narrowest: LinkedIn, then Resume. -->
+        <div class="footer-top-row">
+          <p class="footer-heading">let's work together</p>
           <a class="footer-pill" href="mailto:uxdesigner.muskan@gmail.com">
             <span>uxdesigner.muskan@gmail.com</span>
             <span class="footer-pill-arrow" aria-hidden="true">
@@ -271,6 +272,8 @@
               </svg>
             </span>
           </a>
+        </div>
+        <div class="footer-pills-rest">
           <!-- TODO: swap href for the real LinkedIn profile URL -->
           <a class="footer-pill" href="#" target="_blank" rel="noopener noreferrer">
             <span>LinkedIn</span>
