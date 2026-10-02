@@ -42,31 +42,26 @@
     </div>
   </section>
 
-  <!-- ============ VOICE (type-swap demo) ============ -->
+  <!-- ============ WORK (full-fold intro to the case studies) ============ -->
   <section id="voice">
-    <div class="wrap">
-      <div class="voice-grid">
-        <div class="voice-left reveal">
+    <div class="wrap work-fold">
+      <div class="section-head reveal">
+        <div>
           <p class="index">work</p>
-          <h2 class="voice-headline" id="voiceHeadline"><span class="line1">same words,</span><span class="line2">new voice.</span></h2>
-          <p class="voice-sub">Two typefaces from the kit I actually ship with, plus the first case study — hover a row to see the headline change.</p>
-          <div class="voice-ref">
-            <span class="voice-ref-thumb" aria-hidden="true"></span>
-            <span class="voice-ref-name">Specmatic Insights</span>
-          </div>
+          <h2>where ideas turn into products and experiences</h2>
         </div>
-        <div class="voice-right reveal">
-          <div class="voice-row" data-font="serif" tabindex="0">
-            <span class="voice-sample voice-font-serif">same words, new voice.</span>
-            <span class="voice-label">Editorial serif</span>
-          </div>
-          <div class="voice-row" data-font="sans" tabindex="0">
-            <span class="voice-sample voice-font-sans">same words, new voice.</span>
-            <span class="voice-label">Grotesque display</span>
-          </div>
-          <a class="voice-row voice-row-link" href="work/service-dependency-graph" data-font="italic" tabindex="0">
-            <span class="voice-sample voice-font-italic">same words, new voice.</span>
-            <span class="voice-label">Service Dependency Graph →</span>
+      </div>
+
+      <div class="work-stage reveal">
+        <div class="work-thumb" aria-hidden="true"></div>
+        <div class="work-list">
+          <a class="work-list-row" href="work/service-dependency-graph">
+            <span class="work-list-name">Service Dependency Graph</span>
+            <span class="work-list-arrow" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
           </a>
         </div>
       </div>
@@ -509,36 +504,6 @@
 
   // ---------- Motion: canvas signatures ----------
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // ---------- Voice: hover a row, the headline re-renders in that typeface ----------
-  (function () {
-    const rows = document.querySelectorAll('.voice-row');
-    const headline = document.getElementById('voiceHeadline');
-    if (!rows.length || !headline) return;
-
-    const FONT_MAP = {
-      serif: { family: 'var(--font-serif)', weight: '400', style: 'normal' },
-      sans: { family: '"Instrument Sans", "Helvetica Neue", Arial, sans-serif', weight: '700', style: 'normal' },
-      italic: { family: 'var(--font-serif)', weight: '400', style: 'italic' }
-    };
-    const DEFAULT = FONT_MAP.serif;
-
-    function setFont(key) {
-      const f = FONT_MAP[key] || DEFAULT;
-      headline.style.fontFamily = f.family;
-      headline.style.fontWeight = f.weight;
-      headline.style.fontStyle = f.style;
-      headline.classList.toggle('is-sans', key === 'sans');
-    }
-
-    rows.forEach((row) => {
-      const key = row.dataset.font;
-      row.addEventListener('mouseenter', () => setFont(key));
-      row.addEventListener('mouseleave', () => setFont(null));
-      row.addEventListener('focus', () => setFont(key));
-      row.addEventListener('blur', () => setFont(null));
-    });
-  })();
 
   // ---------- Hero load-in animation ----------
   // Restrained fade + slide-up, staggered per line; disabled entirely under reduced motion.
