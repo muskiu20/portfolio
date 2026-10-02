@@ -107,12 +107,10 @@
   </section>
 
   <!-- ============ TESTIMONIALS ============
-       One row: 3 interactive grey cards (photo fills bottom 3/4, top left as
-       negative space) with 2 plain accent cards sitting behind them between.
-       Grey cards: hover = dot halftone glows over the photo and the card's
-       outline lights up; click = flips to an off-white panel with the quote
-       (sample placeholder text — not real people yet). Accent cards have no
-       hover state at all. ============ -->
+       One black card at a time, full width of the page's content grid —
+       quote + byline on the left (quote icon top-left), accent-outlined
+       illustration on the right. Auto-advances through the slides on an
+       infinite loop at a fixed interval (see script below). ============ -->
   <section id="testimonials">
     <div class="wrap">
       <div class="section-head reveal">
@@ -122,43 +120,39 @@
         </div>
       </div>
 
-      <div class="testimonial-grid reveal">
-        <button class="testimonial-card" type="button" aria-expanded="false" aria-label="Read testimonial — placeholder, Role at Company">
-          <span class="testimonial-media">
+      <div class="testimonial-carousel reveal">
+        <div class="testimonial-slide is-active">
+          <div class="testimonial-slide-text">
+            <span class="testimonial-quote-icon" aria-hidden="true">&ldquo;</span>
+            <p class="testimonial-quote">Swap this for a real quote whenever one's ready — the slide is already wired up.</p>
+            <p class="testimonial-byline"><strong>Name</strong> — Role, Company</p>
+          </div>
+          <div class="testimonial-slide-media">
             <span class="testimonial-photo" style="--photo: url('Images/PG.png');" aria-hidden="true"></span>
-            <span class="testimonial-facemap" aria-hidden="true"></span>
-          </span>
-          <span class="testimonial-reveal">
-            <span class="testimonial-quote">Swap this for a real quote whenever one's ready — the card is already wired up.</span>
-            <span class="testimonial-byline"><strong>Name</strong> — Role, Company</span>
-          </span>
-        </button>
+          </div>
+        </div>
 
-        <div class="testimonial-card testimonial-card--accent" aria-hidden="true"></div>
-
-        <button class="testimonial-card" type="button" aria-expanded="false" aria-label="Read testimonial — placeholder, Role at Company">
-          <span class="testimonial-media">
+        <div class="testimonial-slide">
+          <div class="testimonial-slide-text">
+            <span class="testimonial-quote-icon" aria-hidden="true">&ldquo;</span>
+            <p class="testimonial-quote">Same slide, same behaviour — just drop real words in here when they arrive.</p>
+            <p class="testimonial-byline"><strong>Name</strong> — Role, Company</p>
+          </div>
+          <div class="testimonial-slide-media">
             <span class="testimonial-photo" style="--photo: url('Images/RJ.png');" aria-hidden="true"></span>
-            <span class="testimonial-facemap" aria-hidden="true"></span>
-          </span>
-          <span class="testimonial-reveal">
-            <span class="testimonial-quote">Same card, same behaviour — just drop real words in here when they arrive.</span>
-            <span class="testimonial-byline"><strong>Name</strong> — Role, Company</span>
-          </span>
-        </button>
+          </div>
+        </div>
 
-        <div class="testimonial-card testimonial-card--accent" aria-hidden="true"></div>
-
-        <button class="testimonial-card" type="button" aria-expanded="false" aria-label="Read testimonial — placeholder, Role at Company">
-          <span class="testimonial-media">
+        <div class="testimonial-slide">
+          <div class="testimonial-slide-text">
+            <span class="testimonial-quote-icon" aria-hidden="true">&ldquo;</span>
+            <p class="testimonial-quote">Three slides, cycling on an infinite loop at an equal interval.</p>
+            <p class="testimonial-byline"><strong>Name</strong> — Role, Company</p>
+          </div>
+          <div class="testimonial-slide-media">
             <span class="testimonial-photo" style="--photo: url('Images/SK.png');" aria-hidden="true"></span>
-            <span class="testimonial-facemap" aria-hidden="true"></span>
-          </span>
-          <span class="testimonial-reveal">
-            <span class="testimonial-quote">Click another card and this one closes — only one stays open at a time.</span>
-            <span class="testimonial-byline"><strong>Name</strong> — Role, Company</span>
-          </span>
-        </button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -296,21 +290,18 @@
   updateClock();
   setInterval(updateClock, 15000);
 
-  // ---------- Testimonials: click to reveal quote (only one open at a time) ----------
-  const testimonialCards = document.querySelectorAll('button.testimonial-card');
-  testimonialCards.forEach((card) => {
-    card.addEventListener('click', () => {
-      const wasActive = card.classList.contains('is-active');
-      testimonialCards.forEach((c) => {
-        c.classList.remove('is-active');
-        c.setAttribute('aria-expanded', 'false');
-      });
-      if (!wasActive) {
-        card.classList.add('is-active');
-        card.setAttribute('aria-expanded', 'true');
-      }
-    });
-  });
+  // ---------- Testimonials: single-slide carousel, auto-advancing on a loop ----------
+  (function () {
+    const slides = document.querySelectorAll('.testimonial-slide');
+    if (slides.length < 2) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let current = 0;
+    setInterval(() => {
+      slides[current].classList.remove('is-active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('is-active');
+    }, 6000);
+  })();
 
   // ---------- Graphics: takes grid + fullscreen viewer ----------
   (function () {

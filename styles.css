@@ -586,129 +586,79 @@ section + section { border-top: 1px solid var(--line); }
 }
 
 /* ---------- Testimonials ----------
-   One row of 5: 3 interactive grey cards with 2 plain accent cards sitting
-   between them — scattered tilt/lift/stacking order uncorrelated with
-   position, opaque by default, un-rotating to the front on hover. */
-.testimonial-grid {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 2.5rem 0 1.5rem;
-}
-
-.testimonial-card {
+   One black slide at a time, full width of the page's content grid — quote
+   (with a quote icon) on the left, accent-outlined illustration on the
+   right. Slides are stacked and cross-fade on an interval (see script). */
+.testimonial-carousel {
   position: relative;
-  display: block;
-  width: 312px; /* 240px base, +30% */
-  aspect-ratio: 3 / 4;
-  margin-left: -4rem;
-  border-radius: 20px;
+  width: 100%;
+  min-height: 460px;
+  border-radius: 24px;
   border: 1.5px solid var(--accent-soft); /* #C33F27 on black is only ~3.8:1 — use the lighter tone */
   background: var(--paper); /* black */
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
   overflow: hidden;
-  cursor: pointer;
-  font: inherit;
-  color: inherit;
-  padding: 0;
-  text-align: left;
-  -webkit-appearance: none;
-  appearance: none;
-  transform: rotate(var(--tilt, 0deg)) translateY(var(--dy, 0px));
-  transition: transform 0.35s var(--ease), background 0.35s var(--ease), border-color 0.35s var(--ease);
-}
-.testimonial-card:first-child { margin-left: 0; }
-/* Tilt/offset/stacking order are deliberately uncorrelated with left-to-right
-   position, so the row reads as a scattered pile rather than a tidy fan. */
-/* Grey cards (1, 3, 5) always outrank the accent cards (2, 4), so the 3
-   main cards read as in front and the accent cards sit behind them. */
-.testimonial-card:nth-child(1) { --tilt: -7deg; --dy: 10px; z-index: 5; }
-.testimonial-card:nth-child(2) { --tilt: 5deg; --dy: -14px; z-index: 1; }
-.testimonial-card:nth-child(3) { --tilt: -3deg; --dy: 6px; z-index: 4; }
-.testimonial-card:nth-child(4) { --tilt: 8deg; --dy: -8px; z-index: 2; }
-.testimonial-card:nth-child(5) { --tilt: -5deg; --dy: 4px; z-index: 3; }
-/* Hover/active only applies to the 3 interactive (grey) cards — the accent
-   cards are plain and have no hover state at all. */
-.testimonial-card:not(.testimonial-card--accent):hover,
-.testimonial-card:not(.testimonial-card--accent):focus-visible,
-.testimonial-card.is-active {
-  transform: rotate(0deg) translateY(-18px);
-  z-index: 10;
-  border-color: var(--accent-lighter);
-  box-shadow: 0 0 0 2px var(--accent-lighter), 0 20px 44px rgba(0, 0, 0, 0.45);
-}
-.testimonial-card:focus-visible { outline: 2px solid var(--accent-lighter); outline-offset: 3px; }
-
-/* Accent cards — plain solid colour, not clickable, no hover state (<div>s) */
-.testimonial-card--accent {
-  background: var(--accent-soft);
-  border-color: var(--accent-lighter);
-  cursor: default;
 }
 
-@media (max-width: 640px) {
-  .testimonial-grid { flex-direction: column; align-items: center; }
-  .testimonial-card { margin-left: 0; margin-top: -2.5rem; --tilt: 0deg; --dy: 0px; }
-  .testimonial-card:first-child { margin-top: 0; }
+.testimonial-slide {
+  position: absolute; inset: 0;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s var(--ease);
 }
+.testimonial-slide.is-active { opacity: 1; pointer-events: auto; }
 
-.testimonial-media { position: absolute; inset: 0; }
-/* Illustration fills the bottom 3/4 of the card, leaving the top as negative
-   space. The source PNG is black line art on a transparent background, used
-   here as a mask so the strokes render in the accent colour instead. */
+.testimonial-slide-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(2rem, 5vw, 4.5rem);
+}
+.testimonial-quote-icon {
+  font-family: var(--font-serif);
+  font-size: 4.5rem;
+  line-height: 1;
+  color: var(--accent-soft);
+  margin-bottom: 0.5rem;
+}
+.testimonial-quote {
+  font-family: var(--font-serif); font-weight: 400; font-style: italic;
+  font-size: clamp(1.3rem, 2.3vw, 1.85rem); line-height: 1.4;
+  color: var(--ink);
+  margin: 0 0 1.75rem;
+}
+.testimonial-byline {
+  font-family: var(--font-label); font-size: 0.8rem;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--muted);
+  margin: 0;
+}
+.testimonial-byline strong { color: var(--ink); font-weight: 600; }
+
+/* Illustration — black line-art PNG used as a mask over a solid accent fill,
+   so the outline itself reads in the accent colour against the black card. */
+.testimonial-slide-media { position: relative; }
 .testimonial-photo {
-  position: absolute; left: 0; right: 0; bottom: 0;
-  width: 100%; height: 75%;
+  position: absolute; inset: clamp(1.5rem, 4vw, 3rem);
   display: block;
   background-color: var(--accent-soft); /* #C33F27 on black is only ~3.8:1 — use the lighter tone */
   -webkit-mask-image: var(--photo);
   mask-image: var(--photo);
-  -webkit-mask-size: cover;
-  mask-size: cover;
+  -webkit-mask-size: contain;
+  mask-size: contain;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-  -webkit-mask-position: center bottom;
-  mask-position: center bottom;
+  -webkit-mask-position: center;
+  mask-position: center;
 }
 
-/* Hover state — the same halftone dot screen used on the graphics tiles
-   (.takes-dots) fades in over the photo like a light source, and the card's
-   outline (above) brightens as if lit by it. */
-.testimonial-facemap {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  background-image: radial-gradient(var(--accent-lighter) 30%, transparent 32%);
-  background-size: 3px 3px;
-  opacity: 0;
-  transition: opacity 0.35s var(--ease);
+@media (max-width: 760px) {
+  .testimonial-carousel { min-height: 620px; }
+  .testimonial-slide { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .testimonial-slide-text { padding-bottom: 1rem; }
+  .testimonial-photo { inset: 1rem; }
 }
-.testimonial-card:hover .testimonial-facemap,
-.testimonial-card:focus-visible .testimonial-facemap { opacity: 1; }
-
-/* Click state — card flips to an off-white panel with the quote */
-.testimonial-reveal {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 1.5rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s var(--ease);
-}
-.testimonial-quote {
-  font-family: var(--font-serif); font-weight: 400; font-style: italic;
-  font-size: 1.05rem; line-height: 1.4;
-  color: var(--ink-on-sheet);
-  margin-bottom: 1rem;
-}
-.testimonial-byline {
-  font-family: var(--font-label); font-size: 0.78rem;
-  text-transform: uppercase; letter-spacing: 0.05em;
-  color: var(--muted-on-sheet);
-}
-.testimonial-byline strong { color: var(--ink-on-sheet); font-weight: 600; }
-
-.testimonial-card.is-active { background: var(--sheet); border-color: var(--sheet); }
-.testimonial-card.is-active .testimonial-media { opacity: 0; }
-.testimonial-card.is-active .testimonial-reveal { opacity: 1; pointer-events: auto; }
 
 /* ---------- Process (numbered rows intensify like a proof sheet) ---------- */
 .process-list { counter-reset: step; border-top: 1px solid var(--accent); }
