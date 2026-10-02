@@ -616,11 +616,13 @@ section + section { border-top: 1px solid var(--line); }
 .testimonial-card:first-child { margin-left: 0; }
 /* Tilt/offset/stacking order are deliberately uncorrelated with left-to-right
    position, so the row reads as a scattered pile rather than a tidy fan. */
-.testimonial-card:nth-child(1) { --tilt: -7deg; --dy: 10px; z-index: 3; }
-.testimonial-card:nth-child(2) { --tilt: 5deg; --dy: -14px; z-index: 5; }
-.testimonial-card:nth-child(3) { --tilt: -3deg; --dy: 6px; z-index: 1; }
-.testimonial-card:nth-child(4) { --tilt: 8deg; --dy: -8px; z-index: 4; }
-.testimonial-card:nth-child(5) { --tilt: -5deg; --dy: 4px; z-index: 2; }
+/* Grey cards (1, 3, 5) always outrank the accent cards (2, 4), so the 3
+   main cards read as in front and the accent cards sit behind them. */
+.testimonial-card:nth-child(1) { --tilt: -7deg; --dy: 10px; z-index: 5; }
+.testimonial-card:nth-child(2) { --tilt: 5deg; --dy: -14px; z-index: 1; }
+.testimonial-card:nth-child(3) { --tilt: -3deg; --dy: 6px; z-index: 4; }
+.testimonial-card:nth-child(4) { --tilt: 8deg; --dy: -8px; z-index: 2; }
+.testimonial-card:nth-child(5) { --tilt: -5deg; --dy: 4px; z-index: 3; }
 .testimonial-card:hover,
 .testimonial-card:focus-visible,
 .testimonial-card.is-active {
