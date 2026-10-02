@@ -243,11 +243,36 @@
 
 <!-- ============ FOOTER (carries contact + quick links) ============ -->
 <footer class="site-footer" id="footer-contact">
-  <div class="footer-main">
+  <div class="footer-main theme-sheet">
     <canvas class="pool-canvas" aria-hidden="true"></canvas>
     <div class="wrap">
-      <div class="footer-contact">
-        <a href="mailto:hello@muskanjain.studio">hello@muskanjain.studio →</a>
+      <p class="footer-heading">let's work together</p>
+      <div class="footer-pills">
+        <a class="footer-pill" href="mailto:uxdesigner.muskan@gmail.com">
+          <span>uxdesigner.muskan@gmail.com</span>
+          <span class="footer-pill-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </a>
+        <a class="footer-pill" href="https://drive.google.com/file/d/1b-tqPKzSWMeB06n6GI_zYxItHj281vK_/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+          <span>Resume</span>
+          <span class="footer-pill-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </a>
+        <!-- TODO: swap href for the real LinkedIn profile URL -->
+        <a class="footer-pill" href="#" target="_blank" rel="noopener noreferrer">
+          <span>LinkedIn</span>
+          <span class="footer-pill-arrow" aria-hidden="true">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </a>
       </div>
 
       <div class="footer-bottom">
@@ -291,6 +316,7 @@
         if (r.top <= h && r.bottom >= 0) onLight = true;
       });
       header.classList.toggle('on-light', onLight);
+      header.classList.toggle('is-scrolled', window.scrollY > 10);
     }
     updateHeaderTheme();
     window.addEventListener('scroll', updateHeaderTheme, { passive: true });
