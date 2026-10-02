@@ -277,6 +277,23 @@
     window.addEventListener('resize', updateHeaderTheme);
   })();
 
+  // ---------- Hero vertical centering reference ----------
+  // #top .wrap centers using the fixed header's actual bottom edge as the
+  // top reference (not the raw viewport top), so the gap from the header
+  // down to the content matches the gap from the content down to the
+  // viewport's bottom edge. Measured in JS since header height can shift
+  // slightly (font loading, responsive padding) rather than assumed.
+  (function () {
+    const header = document.querySelector('.site-header');
+    if (!header) return;
+    function setHeaderHeight() {
+      document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+    }
+    setHeaderHeight();
+    window.addEventListener('resize', setHeaderHeight);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(setHeaderHeight);
+  })();
+
   // ---------- Local time readout ----------
   // REPLACE 'Asia/Kolkata' with your own timezone
   function updateClock() {

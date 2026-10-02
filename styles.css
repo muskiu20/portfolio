@@ -230,12 +230,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 #top.hero {
   min-height: 100vh;
   min-height: 100dvh;
-  padding: clamp(3.5rem, 13vw, 9rem) var(--gutter);
+  padding: 0 var(--gutter);
   display: flex;
   flex-direction: column;
-  justify-content: center; /* equal space above/below regardless of content height */
+  justify-content: center; /* equal space above/below, measured from the two
+    true ends — the fixed header's bottom edge and the viewport's bottom
+    edge — not the raw viewport top (see .hero .wrap margin-top below and
+    the header-height measurement script). */
 }
 #top.hero::after { content: none; }
+#top .wrap { margin-top: var(--header-h, 64px); }
 
 /* CSS fallback matching the canvas's base layer exactly — shown briefly
    before the pleat script paints, and as the degraded result if it can't
