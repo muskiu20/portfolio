@@ -26,6 +26,10 @@
 
   --accent: #C33F27;
   --accent-soft: #D9563C;
+  /* Lighter still — #C33F27 on #0D0D0C is only ~3.8:1, under the 4.5:1 text
+     minimum; used where accent sits directly on the black testimonial
+     cards as a thin border/line-art stroke and needs to read clearly. */
+  --accent-lighter: #E3806D;
 
   --font-display: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
   --font-serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
@@ -599,7 +603,7 @@ section + section { border-top: 1px solid var(--line); }
   aspect-ratio: 3 / 4;
   margin-left: -4rem;
   border-radius: 20px;
-  border: 1.5px solid var(--accent);
+  border: 1.5px solid var(--accent-soft); /* #C33F27 on black is only ~3.8:1 — use the lighter tone */
   background: var(--paper); /* black */
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
   overflow: hidden;
@@ -630,15 +634,15 @@ section + section { border-top: 1px solid var(--line); }
 .testimonial-card.is-active {
   transform: rotate(0deg) translateY(-18px);
   z-index: 10;
-  border-color: var(--accent-soft);
-  box-shadow: 0 0 0 2px var(--accent-soft), 0 20px 44px rgba(0, 0, 0, 0.45);
+  border-color: var(--accent-lighter);
+  box-shadow: 0 0 0 2px var(--accent-lighter), 0 20px 44px rgba(0, 0, 0, 0.45);
 }
-.testimonial-card:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 3px; }
+.testimonial-card:focus-visible { outline: 2px solid var(--accent-lighter); outline-offset: 3px; }
 
 /* Accent cards — plain solid colour, not clickable, no hover state (<div>s) */
 .testimonial-card--accent {
-  background: var(--accent);
-  border-color: var(--accent-soft);
+  background: var(--accent-soft);
+  border-color: var(--accent-lighter);
   cursor: default;
 }
 
@@ -656,7 +660,7 @@ section + section { border-top: 1px solid var(--line); }
   position: absolute; left: 0; right: 0; bottom: 0;
   width: 100%; height: 75%;
   display: block;
-  background-color: var(--accent);
+  background-color: var(--accent-soft); /* #C33F27 on black is only ~3.8:1 — use the lighter tone */
   -webkit-mask-image: var(--photo);
   mask-image: var(--photo);
   -webkit-mask-size: cover;
@@ -672,7 +676,7 @@ section + section { border-top: 1px solid var(--line); }
    outline (above) brightens as if lit by it. */
 .testimonial-facemap {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  background-image: radial-gradient(var(--accent-soft) 30%, transparent 32%);
+  background-image: radial-gradient(var(--accent-lighter) 30%, transparent 32%);
   background-size: 3px 3px;
   opacity: 0;
   transition: opacity 0.35s var(--ease);
