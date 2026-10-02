@@ -620,7 +620,7 @@ section + section { border-top: 1px solid var(--line); }
   font-size: 4.5rem;
   line-height: 1;
   color: var(--accent-soft);
-  margin-bottom: 0.5rem;
+  margin-bottom: -1.1rem; /* glyph sits high in its own line-box, so pull the gap in */
 }
 .testimonial-quote {
   font-family: var(--font-serif); font-weight: 400; font-style: italic;
