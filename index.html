@@ -146,7 +146,7 @@
         <div class="testimonial-slide">
           <div class="testimonial-slide-text">
             <span class="testimonial-quote-icon" aria-hidden="true">&ldquo;</span>
-            <p class="testimonial-quote">Three slides, cycling on an infinite loop at an equal interval.</p>
+            <p class="testimonial-quote">It was a pleasure working with her as part of the PyCon India 2025 Design Work Group. Her commitment and perseverance were truly commendable, and she consistently brought thoughtful ideas and strong attention to detail to her design work. She had a meaningful impact on the overall visual experience of the event, and her ownership and dedication helped elevate the quality of the team's work. She was a dependable and valuable contributor throughout the project.</p>
             <p class="testimonial-byline"><strong>Name</strong> — Role, Company</p>
           </div>
           <div class="testimonial-slide-media">
@@ -292,9 +292,29 @@
 
   // ---------- Testimonials: single-slide carousel, auto-advancing on a loop ----------
   (function () {
+    const carousel = document.querySelector('.testimonial-carousel');
     const slides = document.querySelectorAll('.testimonial-slide');
-    if (slides.length < 2) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!carousel || !slides.length) return;
+
+    // Slides are stacked with position:absolute so they can cross-fade, which
+    // means the container's height can't come from content directly — quotes
+    // vary a lot in length, so measure each slide's natural height and size
+    // the carousel to the tallest one instead of guessing a fixed value.
+    function sizeCarousel() {
+      let max = 0;
+      slides.forEach((s) => {
+        s.style.position = 'relative';
+        s.style.opacity = '0';
+        max = Math.max(max, s.scrollHeight);
+        s.style.position = '';
+        s.style.opacity = '';
+      });
+      carousel.style.minHeight = max + 'px';
+    }
+    sizeCarousel();
+    window.addEventListener('resize', sizeCarousel);
+
+    if (slides.length < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     let current = 0;
     setInterval(() => {
       slides[current].classList.remove('is-active');
