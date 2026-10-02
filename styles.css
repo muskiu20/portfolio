@@ -255,7 +255,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 #top.hero::after { content: none; }
 #top .wrap {
   margin-top: var(--header-h, 64px); /* balances the gap: header-bottom-to-content == content-to-viewport-bottom */
-  transform: translateY(-40px); /* then nudged up 40px as requested, as a direct visual offset */
+  transform: translate(-60px, -48px); /* nudged 48px up, 60px left, as a direct visual offset */
   /* #top.hero is a flex container (for vertical centering), and a flex
      item with auto margins on the cross axis shrinks to its content size
      instead of stretching — unlike .wrap in every other (non-flex) block-
@@ -353,6 +353,10 @@ section + section { border-top: 1px solid var(--line); }
   /* Single-line heading is a desktop nicety — let it wrap naturally once
      the column is too narrow to fit it, rather than overflowing. */
   .section-head h2 { white-space: normal; max-width: none; }
+  /* The hero's -60px leftward nudge would push content past the gutter
+     (and off-screen) once the gutter itself shrinks below ~60px — keep
+     only the vertical offset on narrow screens. */
+  #top .wrap { transform: translateY(-48px); }
 }
 
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
