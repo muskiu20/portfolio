@@ -582,24 +582,26 @@ section + section { border-top: 1px solid var(--line); }
 }
 
 /* ---------- Testimonials ----------
-   Cards fan out like a hand of stacked cards (ref: truus.co "call us if you
-   need" row) — overlapping, alternating tilt, lifting to front on interaction. */
+   Cards sit scattered on top of each other, like a loose pile of photos
+   (ref: truus.co "call us if you need" row for the overlapping-card idea) —
+   random-looking tilt/lift/stacking order per card, opaque grey by default,
+   un-rotating and coming to the very front on hover/active. */
 .testimonial-grid {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  padding: 1.5rem 0 1rem;
+  padding: 2.5rem 0 1.5rem;
 }
 
 .testimonial-card {
   position: relative;
   display: block;
-  width: 240px;
+  width: 312px; /* 240px base, +30% */
   aspect-ratio: 3 / 4;
-  margin-left: -3rem;
+  margin-left: -4rem;
   border-radius: 20px;
   border: 1.5px solid var(--accent);
-  background: rgba(234, 232, 225, 0.06); /* grey — a faint wash of --ink over --paper */
+  background: var(--muted); /* opaque — solid portfolio grey, not a translucent wash */
   box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
   overflow: hidden;
   cursor: pointer;
@@ -609,24 +611,28 @@ section + section { border-top: 1px solid var(--line); }
   text-align: left;
   -webkit-appearance: none;
   appearance: none;
-  transform: rotate(var(--tilt, 0deg));
+  transform: rotate(var(--tilt, 0deg)) translateY(var(--dy, 0px));
   transition: transform 0.35s var(--ease), background 0.35s var(--ease), border-color 0.35s var(--ease);
 }
 .testimonial-card:first-child { margin-left: 0; }
-.testimonial-card:nth-child(1) { --tilt: -4deg; z-index: 1; }
-.testimonial-card:nth-child(2) { --tilt: 0deg; z-index: 2; }
-.testimonial-card:nth-child(3) { --tilt: 4deg; z-index: 3; }
+/* Tilt/offset/stacking order are deliberately uncorrelated with left-to-right
+   position, so the pile reads as scattered rather than a tidy fan. */
+.testimonial-card:nth-child(1) { --tilt: -7deg; --dy: 10px; z-index: 3; }
+.testimonial-card:nth-child(2) { --tilt: 5deg; --dy: -14px; z-index: 5; }
+.testimonial-card:nth-child(3) { --tilt: -3deg; --dy: 6px; z-index: 1; }
+.testimonial-card:nth-child(4) { --tilt: 8deg; --dy: -8px; z-index: 4; }
+.testimonial-card:nth-child(5) { --tilt: -5deg; --dy: 4px; z-index: 2; }
 .testimonial-card:hover,
 .testimonial-card:focus-visible,
 .testimonial-card.is-active {
-  transform: rotate(0deg) translateY(-14px);
+  transform: rotate(0deg) translateY(-18px);
   z-index: 10;
 }
 .testimonial-card:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 3px; }
 
 @media (max-width: 640px) {
   .testimonial-grid { flex-direction: column; align-items: center; }
-  .testimonial-card { margin-left: 0; margin-top: -2rem; --tilt: 0deg; }
+  .testimonial-card { margin-left: 0; margin-top: -2.5rem; --tilt: 0deg; --dy: 0px; }
   .testimonial-card:first-child { margin-top: 0; }
 }
 
@@ -634,7 +640,7 @@ section + section { border-top: 1px solid var(--line); }
 .testimonial-media { position: absolute; inset: 0; transition: opacity 0.3s var(--ease); }
 .testimonial-avatar { width: 100%; height: 100%; display: block; }
 .testimonial-avatar .avatar-head,
-.testimonial-avatar .avatar-shoulders { fill: var(--ink-soft); opacity: 0.5; }
+.testimonial-avatar .avatar-shoulders { fill: var(--paper); opacity: 0.4; }
 
 /* Hover state — the same halftone dot screen used on the graphics tiles
    (.takes-dots) fades in over the face and drifts toward the row's centre. */
