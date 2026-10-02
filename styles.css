@@ -582,16 +582,22 @@ section + section { border-top: 1px solid var(--line); }
 }
 
 /* ---------- Testimonials ----------
-   Cards sit scattered on top of each other, like a loose pile of photos
-   (ref: truus.co "call us if you need" row for the overlapping-card idea) —
-   random-looking tilt/lift/stacking order per card, opaque grey by default,
-   un-rotating and coming to the very front on hover/active. */
+   Two rows: 3 interactive cards on top, 2 non-clickable accent cards below,
+   each row a scattered little pile — tilt/lift/stacking order uncorrelated
+   with position, opaque by default, un-rotating to the front on hover. */
 .testimonial-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5rem 0 1.5rem;
+}
+
+.testimonial-row {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  padding: 2.5rem 0 1.5rem;
 }
+.testimonial-row-bottom { margin-top: -3rem; }
 
 .testimonial-card {
   position: relative;
@@ -614,14 +620,14 @@ section + section { border-top: 1px solid var(--line); }
   transform: rotate(var(--tilt, 0deg)) translateY(var(--dy, 0px));
   transition: transform 0.35s var(--ease), background 0.35s var(--ease), border-color 0.35s var(--ease);
 }
-.testimonial-card:first-child { margin-left: 0; }
+.testimonial-row .testimonial-card:first-child { margin-left: 0; }
 /* Tilt/offset/stacking order are deliberately uncorrelated with left-to-right
-   position, so the pile reads as scattered rather than a tidy fan. */
-.testimonial-card:nth-child(1) { --tilt: -7deg; --dy: 10px; z-index: 3; }
-.testimonial-card:nth-child(2) { --tilt: 5deg; --dy: -14px; z-index: 5; }
-.testimonial-card:nth-child(3) { --tilt: -3deg; --dy: 6px; z-index: 1; }
-.testimonial-card:nth-child(4) { --tilt: 8deg; --dy: -8px; z-index: 4; }
-.testimonial-card:nth-child(5) { --tilt: -5deg; --dy: 4px; z-index: 2; }
+   position, so each row reads as scattered rather than a tidy fan. */
+.testimonial-row-top .testimonial-card:nth-child(1) { --tilt: -7deg; --dy: 8px; z-index: 2; }
+.testimonial-row-top .testimonial-card:nth-child(2) { --tilt: 5deg; --dy: -12px; z-index: 3; }
+.testimonial-row-top .testimonial-card:nth-child(3) { --tilt: -4deg; --dy: 6px; z-index: 1; }
+.testimonial-row-bottom .testimonial-card:nth-child(1) { --tilt: 6deg; --dy: -6px; z-index: 2; }
+.testimonial-row-bottom .testimonial-card:nth-child(2) { --tilt: -5deg; --dy: 4px; z-index: 1; }
 .testimonial-card:hover,
 .testimonial-card:focus-visible,
 .testimonial-card.is-active {
@@ -630,10 +636,21 @@ section + section { border-top: 1px solid var(--line); }
 }
 .testimonial-card:focus-visible { outline: 2px solid var(--accent-soft); outline-offset: 3px; }
 
+/* Bottom row — accent-coloured, hover-only, not clickable (plain <div>s) */
+.testimonial-card--accent {
+  background: var(--accent);
+  border-color: var(--accent-soft);
+  cursor: default;
+}
+.testimonial-card--accent .testimonial-avatar .avatar-head,
+.testimonial-card--accent .testimonial-avatar .avatar-shoulders { fill: var(--ink); }
+.testimonial-card--accent .testimonial-facemap { background-image: radial-gradient(var(--ink) 30%, transparent 32%); }
+
 @media (max-width: 640px) {
-  .testimonial-grid { flex-direction: column; align-items: center; }
+  .testimonial-row { flex-direction: column; align-items: center; }
+  .testimonial-row-bottom { margin-top: -2rem; }
   .testimonial-card { margin-left: 0; margin-top: -2.5rem; --tilt: 0deg; --dy: 0px; }
-  .testimonial-card:first-child { margin-top: 0; }
+  .testimonial-row .testimonial-card:first-child { margin-top: 0; }
 }
 
 /* Normal state — illustrated avatar standing in for a real photo */
