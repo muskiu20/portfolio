@@ -248,31 +248,35 @@
     <div class="wrap">
       <p class="footer-heading">let's work together</p>
       <div class="footer-pills">
-        <a class="footer-pill" href="mailto:uxdesigner.muskan@gmail.com">
-          <span>uxdesigner.muskan@gmail.com</span>
-          <span class="footer-pill-arrow" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </span>
-        </a>
-        <a class="footer-pill" href="https://drive.google.com/file/d/1b-tqPKzSWMeB06n6GI_zYxItHj281vK_/view?usp=sharing" target="_blank" rel="noopener noreferrer">
-          <span>Resume</span>
-          <span class="footer-pill-arrow" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </span>
-        </a>
-        <!-- TODO: swap href for the real LinkedIn profile URL -->
-        <a class="footer-pill" href="#" target="_blank" rel="noopener noreferrer">
-          <span>LinkedIn</span>
-          <span class="footer-pill-arrow" aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-          </span>
-        </a>
+        <div class="footer-pills-row">
+          <a class="footer-pill" href="mailto:uxdesigner.muskan@gmail.com">
+            <span>uxdesigner.muskan@gmail.com</span>
+            <span class="footer-pill-arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </a>
+        </div>
+        <div class="footer-pills-row">
+          <a class="footer-pill" href="https://drive.google.com/file/d/1b-tqPKzSWMeB06n6GI_zYxItHj281vK_/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+            <span>Resume</span>
+            <span class="footer-pill-arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </a>
+          <!-- TODO: swap href for the real LinkedIn profile URL -->
+          <a class="footer-pill" href="#" target="_blank" rel="noopener noreferrer">
+            <span>LinkedIn</span>
+            <span class="footer-pill-arrow" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </a>
+        </div>
       </div>
 
       <div class="footer-bottom">
@@ -760,6 +764,14 @@
     window.addEventListener('resize', resize);
     host.addEventListener('mousemove', (e) => {
       const rect = canvas.getBoundingClientRect();
+      // The canvas only covers a slice of the host (near the bottom nav),
+      // but the listener is on the whole host — so hovering the heading/
+      // buttons above it would otherwise still move the dots. Only track
+      // the cursor while it's actually over the canvas's own area.
+      if (e.clientY < rect.top || e.clientY > rect.bottom) {
+        mouse.x = -9999; mouse.y = -9999;
+        return;
+      }
       mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top;
     });
     host.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
