@@ -1069,26 +1069,28 @@ section + section { border-top: 1px solid var(--line); }
   aspect-ratio: 16 / 10;
   flex-direction: column;
   gap: 14px;
-  color: var(--cs-ink-dim);
+  color: #fff;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  background-image: linear-gradient(180deg, rgba(10, 10, 10, 0.1) 0%, rgba(10, 10, 10, 0.55) 100%),
+    url('Images/work-service-dependency-graph.jpg');
+  background-size: cover;
+  background-position: center;
+  transition: border-color 0.15s ease;
 }
 .cs-figure-frame.cs-figure-link:hover,
 .cs-figure-frame.cs-figure-link:focus-visible {
-  background: var(--cs-paper);
   border-color: var(--cs-ink-faint);
-  color: var(--cs-ink);
 }
 .cs-figure-link-icon {
   display: flex; align-items: center; justify-content: center;
   width: 44px; height: 44px;
-  border: 1px solid var(--cs-rule); border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5); border-radius: 50%;
   transition: border-color 0.15s ease;
 }
 .cs-figure-frame.cs-figure-link:hover .cs-figure-link-icon,
 .cs-figure-frame.cs-figure-link:focus-visible .cs-figure-link-icon {
-  border-color: currentColor;
+  border-color: #fff;
 }
 .cs-figure-link-text {
   font-family: var(--cs-sans); font-size: 0.85rem; letter-spacing: 0.01em;
