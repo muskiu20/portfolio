@@ -800,6 +800,12 @@
     const image = thumb ? thumb.querySelector('.work-thumb-image') : null;
     if (!rows.length || !thumb || !label || !image) return;
 
+    // Preload every row's thumbnail up front so the first hover shows it
+    // instantly instead of waiting on the image to fetch/decode.
+    rows.forEach((row) => {
+      if (row.dataset.thumbImg) new Image().src = row.dataset.thumbImg;
+    });
+
     function showRow(row) {
       const imgSrc = row.dataset.thumbImg;
       if (imgSrc) {
@@ -813,9 +819,8 @@
         thumb.classList.remove('has-image');
       }
     }
-    function clear() {
-      thumb.classList.remove('is-active', 'has-image');
-    }
+    // Not-hovering reverts to the first project, not an empty frame.
+    function clear() { showRow(rows[0]); }
 
     rows.forEach((row) => {
       row.addEventListener('mouseenter', () => showRow(row));
@@ -823,6 +828,9 @@
       row.addEventListener('focus', () => showRow(row));
       row.addEventListener('blur', clear);
     });
+
+    // Normal (un-hovered) state shows the first project, not a blank frame.
+    showRow(rows[0]);
   })();
 </script>
 
