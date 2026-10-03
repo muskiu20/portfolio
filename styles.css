@@ -438,8 +438,7 @@ section + section { border-top: 1px solid var(--line); }
      space), list sized to its own content below it. */
   .work-stage { display: flex; flex-direction: column; gap: 1.5rem; }
   .work-thumb { flex: 1; width: 100%; height: auto; min-height: 220px; }
-  .work-list { height: auto; }
-  .work-list-row { justify-content: center; text-align: center; }
+  .work-list { height: auto; width: 100%; }
 }
 
 /* ---------- AI Experiments: project list ----------
