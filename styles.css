@@ -434,8 +434,10 @@ section + section { border-top: 1px solid var(--line); }
 .work-list-row:hover .work-list-arrow { border-color: var(--accent); color: var(--accent); transform: translate(2px, -2px); }
 
 @media (max-width: 900px) {
-  .work-stage { grid-template-columns: 1fr; }
-  .work-thumb { display: none; }
+  /* Stacked instead of side-by-side: thumbnail on top (fills remaining
+     space), list sized to its own content below it. */
+  .work-stage { display: flex; flex-direction: column; gap: 1.5rem; }
+  .work-thumb { flex: 1; width: 100%; height: auto; min-height: 220px; }
   .work-list { height: auto; }
 }
 
