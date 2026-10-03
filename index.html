@@ -53,10 +53,19 @@
       </div>
 
       <div class="work-stage reveal">
-        <div class="work-thumb" aria-hidden="true"></div>
+        <div class="work-thumb" aria-hidden="true"><span class="work-thumb-label"></span></div>
         <div class="work-list">
           <a class="work-list-row" href="work/service-dependency-graph">
             <span class="work-list-name">Service Dependency Graph</span>
+            <span class="work-list-arrow" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </span>
+          </a>
+          <!-- TODO: swap href for the real Website Redesign case study URL -->
+          <a class="work-list-row" href="#">
+            <span class="work-list-name">Website Redesign</span>
             <span class="work-list-arrow" aria-hidden="true">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
@@ -779,45 +788,29 @@
 
   document.querySelectorAll('.pool-canvas').forEach(initPoolCanvas);
 
-  // ---------- Work list: preview panel sized to the hovered row's text block ----------
-  // The left-column thumbnail isn't a fixed size — its width and height are
-  // read straight off whichever row's .title-block (heading + description)
-  // is currently hovered/focused, so the box always traces exactly the
-  // footprint that text occupies on the right.
+  // ---------- Work list: hovering a row previews it in the thumbnail frame ----------
+  // Placeholder preview (no real project imagery yet) — the frame just
+  // surfaces the hovered row's name, and fades out once nothing is hovered.
   (function () {
-    const rows = document.querySelectorAll('#work .work-row');
-    const thumb = document.getElementById('workThumb');
+    const rows = document.querySelectorAll('#voice .work-list-row');
+    const thumb = document.querySelector('#voice .work-thumb');
     const label = thumb ? thumb.querySelector('.work-thumb-label') : null;
     if (!rows.length || !thumb || !label) return;
 
-    let active = rows[0];
-
-    function sizeToBlock(block) {
-      const r = block.getBoundingClientRect();
-      thumb.style.width = r.width + 'px';
-      thumb.style.height = r.height + 'px';
-    }
     function showRow(row) {
-      active = row;
-      sizeToBlock(row.querySelector('.title-block'));
-      label.textContent = row.dataset.thumb || '';
+      label.textContent = row.querySelector('.work-list-name').textContent;
       thumb.classList.add('is-active');
+    }
+    function clear() {
+      thumb.classList.remove('is-active');
     }
 
     rows.forEach((row) => {
       row.addEventListener('mouseenter', () => showRow(row));
+      row.addEventListener('mouseleave', clear);
       row.addEventListener('focus', () => showRow(row));
+      row.addEventListener('blur', clear);
     });
-
-    // Re-measure the active row if the viewport reflows (font load, resize).
-    window.addEventListener('resize', () => sizeToBlock(active.querySelector('.title-block')));
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(() => sizeToBlock(active.querySelector('.title-block')));
-    }
-
-    // Default state: the first project's dimensions, before any hover.
-    showRow(rows[0]);
-    thumb.classList.remove('is-active');
   })();
 </script>
 

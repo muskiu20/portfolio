@@ -387,7 +387,17 @@ section + section { border-top: 1px solid var(--line); }
   border-radius: 20px;
   background: var(--line);
   border: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
 }
+.work-thumb-label {
+  font-family: var(--font-label); font-size: 0.8rem;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--muted);
+  opacity: 0;
+  transition: opacity 0.25s var(--ease);
+}
+.work-thumb.is-active .work-thumb-label { opacity: 1; }
 .work-list {
   height: 50vh; height: 50dvh; /* half the fold, as specified */
   max-height: 100%;
@@ -419,56 +429,6 @@ section + section { border-top: 1px solid var(--line); }
   .work-thumb { display: none; }
   .work-list { height: auto; }
 }
-
-/* ---------- Work Grid (cream interlude section) ---------- */
-.work-grid {
-  display: grid;
-  grid-template-columns: minmax(200px, 1fr) minmax(0, 2.1fr);
-  gap: clamp(2rem, 5vw, 4rem);
-  align-items: start;
-}
-.work-preview { position: sticky; top: calc(4.5rem + 1.5rem); }
-.work-thumb {
-  width: 100%;
-  background: var(--paper-dim);
-  border: 1px solid var(--line);
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
-  font-family: var(--font-label); font-size: 0.72rem; color: var(--muted);
-  text-align: center; padding: 1rem;
-  filter: grayscale(1);
-  transition: width 0.35s var(--ease), height 0.35s var(--ease),
-    filter 0.35s var(--ease), border-color 0.35s var(--ease);
-}
-.work-thumb.is-active { filter: grayscale(0); border-color: var(--accent-soft); }
-.work-thumb-label {
-  text-transform: uppercase; letter-spacing: 0.05em;
-  transition: color 0.35s var(--ease);
-}
-.work-thumb.is-active .work-thumb-label { color: var(--accent); }
-
-.work-list { border-top: 1px solid var(--line); }
-.work-row {
-  display: grid; grid-template-columns: 2.5rem 1fr auto;
-  align-items: center; gap: 1.5rem;
-  padding: 1.6rem 0; border-bottom: 1px solid var(--line);
-  transition: padding-left 0.25s var(--ease);
-}
-.work-row:hover, .work-row:focus-visible { padding-left: 0.5rem; }
-.work-row .num { font-family: var(--font-label); font-size: 0.78rem; color: var(--muted); }
-.work-row .title-block h3 {
-  font-family: var(--font-serif); font-weight: 400;
-  font-size: clamp(1.5rem, 3.5vw, 2.5rem); margin: 0 0 0.25rem;
-  letter-spacing: -0.01em;
-  transition: color 0.25s var(--ease);
-}
-.work-row:hover .title-block h3 { color: var(--accent); }
-.work-row .title-block span { color: var(--muted); font-size: 0.95rem; }
-.work-row .arrow {
-  font-family: var(--font-label); font-size: 1.1rem; color: var(--accent);
-  transition: transform 0.25s var(--ease);
-}
-.work-row:hover .arrow { transform: translateX(4px); }
 
 /* ---------- AI Experiments: project list ----------
    Simple row list — heading on the left, diagonal arrow on the right.
@@ -833,14 +793,7 @@ section + section { border-top: 1px solid var(--line); }
 .footer-bottom a:hover { color: var(--accent-soft); }
 .footer-bottom-contact { display: flex; gap: 1.5rem; }
 
-@media (max-width: 860px) {
-  .work-grid { grid-template-columns: 1fr; }
-  .work-preview { display: none; }
-}
-
 @media (max-width: 640px) {
-  .work-row { grid-template-columns: 2rem 1fr; }
-  .work-row .arrow { display: none; }
   .process-step, .process-step.meta-row { grid-template-columns: 1fr; gap: 0.5rem; }
   .hero .meta-row { flex-direction: column; gap: 0.5rem; }
 }
