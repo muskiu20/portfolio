@@ -95,7 +95,8 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
 .intro-loader {
   position: fixed; inset: 0; z-index: 200;
   background: #0B0B0B;
-  display: flex; align-items: center; justify-content: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 32px;
 }
 .intro-loader.is-fading-out { opacity: 0; transition: opacity 0.5s ease; }
 
@@ -122,11 +123,9 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   font-family: var(--font-display);
   white-space: nowrap;
 }
-.intro-line-1 { font-size: 56px; font-weight: 500; }
-.intro-line-2, .intro-line-3, .intro-line-4 { font-size: 28px; font-weight: 400; }
+.intro-line-1, .intro-line-2, .intro-line-3, .intro-line-4 { font-size: 56px; font-weight: 500; }
 .intro-aside {
-  font-family: var(--font-serif); font-style: italic;
-  font-size: 0.6em; margin-left: 0.35em;
+  margin-left: 0.35em;
   opacity: 0;
 }
 
@@ -159,6 +158,22 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   to { opacity: 1; }
 }
 
+.intro-progress {
+  position: relative; z-index: 1;
+  width: 140px; height: 2px;
+  background: rgba(163, 47, 35, 0.25);
+  overflow: hidden;
+}
+.intro-progress-bar {
+  width: 0%; height: 100%;
+  background: #A32F23;
+  animation: introProgressFill 10.9s linear forwards;
+}
+@keyframes introProgressFill {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
 .intro-skip {
   position: absolute; right: 24px; bottom: 24px; z-index: 2;
   background: none; border: none; cursor: pointer;
@@ -170,8 +185,7 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
 .intro-skip:hover { opacity: 0.7; }
 
 @media (max-width: 640px) {
-  .intro-line-1 { font-size: 36px; }
-  .intro-line-2, .intro-line-3, .intro-line-4 { font-size: 20px; }
+  .intro-line-1, .intro-line-2, .intro-line-3, .intro-line-4 { font-size: 36px; }
 }
 
 /* Reduced motion: no slide/stagger — four lines just fade in/out across a
@@ -184,6 +198,7 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   .intro-line-3 { animation-duration: 0.8s; animation-delay: 2.4s; }
   .intro-line-4 { animation-duration: 0.8s; animation-delay: 3.2s; }
   .intro-line-4 .intro-aside { animation-duration: 0.3s; animation-delay: 3.4s; }
+  .intro-progress-bar { animation-duration: 4s; }
   .intro-stripe { transition: none; }
   @keyframes introFadeOnly {
     0% { opacity: 0; }
