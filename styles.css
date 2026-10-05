@@ -692,6 +692,30 @@ section + section { border-top: 1px solid var(--line); }
   .testimonial-photo { inset: 1rem; }
 }
 
+/* Manual controls: arrows flanking a dot row, centered under the frame. */
+.testimonial-controls {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+}
+.testimonial-arrow {
+  display: flex; align-items: center; justify-content: center;
+  width: 2.5rem; height: 2.5rem; flex: none;
+  border: 1px solid var(--line); border-radius: 50%;
+  background: none; color: var(--muted); cursor: pointer;
+  transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+.testimonial-arrow:hover { border-color: var(--accent); color: var(--accent); }
+.testimonial-dots { display: flex; align-items: center; gap: 0.6rem; }
+.testimonial-dot {
+  width: 0.55rem; height: 0.55rem; padding: 0; flex: none;
+  border: none; border-radius: 50%;
+  background: var(--line); cursor: pointer;
+  transition: background 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.testimonial-dot:hover { background: var(--accent-soft); }
+.testimonial-dot.is-active { background: var(--accent); transform: scale(1.3); }
+
 /* ---------- Process (numbered rows intensify like a proof sheet) ---------- */
 .process-list { counter-reset: step; border-top: 1px solid var(--accent); }
 .process-step {
