@@ -89,6 +89,110 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .skip-link:focus { left: var(--gutter); top: var(--gutter); }
 
+/* ---------- Intro loader ---------- */
+html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 100%; }
+
+.intro-loader {
+  position: fixed; inset: 0; z-index: 200;
+  background: #0B0B0B;
+  display: flex; align-items: center; justify-content: center;
+}
+.intro-loader.is-fading-out { opacity: 0; transition: opacity 0.5s ease; }
+
+.intro-loader-stripes { position: absolute; inset: 0; display: flex; }
+.intro-stripe {
+  flex: 1 1 0; height: 100%;
+  background: #0B0B0B;
+  transform: translateY(0);
+  transition: transform 0.5s cubic-bezier(0.7, 0, 0.2, 1);
+}
+.intro-loader-stripes.is-lifted .intro-stripe { transform: translateY(-100%); }
+
+.intro-loader-text {
+  position: relative; z-index: 1;
+  display: grid; place-items: center;
+  text-align: center;
+  padding: 0 24px;
+  max-width: 90vw;
+}
+.intro-line {
+  grid-area: 1 / 1;
+  margin: 0;
+  color: #A32F23;
+  font-family: var(--font-display);
+  white-space: nowrap;
+}
+.intro-line-1 { font-size: 56px; font-weight: 500; }
+.intro-line-2, .intro-line-3, .intro-line-4 { font-size: 28px; font-weight: 400; }
+.intro-aside {
+  font-family: var(--font-serif); font-style: italic;
+  font-size: 0.6em; margin-left: 0.35em;
+  opacity: 0;
+}
+
+.intro-line-1 { animation: introMotion1 4s cubic-bezier(0.65, 0, 0.35, 1) 0s both; }
+.intro-line-2 { animation: introMotion2 2.5s cubic-bezier(0.65, 0, 0.35, 1) 4s both; }
+.intro-line-3 { animation: introMotion2 2.5s cubic-bezier(0.65, 0, 0.35, 1) 6.5s both; }
+.intro-line-4 { animation: introMotion4 1.9s cubic-bezier(0.65, 0, 0.35, 1) 9s both; }
+.intro-line-4 .intro-aside { animation: introAsideFade 0.5s cubic-bezier(0.65, 0, 0.35, 1) 9.5s both; }
+
+@keyframes introMotion1 {
+  0% { opacity: 0; transform: translateY(24px); }
+  12.5% { opacity: 1; transform: translateY(0); }
+  87.5% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-24px); }
+}
+@keyframes introMotion2 {
+  0% { opacity: 0; transform: translateY(24px); }
+  20% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-24px); }
+}
+@keyframes introMotion4 {
+  0% { opacity: 0; transform: translateY(24px); }
+  26.32% { opacity: 1; transform: translateY(0); }
+  73.68% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-24px); }
+}
+@keyframes introAsideFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.intro-skip {
+  position: absolute; right: 24px; bottom: 24px; z-index: 2;
+  background: none; border: none; cursor: pointer;
+  color: #A32F23;
+  font-family: var(--font-label); font-size: 13px; letter-spacing: 1px;
+  padding: 0.5rem;
+  transition: opacity 0.2s ease;
+}
+.intro-skip:hover { opacity: 0.7; }
+
+@media (max-width: 640px) {
+  .intro-line-1 { font-size: 36px; }
+  .intro-line-2, .intro-line-3, .intro-line-4 { font-size: 20px; }
+}
+
+/* Reduced motion: no slide/stagger — four lines just fade in/out across a
+   compressed ~4s window, then the whole loader fades out as one piece
+   (the stripes' blinds-lift animation is skipped entirely). */
+@media (prefers-reduced-motion: reduce) {
+  .intro-line { animation-name: introFadeOnly !important; }
+  .intro-line-1 { animation-duration: 1.6s; animation-delay: 0s; }
+  .intro-line-2 { animation-duration: 0.8s; animation-delay: 1.6s; }
+  .intro-line-3 { animation-duration: 0.8s; animation-delay: 2.4s; }
+  .intro-line-4 { animation-duration: 0.8s; animation-delay: 3.2s; }
+  .intro-line-4 .intro-aside { animation-duration: 0.3s; animation-delay: 3.4s; }
+  .intro-stripe { transition: none; }
+  @keyframes introFadeOnly {
+    0% { opacity: 0; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+}
+
 /* ---------- Grain overlay ---------- */
 .grain-overlay {
   position: fixed; inset: 0; z-index: 60; pointer-events: none;

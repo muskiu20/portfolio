@@ -13,6 +13,27 @@
 </head>
 <body>
 
+<!-- ============ INTRO LOADER (first visit only, see script below) ============ -->
+<div class="intro-loader" id="introLoader" aria-hidden="true">
+  <div class="intro-loader-stripes" id="introStripes"></div>
+  <div class="intro-loader-text">
+    <p class="intro-line intro-line-1">Meet Muskan Jain,</p>
+    <p class="intro-line intro-line-2">Product Designer from Bengaluru</p>
+    <p class="intro-line intro-line-3">Curious, slightly obsessive.</p>
+    <p class="intro-line intro-line-4">Overthinker <span class="intro-aside">(in a good way)</span></p>
+  </div>
+  <button class="intro-skip" id="introSkip" type="button">Skip →</button>
+</div>
+<script>
+  // Runs immediately (before the rest of the page paints) so a repeat visit
+  // in the same session never flashes the loader before removing it.
+  if (sessionStorage.getItem('introSeen')) {
+    document.getElementById('introLoader').remove();
+  } else {
+    document.documentElement.classList.add('intro-lock-scroll');
+  }
+</script>
+
 <div class="grain-overlay" aria-hidden="true"></div>
 
 <a class="skip-link" href="#main">Skip to content</a>
@@ -328,6 +349,48 @@
 </footer>
 
 <script>
+  // ---------- Intro loader ----------
+  (function () {
+    const loader = document.getElementById('introLoader');
+    if (!loader) return; // already removed by the early inline script (repeat visit)
+
+    sessionStorage.setItem('introSeen', '1');
+
+    const stripesHost = document.getElementById('introStripes');
+    const STRIPE_COUNT = 28;
+    const STRIPE_STAGGER_MS = 22;
+    const STRIPE_DURATION_MS = 500;
+    for (let i = 0; i < STRIPE_COUNT; i++) {
+      const s = document.createElement('div');
+      s.className = 'intro-stripe';
+      s.style.transitionDelay = (i * STRIPE_STAGGER_MS) + 'ms';
+      stripesHost.appendChild(s);
+    }
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let revealed = false;
+
+    function finish() {
+      document.documentElement.classList.remove('intro-lock-scroll');
+      loader.remove();
+    }
+
+    function reveal() {
+      if (revealed) return;
+      revealed = true;
+      if (reduce) {
+        loader.classList.add('is-fading-out');
+        setTimeout(finish, 520);
+      } else {
+        stripesHost.classList.add('is-lifted');
+        setTimeout(finish, (STRIPE_COUNT - 1) * STRIPE_STAGGER_MS + STRIPE_DURATION_MS + 30);
+      }
+    }
+
+    document.getElementById('introSkip').addEventListener('click', reveal);
+    setTimeout(reveal, reduce ? 4000 : 10900);
+  })();
+
   // ---------- Scroll-reveal ----------
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
