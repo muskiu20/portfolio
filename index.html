@@ -16,12 +16,10 @@
 <!-- ============ INTRO LOADER (first visit only, see script below) ============ -->
 <div class="intro-loader" id="introLoader" aria-hidden="true">
   <div class="intro-loader-stripes" id="introStripes"></div>
-  <div class="intro-loader-text">
-    <p class="intro-line intro-line-1">Meet Muskan Jain,</p>
-    <p class="intro-line intro-line-2">Product Designer from Bengaluru</p>
-    <p class="intro-line intro-line-3">Curious, slightly obsessive.</p>
-    <p class="intro-line intro-line-4">Overthinker <span class="intro-aside">(in a good way)</span></p>
-  </div>
+  <span class="intro-loader-text" role="status">
+    <span class="t-think-sizer" aria-hidden="true">Product Designer from Bengaluru</span>
+    <span class="t-think-text" id="introText" data-text="Meet Muskan Jain,">Meet Muskan Jain,</span>
+  </span>
   <div class="intro-progress" aria-hidden="true"><div class="intro-progress-bar"></div></div>
   <button class="intro-skip" id="introSkip" type="button">Skip →</button>
 </div>
@@ -372,7 +370,7 @@
     let revealed = false;
 
     // A short synthesized tick (no audio asset needed), played right as
-    // each line finishes disappearing.
+    // a line finishes disappearing.
     let audioCtx;
     function playTick() {
       try {
@@ -388,8 +386,56 @@
         osc.stop(audioCtx.currentTime + 0.05);
       } catch (e) { /* Web Audio unsupported/blocked — fail silently */ }
     }
-    const tickTimes = reduce ? [1600, 2400, 3200, 4000] : [4000, 6500, 9000, 10900];
-    const tickTimers = tickTimes.map((t) => setTimeout(playTick, t));
+
+    // ---- Thinking-state text swap (see t-think CSS) ----
+    // "Overthinker" / "Overthinker (in a good way)" are two separate
+    // states so the aside's delayed appearance falls out of the normal
+    // swap sequence rather than needing its own nested animation.
+    const textEl = document.getElementById('introText');
+    const SWAP_MS = 150, GAP_MS = 50; // must match --think-swap / --think-gap
+    const states = reduce
+      ? [
+          { text: 'Meet Muskan Jain,', hold: 1600 },
+          { text: 'Product Designer from Bengaluru', hold: 800 },
+          { text: 'Curious, slightly obsessive.', hold: 800 },
+          { text: 'Overthinker', hold: 300 },
+          { text: 'Overthinker (in a good way)', hold: 500 }
+        ]
+      : [
+          { text: 'Meet Muskan Jain,', hold: 4000 },
+          { text: 'Product Designer from Bengaluru', hold: 2500 },
+          { text: 'Curious, slightly obsessive.', hold: 2500 },
+          { text: 'Overthinker', hold: 500 },
+          { text: 'Overthinker (in a good way)', hold: 1400 }
+        ];
+    // Tick after every *line* disappearing, not the internal aside swap
+    // (index 3 -> 4 is the same line gaining its parenthetical, not a
+    // new line replacing it).
+    const TICK_AFTER_INDEX = new Set([0, 1, 2, 4]);
+
+    function swapTo(text) {
+      textEl.classList.add('is-exit');
+      setTimeout(() => {
+        textEl.textContent = text;
+        textEl.setAttribute('data-text', text);
+        textEl.classList.remove('is-exit');
+        textEl.classList.add('is-enter-start');
+        textEl.offsetWidth; // force reflow so the snapped start position commits
+        setTimeout(() => textEl.classList.remove('is-enter-start'), 0);
+      }, SWAP_MS + GAP_MS);
+    }
+
+    const timers = [];
+    let t = 0;
+    states.forEach((state, i) => {
+      if (i > 0) {
+        const text = state.text;
+        timers.push(setTimeout(() => swapTo(text), t));
+      }
+      t += state.hold;
+      if (TICK_AFTER_INDEX.has(i)) timers.push(setTimeout(playTick, t));
+    });
+    const totalMs = t;
 
     function finish() {
       document.documentElement.classList.remove('intro-lock-scroll');
@@ -399,7 +445,7 @@
     function reveal() {
       if (revealed) return;
       revealed = true;
-      tickTimers.forEach(clearTimeout);
+      timers.forEach(clearTimeout);
       if (reduce) {
         loader.classList.add('is-fading-out');
         setTimeout(finish, 520);
@@ -410,7 +456,7 @@
     }
 
     document.getElementById('introSkip').addEventListener('click', reveal);
-    setTimeout(reveal, reduce ? 4000 : 10900);
+    setTimeout(reveal, totalMs);
   })();
 
   // ---------- Scroll-reveal ----------

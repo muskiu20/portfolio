@@ -109,53 +109,77 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
 }
 .intro-loader-stripes.is-lifted .intro-stripe { transform: translateY(-100%); }
 
+/* ---- "Thinking state" shimmer/swap text (t-think) ----
+   JS swaps the visible line by: add .is-exit (fades/blurs the outgoing
+   text up and out) -> after --think-swap + --think-gap, update the text
+   and swap in .is-enter-start (snaps it, transition-less, to the
+   below/blurred/invisible starting position) -> force reflow -> drop
+   .is-enter-start (transitions it up to resting state). The hidden
+   sizer (longest state) sets a fixed box width so centering never
+   jitters as the line changes. */
 .intro-loader-text {
   position: relative; z-index: 1;
-  display: grid; place-items: center;
+  display: inline-block;
   text-align: center;
   padding: 0 24px;
   max-width: 90vw;
+  font-family: var(--font-serif); font-weight: 400;
+  --think-swap: 150ms;
+  --think-gap: 50ms;
+  --think-distance: 8px;
+  --think-blur: 2px;
+  --think-shimmer: 2000ms;
+  --think-base: #A32F23;
+  --think-highlight: var(--ink);
+  --think-ease: ease-in-out;
 }
-.intro-line {
-  grid-area: 1 / 1;
-  margin: 0;
-  color: #A32F23;
-  font-family: var(--font-serif);
+.intro-loader-text .t-think-sizer { display: block; visibility: hidden; white-space: nowrap; font-size: 38px; }
+.intro-loader-text .t-think-text {
+  position: absolute; top: 0; left: 0; right: 0;
+  display: block;
+  color: var(--think-base);
   white-space: nowrap;
+  font-size: 38px;
+  transform: translateY(0);
+  filter: blur(0);
+  opacity: 1;
+  transition:
+    transform var(--think-swap) var(--think-ease),
+    filter var(--think-swap) var(--think-ease),
+    opacity var(--think-swap) var(--think-ease);
+  will-change: transform, filter, opacity;
 }
-.intro-line-1, .intro-line-2, .intro-line-3, .intro-line-4 { font-size: 38px; font-weight: 400; }
-.intro-aside {
-  margin-left: 0.35em;
+/* Shimmer sweeps the glyphs only (background-clip: text). */
+.intro-loader-text .t-think-text::before {
+  content: attr(data-text);
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(90deg,
+    transparent 0%, transparent 40%,
+    var(--think-highlight) 50%,
+    transparent 60%, transparent 100%);
+  background-size: 400% 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: t-think-shimmer var(--think-shimmer) linear infinite;
+}
+@keyframes t-think-shimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: 0% 0; }
+}
+.intro-loader-text .t-think-text.is-exit {
+  transform: translateY(calc(var(--think-distance) * -1));
+  filter: blur(var(--think-blur));
   opacity: 0;
 }
-
-.intro-line-1 { animation: introMotion1 4s cubic-bezier(0.65, 0, 0.35, 1) 0s both; }
-.intro-line-2 { animation: introMotion2 2.5s cubic-bezier(0.65, 0, 0.35, 1) 4s both; }
-.intro-line-3 { animation: introMotion2 2.5s cubic-bezier(0.65, 0, 0.35, 1) 6.5s both; }
-.intro-line-4 { animation: introMotion4 1.9s cubic-bezier(0.65, 0, 0.35, 1) 9s both; }
-.intro-line-4 .intro-aside { animation: introAsideFade 0.5s cubic-bezier(0.65, 0, 0.35, 1) 9.5s both; }
-
-@keyframes introMotion1 {
-  0% { opacity: 0; transform: translateY(24px); }
-  12.5% { opacity: 1; transform: translateY(0); }
-  87.5% { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(-24px); }
-}
-@keyframes introMotion2 {
-  0% { opacity: 0; transform: translateY(24px); }
-  20% { opacity: 1; transform: translateY(0); }
-  80% { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(-24px); }
-}
-@keyframes introMotion4 {
-  0% { opacity: 0; transform: translateY(24px); }
-  26.32% { opacity: 1; transform: translateY(0); }
-  73.68% { opacity: 1; transform: translateY(0); }
-  100% { opacity: 0; transform: translateY(-24px); }
-}
-@keyframes introAsideFade {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.intro-loader-text .t-think-text.is-enter-start {
+  transition: none;
+  transform: translateY(var(--think-distance));
+  filter: blur(var(--think-blur));
+  opacity: 0;
 }
 
 .intro-progress {
@@ -185,27 +209,17 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
 .intro-skip:hover { opacity: 0.7; }
 
 @media (max-width: 640px) {
-  .intro-line-1, .intro-line-2, .intro-line-3, .intro-line-4 { font-size: 24px; }
+  .intro-loader-text .t-think-sizer, .intro-loader-text .t-think-text { font-size: 24px; }
 }
 
-/* Reduced motion: no slide/stagger — four lines just fade in/out across a
-   compressed ~4s window, then the whole loader fades out as one piece
-   (the stripes' blinds-lift animation is skipped entirely). */
+/* Reduced motion: swaps become instant (no slide/blur/shimmer), lines
+   still cycle but across a compressed ~4s window (timed from JS), then
+   the whole loader fades out as one piece instead of the stripe lift. */
 @media (prefers-reduced-motion: reduce) {
-  .intro-line { animation-name: introFadeOnly !important; }
-  .intro-line-1 { animation-duration: 1.6s; animation-delay: 0s; }
-  .intro-line-2 { animation-duration: 0.8s; animation-delay: 1.6s; }
-  .intro-line-3 { animation-duration: 0.8s; animation-delay: 2.4s; }
-  .intro-line-4 { animation-duration: 0.8s; animation-delay: 3.2s; }
-  .intro-line-4 .intro-aside { animation-duration: 0.3s; animation-delay: 3.4s; }
+  .intro-loader-text .t-think-text { transition: none !important; transform: none !important; filter: none !important; }
+  .intro-loader-text .t-think-text::before { display: none !important; }
   .intro-progress-bar { animation-duration: 4s; }
   .intro-stripe { transition: none; }
-  @keyframes introFadeOnly {
-    0% { opacity: 0; }
-    15% { opacity: 1; }
-    85% { opacity: 1; }
-    100% { opacity: 0; }
-  }
 }
 
 /* ---------- Grain overlay ---------- */
