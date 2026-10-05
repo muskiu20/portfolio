@@ -700,7 +700,7 @@ section + section { border-top: 1px solid var(--line); }
 }
 .testimonial-arrow {
   display: flex; align-items: center; justify-content: center;
-  width: 2.5rem; height: 2.5rem; flex: none;
+  width: 32px; height: 32px; flex: none;
   border: 1px solid var(--line); border-radius: 50%;
   background: none; color: var(--muted); cursor: pointer;
   transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
