@@ -371,6 +371,26 @@
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let revealed = false;
 
+    // A short synthesized tick (no audio asset needed), played right as
+    // each line finishes disappearing.
+    let audioCtx;
+    function playTick() {
+      try {
+        audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'square';
+        osc.frequency.value = 1800;
+        gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+        osc.connect(gain).connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.05);
+      } catch (e) { /* Web Audio unsupported/blocked — fail silently */ }
+    }
+    const tickTimes = reduce ? [1600, 2400, 3200, 4000] : [4000, 6500, 9000, 10900];
+    const tickTimers = tickTimes.map((t) => setTimeout(playTick, t));
+
     function finish() {
       document.documentElement.classList.remove('intro-lock-scroll');
       loader.remove();
@@ -379,6 +399,7 @@
     function reveal() {
       if (revealed) return;
       revealed = true;
+      tickTimers.forEach(clearTimeout);
       if (reduce) {
         loader.classList.add('is-fading-out');
         setTimeout(finish, 520);
