@@ -455,6 +455,7 @@
         textEl.classList.remove('is-enter-start');
         textEl.classList.add('is-exit');
         setTimeout(() => {
+          loader.classList.add('is-revealing'); // drop the flash-guard background so the lifting stripes actually uncover the hero
           stripesHost.classList.add('is-lifted');
           setTimeout(finish, (STRIPE_COUNT - 1) * STRIPE_STAGGER_MS + STRIPE_DURATION_MS + 30);
         }, SWAP_MS);

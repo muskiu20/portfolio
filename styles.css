@@ -94,11 +94,12 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
 
 .intro-loader {
   position: fixed; inset: 0; z-index: 200;
-  background: #0B0B0B;
+  background: #0B0B0B; /* only a flash-guard before JS populates the stripes below — cleared via .is-revealing the moment they start lifting, otherwise this opaque layer would mask the reveal no matter where the stripes are */
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 32px;
 }
 .intro-loader.is-fading-out { opacity: 0; transition: opacity 0.5s ease; }
+.intro-loader.is-revealing { background: none; }
 
 .intro-loader-stripes { position: absolute; inset: 0; display: flex; }
 .intro-stripe {
