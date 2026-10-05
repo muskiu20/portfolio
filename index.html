@@ -146,8 +146,8 @@
   <!-- ============ TESTIMONIALS ============
        One black card at a time, full width of the page's content grid —
        quote + byline on the left (quote icon top-left), accent-outlined
-       illustration on the right. Auto-advances through the slides on an
-       infinite loop at a fixed interval (see script below). ============ -->
+       illustration on the right. Navigated manually via the dots/arrows
+       below the frame (see script below). ============ -->
   <section id="testimonials">
     <div class="wrap">
       <div class="section-head reveal">
@@ -397,7 +397,7 @@
   updateClock();
   setInterval(updateClock, 15000);
 
-  // ---------- Testimonials: single-slide carousel, auto-advancing on a loop ----------
+  // ---------- Testimonials: single-slide carousel, manual navigation only ----------
   (function () {
     const carousel = document.querySelector('.testimonial-carousel');
     const slides = document.querySelectorAll('.testimonial-slide');
@@ -444,27 +444,11 @@
       dots[current] && dots[current].setAttribute('aria-selected', 'true');
     }
 
-    const reduceMotionTestimonials = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let autoAdvance;
-    function startAutoAdvance() {
-      if (reduceMotionTestimonials) return;
-      clearInterval(autoAdvance);
-      autoAdvance = setInterval(() => goTo(current + 1), 6000);
-    }
-    // Manual navigation jumps straight to the chosen slide and restarts the
-    // auto-advance clock, so it doesn't immediately skip again right after.
-    function goToManually(index) {
-      goTo(index);
-      startAutoAdvance();
-    }
-
-    dots.forEach((dot, i) => dot.addEventListener('click', () => goToManually(i)));
+    dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
     arrows.forEach((arrow) => {
       const dir = Number(arrow.dataset.dir);
-      arrow.addEventListener('click', () => goToManually(current + dir));
+      arrow.addEventListener('click', () => goTo(current + dir));
     });
-
-    startAutoAdvance();
   })();
 
   // ---------- Graphics: takes grid + fullscreen viewer ----------
