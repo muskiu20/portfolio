@@ -427,16 +427,42 @@
 
     const arrows = document.querySelectorAll('.testimonial-arrow');
     let current = 0;
+    let animating = false;
 
-    function goTo(index) {
-      slides[current].classList.remove('is-active');
-      current = (index + slides.length) % slides.length;
-      slides[current].classList.add('is-active');
+    // Every slide but the active one starts parked off to the right — only
+    // its position right before a transition (set in goTo, per direction)
+    // actually matters, since it's invisible behind the carousel's
+    // overflow:hidden until then.
+    slides.forEach((s, i) => { s.style.transform = i === current ? 'translateX(0)' : 'translateX(100%)'; });
+
+    // Push transition: the incoming slide enters from the side it's coming
+    // from (right for "next", left for "prev") while the outgoing slide
+    // exits the opposite side, instead of cross-fading in place.
+    function goTo(index, dir) {
+      if (animating || index === current) return;
+      animating = true;
+      const oldSlide = slides[current];
+      const newSlide = slides[index];
+
+      newSlide.style.transition = 'none';
+      newSlide.style.transform = `translateX(${dir * 100}%)`;
+      newSlide.offsetWidth; // force reflow so the jump above isn't animated
+      newSlide.style.transition = '';
+
+      requestAnimationFrame(() => {
+        oldSlide.style.transform = `translateX(${-dir * 100}%)`;
+        newSlide.style.transform = 'translateX(0)';
+      });
+
+      oldSlide.classList.remove('is-active');
+      newSlide.classList.add('is-active');
+      current = index;
+      setTimeout(() => { animating = false; }, 600);
     }
 
     arrows.forEach((arrow) => {
       const dir = Number(arrow.dataset.dir);
-      arrow.addEventListener('click', () => goTo(current + dir));
+      arrow.addEventListener('click', () => goTo((current + dir + slides.length) % slides.length, dir));
     });
   })();
 
