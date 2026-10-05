@@ -685,10 +685,10 @@ section + section { border-top: 1px solid var(--line); }
 .testimonial-slide:nth-child(2) .testimonial-photo { transform: scale(1.0625); }
 
 @media (max-width: 760px) {
-  .testimonial-carousel { min-height: 620px; }
-  .testimonial-slide { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  .testimonial-carousel { min-height: 420px; }
+  .testimonial-slide { grid-template-columns: 1fr; grid-template-rows: 1fr; }
   .testimonial-slide-text { padding-bottom: 1rem; }
-  .testimonial-photo { inset: 1rem; }
+  .testimonial-slide-media { display: none; }
 }
 
 /* Manual controls: arrows flanking a dot row, centered under the frame. */
