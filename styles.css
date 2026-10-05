@@ -632,7 +632,7 @@ section + section { border-top: 1px solid var(--line); }
   display: grid;
   grid-template-columns: 1.15fr 1fr;
   pointer-events: none;
-  transition: transform 0.6s var(--ease);
+  transition: transform 0.9s var(--ease);
 }
 .testimonial-slide.is-active { pointer-events: auto; z-index: 1; }
 
