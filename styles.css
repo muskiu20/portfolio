@@ -184,7 +184,7 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
 
 .intro-progress {
   position: relative; z-index: 1;
-  width: 140px; height: 2px;
+  width: 200px; height: 2px;
   background: rgba(163, 47, 35, 0.25);
   overflow: hidden;
 }
