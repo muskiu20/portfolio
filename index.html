@@ -201,11 +201,6 @@
             <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
-        <div class="testimonial-dots" role="tablist" aria-label="Testimonial slides">
-          <button class="testimonial-dot is-active" type="button" role="tab" aria-selected="true" aria-label="Show testimonial 1 of 3"></button>
-          <button class="testimonial-dot" type="button" role="tab" aria-selected="false" aria-label="Show testimonial 2 of 3"></button>
-          <button class="testimonial-dot" type="button" role="tab" aria-selected="false" aria-label="Show testimonial 3 of 3"></button>
-        </div>
         <button class="testimonial-arrow" type="button" data-dir="1" aria-label="Next testimonial">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
@@ -430,21 +425,15 @@
 
     if (slides.length < 2) return;
 
-    const dots = document.querySelectorAll('.testimonial-dot');
     const arrows = document.querySelectorAll('.testimonial-arrow');
     let current = 0;
 
     function goTo(index) {
       slides[current].classList.remove('is-active');
-      dots[current] && dots[current].classList.remove('is-active');
-      dots[current] && dots[current].setAttribute('aria-selected', 'false');
       current = (index + slides.length) % slides.length;
       slides[current].classList.add('is-active');
-      dots[current] && dots[current].classList.add('is-active');
-      dots[current] && dots[current].setAttribute('aria-selected', 'true');
     }
 
-    dots.forEach((dot, i) => dot.addEventListener('click', () => goTo(i)));
     arrows.forEach((arrow) => {
       const dir = Number(arrow.dataset.dir);
       arrow.addEventListener('click', () => goTo(current + dir));
