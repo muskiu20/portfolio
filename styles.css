@@ -109,6 +109,10 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
 .intro-stripe {
   flex: 1 1 0; height: 100%;
   background: #0B0B0B;
+  /* Bleeds 1px into the next stripe so any sub-pixel rounding gap between
+     28 flex items (more visible on narrow/responsive widths, and engine-
+     dependent) can never show the hero through a seam. */
+  box-shadow: 1px 0 0 0 #0B0B0B;
   transform: translateY(0);
   transition: transform 0.5s cubic-bezier(0.7, 0, 0.2, 1);
 }
