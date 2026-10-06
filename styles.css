@@ -50,7 +50,11 @@
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
+/* scrollbar-gutter keeps the scrollbar's width reserved at all times —
+   without it, the intro loader's overflow:hidden (below) removes the
+   scrollbar entirely while it's up, and the page content shifts
+   sideways the instant it's released and the scrollbar reappears. */
+html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; scrollbar-gutter: stable; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
