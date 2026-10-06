@@ -429,9 +429,13 @@
         }
         textEl.setAttribute('data-text', state.text);
         textEl.classList.remove('is-exit');
-        textEl.classList.add('is-enter-start');
-        textEl.offsetWidth; // force reflow so the snapped start position commits
-        setTimeout(() => textEl.classList.remove('is-enter-start'), 0);
+        // no-shimmer freezes the shimmer pseudo so dropping it next tick
+        // restarts the animation fresh — otherwise it keeps running as one
+        // continuous loop from page load, and a short line can land in a
+        // phase where the highlight never sweeps over it at all.
+        textEl.classList.add('is-enter-start', 'no-shimmer');
+        textEl.offsetWidth; // force reflow so the snapped start position + shimmer restart both commit
+        setTimeout(() => textEl.classList.remove('is-enter-start', 'no-shimmer'), 0);
       }, SWAP_MS + GAP_MS);
     }
 

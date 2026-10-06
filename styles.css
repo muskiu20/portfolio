@@ -171,6 +171,13 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   0%   { background-position: 100% 0; }
   100% { background-position: 0% 0; }
 }
+/* The shimmer runs as one continuous loop from page load rather than
+   per-line, so whichever phase it happens to be at when a short line
+   (like "Overthinker") enters, it may never pass over the glyphs at all
+   in that line's short hold. JS restarts it fresh on every line swap by
+   toggling this class through a forced reflow, so every line gets a
+   guaranteed, consistent sweep. */
+.intro-loader-text .t-think-text.no-shimmer::before { animation: none; }
 .intro-loader-text .t-think-text.is-exit {
   transform: translateY(calc(var(--think-distance) * -1));
   filter: blur(var(--think-blur));
