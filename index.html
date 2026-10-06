@@ -418,24 +418,38 @@
         // reserved layout width is already accounted for in the centered
         // box from the start — appending it later would shift "Overthinker"
         // sideways the instant it's inserted, space-occupying even at
-        // opacity:0. data-text stays as just the base word, so the shimmer
-        // doesn't sweep over (ghost) the aside before it's actually visible.
+        // opacity:0.
         if (state.aside) {
           const span = document.createElement('span');
           span.className = 'intro-aside';
           span.textContent = ' ' + state.aside;
           textEl.appendChild(span);
-          setTimeout(() => span.classList.add('is-visible'), state.asideDelay);
         }
         textEl.setAttribute('data-text', state.text);
         textEl.classList.remove('is-exit');
-        // no-shimmer freezes the shimmer pseudo so dropping it next tick
-        // restarts the animation fresh — otherwise it keeps running as one
-        // continuous loop from page load, and a short line can land in a
-        // phase where the highlight never sweeps over it at all.
+        // no-shimmer freezes the shimmer pseudo so dropping it restarts the
+        // animation fresh — otherwise it keeps running as one continuous
+        // loop from page load, and a short line can land in a phase where
+        // the highlight never sweeps over it at all.
         textEl.classList.add('is-enter-start', 'no-shimmer');
-        textEl.offsetWidth; // force reflow so the snapped start position + shimmer restart both commit
-        setTimeout(() => textEl.classList.remove('is-enter-start', 'no-shimmer'), 0);
+        textEl.offsetWidth; // force reflow so the snapped start position + shimmer freeze both commit
+        setTimeout(() => textEl.classList.remove('is-enter-start'), 0);
+        if (state.aside) {
+          // Hold the shimmer off until the aside actually fades in, then
+          // widen data-text to the full phrase and restart the sweep over
+          // it — syncing the two means the shimmer never ghosts the aside's
+          // glyphs early, and the final line gets one sweep across the
+          // whole phrase instead of stopping at the lead word.
+          setTimeout(() => {
+            const span = textEl.querySelector('.intro-aside');
+            if (span) span.classList.add('is-visible');
+            textEl.setAttribute('data-text', state.text + ' ' + state.aside);
+            textEl.offsetWidth; // force reflow so the shimmer restart commits
+            textEl.classList.remove('no-shimmer');
+          }, state.asideDelay);
+        } else {
+          setTimeout(() => textEl.classList.remove('no-shimmer'), 0);
+        }
       }, SWAP_MS + GAP_MS);
     }
 

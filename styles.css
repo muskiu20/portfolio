@@ -176,8 +176,12 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
    (like "Overthinker") enters, it may never pass over the glyphs at all
    in that line's short hold. JS restarts it fresh on every line swap by
    toggling this class through a forced reflow, so every line gets a
-   guaranteed, consistent sweep. */
-.intro-loader-text .t-think-text.no-shimmer::before { animation: none; }
+   guaranteed, consistent sweep. opacity:0 (not just animation:none) is
+   needed because animation:none freezes the gradient at its *last*
+   background-position rather than hiding it — without this a static
+   highlight band can sit visibly on the glyphs for the whole frozen
+   stretch instead of just disappearing. */
+.intro-loader-text .t-think-text.no-shimmer::before { animation: none; opacity: 0; }
 .intro-loader-text .t-think-text.is-exit {
   transform: translateY(calc(var(--think-distance) * -1));
   filter: blur(var(--think-blur));
