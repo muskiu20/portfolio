@@ -182,13 +182,22 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   filter: blur(var(--think-blur));
   opacity: 0;
 }
+/* The aside fades in on its own — the word it follows never exits/re-enters. */
+.intro-loader-text .intro-aside {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.intro-loader-text .intro-aside.is-visible { opacity: 1; }
 
 .intro-progress {
   position: relative; z-index: 1;
+  opacity: 1;
+  transition: opacity 0.3s ease;
   width: 200px; height: 2px;
   background: rgba(163, 47, 35, 0.25);
   overflow: hidden;
 }
+.intro-progress.is-exit { opacity: 0; }
 .intro-progress-bar {
   width: 0%; height: 100%;
   background: #A32F23;

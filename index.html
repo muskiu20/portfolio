@@ -388,52 +388,56 @@
     }
 
     // ---- Thinking-state text swap (see t-think CSS) ----
-    // "Overthinker" / "Overthinker (in a good way)" are two separate
-    // states so the aside's delayed appearance falls out of the normal
-    // swap sequence rather than needing its own nested animation.
+    // "Overthinker" carries its aside as an `aside`/`asideDelay` pair on
+    // the same state, rather than as a separate state — the word itself
+    // stays put and only the aside fades in, instead of the whole line
+    // exiting and a new, longer one sliding back in to replace it.
     const textEl = document.getElementById('introText');
+    const progressEl = document.querySelector('.intro-progress');
     const SWAP_MS = 150, GAP_MS = 50; // must match --think-swap / --think-gap
     const states = reduce
       ? [
           { text: 'Meet Muskan Jain,', hold: 1600 },
           { text: 'Product Designer from Bengaluru', hold: 800 },
           { text: 'Curious, slightly obsessive.', hold: 800 },
-          { text: 'Overthinker', hold: 300 },
-          { text: 'Overthinker (in a good way)', hold: 500 }
+          { text: 'Overthinker', hold: 800, aside: '(in a good way)', asideDelay: 300 }
         ]
       : [
           { text: 'Meet Muskan Jain,', hold: 4000 },
           { text: 'Product Designer from Bengaluru', hold: 2500 },
           { text: 'Curious, slightly obsessive.', hold: 2500 },
-          { text: 'Overthinker', hold: 500 },
-          { text: 'Overthinker (in a good way)', hold: 1400 }
+          { text: 'Overthinker', hold: 1900, aside: '(in a good way)', asideDelay: 500 }
         ];
-    // Tick after every *line* disappearing, not the internal aside swap
-    // (index 3 -> 4 is the same line gaining its parenthetical, not a
-    // new line replacing it).
-    const TICK_AFTER_INDEX = new Set([0, 1, 2, 4]);
 
-    function swapTo(text) {
+    function revealAside(text) {
+      const span = document.createElement('span');
+      span.className = 'intro-aside';
+      span.textContent = ' ' + text;
+      textEl.appendChild(span);
+      textEl.setAttribute('data-text', textEl.textContent); // keep the shimmer in sync only once it's actually visible
+      span.offsetWidth; // force reflow before transitioning opacity
+      setTimeout(() => span.classList.add('is-visible'), 0);
+    }
+
+    function swapTo(state) {
       textEl.classList.add('is-exit');
       setTimeout(() => {
-        textEl.textContent = text;
-        textEl.setAttribute('data-text', text);
+        textEl.textContent = state.text;
+        textEl.setAttribute('data-text', state.text);
         textEl.classList.remove('is-exit');
         textEl.classList.add('is-enter-start');
         textEl.offsetWidth; // force reflow so the snapped start position commits
         setTimeout(() => textEl.classList.remove('is-enter-start'), 0);
+        if (state.aside) setTimeout(() => revealAside(state.aside), state.asideDelay);
       }, SWAP_MS + GAP_MS);
     }
 
     const timers = [];
     let t = 0;
     states.forEach((state, i) => {
-      if (i > 0) {
-        const text = state.text;
-        timers.push(setTimeout(() => swapTo(text), t));
-      }
+      if (i > 0) timers.push(setTimeout(() => swapTo(state), t));
       t += state.hold;
-      if (TICK_AFTER_INDEX.has(i)) timers.push(setTimeout(playTick, t));
+      timers.push(setTimeout(playTick, t)); // tick after every line disappears
     });
     const totalMs = t;
 
@@ -454,6 +458,7 @@
         // (Skip can land mid-swap, so clear any pending enter state first.)
         textEl.classList.remove('is-enter-start');
         textEl.classList.add('is-exit');
+        progressEl.classList.add('is-exit'); // otherwise it just floats over the hero as the stripes lift
         setTimeout(() => {
           loader.classList.add('is-revealing'); // drop the flash-guard background so the lifting stripes actually uncover the hero
           stripesHost.classList.add('is-lifted');
