@@ -217,6 +217,7 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   transition: opacity 0.2s ease;
 }
 .intro-skip:hover { opacity: 0.7; }
+.intro-skip.is-exit { opacity: 0; pointer-events: none; }
 
 @media (max-width: 640px) {
   .intro-loader-text .t-think-sizer, .intro-loader-text .t-think-text { font-size: 24px; }

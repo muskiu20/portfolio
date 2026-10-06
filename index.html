@@ -394,6 +394,7 @@
     // exiting and a new, longer one sliding back in to replace it.
     const textEl = document.getElementById('introText');
     const progressEl = document.querySelector('.intro-progress');
+    const skipEl = document.getElementById('introSkip');
     const SWAP_MS = 150, GAP_MS = 50; // must match --think-swap / --think-gap
     const states = reduce
       ? [
@@ -452,6 +453,7 @@
       if (revealed) return;
       revealed = true;
       timers.forEach(clearTimeout);
+      skipEl.classList.add('is-exit'); // otherwise it lingers over the revealed hero until it pops away on removal
       if (reduce) {
         loader.classList.add('is-fading-out');
         setTimeout(finish, 520);
@@ -469,7 +471,7 @@
       }
     }
 
-    document.getElementById('introSkip').addEventListener('click', reveal);
+    skipEl.addEventListener('click', reveal);
     setTimeout(reveal, totalMs);
   })();
 
