@@ -176,6 +176,10 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   filter: blur(var(--think-blur));
   opacity: 0;
 }
+/* Kill the shimmer the instant a line exits — otherwise its highlight
+   sweep (independent, unsynced 2s loop) can be mid-pass over the glyphs
+   right as the text fades, flashing white instead of cleanly fading red. */
+.intro-loader-text .t-think-text.is-exit::before { opacity: 0; }
 .intro-loader-text .t-think-text.is-enter-start {
   transition: none;
   transform: translateY(var(--think-distance));
