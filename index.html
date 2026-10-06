@@ -409,26 +409,28 @@
           { text: 'Overthinker', hold: 1900, aside: '(in a good way)', asideDelay: 500 }
         ];
 
-    function revealAside(text) {
-      const span = document.createElement('span');
-      span.className = 'intro-aside';
-      span.textContent = ' ' + text;
-      textEl.appendChild(span);
-      textEl.setAttribute('data-text', textEl.textContent); // keep the shimmer in sync only once it's actually visible
-      span.offsetWidth; // force reflow before transitioning opacity
-      setTimeout(() => span.classList.add('is-visible'), 0);
-    }
-
     function swapTo(state) {
       textEl.classList.add('is-exit');
       setTimeout(() => {
         textEl.textContent = state.text;
+        // The aside span is created now (not when it reveals) so its
+        // reserved layout width is already accounted for in the centered
+        // box from the start — appending it later would shift "Overthinker"
+        // sideways the instant it's inserted, space-occupying even at
+        // opacity:0. data-text stays as just the base word, so the shimmer
+        // doesn't sweep over (ghost) the aside before it's actually visible.
+        if (state.aside) {
+          const span = document.createElement('span');
+          span.className = 'intro-aside';
+          span.textContent = ' ' + state.aside;
+          textEl.appendChild(span);
+          setTimeout(() => span.classList.add('is-visible'), state.asideDelay);
+        }
         textEl.setAttribute('data-text', state.text);
         textEl.classList.remove('is-exit');
         textEl.classList.add('is-enter-start');
         textEl.offsetWidth; // force reflow so the snapped start position commits
         setTimeout(() => textEl.classList.remove('is-enter-start'), 0);
-        if (state.aside) setTimeout(() => revealAside(state.aside), state.asideDelay);
       }, SWAP_MS + GAP_MS);
     }
 
