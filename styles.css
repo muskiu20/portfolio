@@ -471,6 +471,7 @@ html.intro-lock-scroll .site-header .mark {
   color: #EAE8E1;
 }
 #top.hero h1 .line1 { display: block; font-weight: 700; font-style: normal; color: #EFE9E2; }
+#top.hero h1 .line1 .small-cap { display: inline; font-size: 0.72em; color: inherit; }
 #top.hero h1 .line2 {
   display: block;
   font-family: var(--font-serif);
