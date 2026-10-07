@@ -466,9 +466,8 @@ html.intro-lock-scroll .site-header .mark {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(2.25rem, 7.25vw, 6rem);
-  line-height: 0.92;
+  line-height: 1.08; /* was 0.92 — the two block-level lines sat with zero gap between them, crowding line2's ascenders right up against line1's descenders */
   letter-spacing: -0.02em;
-  text-transform: lowercase;
   color: #EAE8E1;
 }
 #top.hero h1 .line1 { display: block; font-weight: 700; font-style: normal; color: #EFE9E2; }
