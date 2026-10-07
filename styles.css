@@ -465,7 +465,7 @@ html.intro-lock-scroll .site-header .mark {
 #top.hero h1 {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(2.75rem, 9vw, 7.5rem);
+  font-size: clamp(2.25rem, 7.25vw, 6rem);
   line-height: 0.92;
   letter-spacing: -0.02em;
   text-transform: lowercase;
@@ -547,7 +547,7 @@ html.intro-lock-scroll .site-header .mark {
 #top .hero-fade.is-visible { opacity: 1; transform: translateY(0); }
 
 @media (max-width: 640px) {
-  #top.hero h1 { font-size: 56px; }
+  #top.hero h1 { font-size: 44px; }
   #top .cta-row { flex-direction: column; align-items: stretch; }
   .hero-cta-primary, .hero-cta-secondary { width: 100%; justify-content: center; text-align: center; }
 }
