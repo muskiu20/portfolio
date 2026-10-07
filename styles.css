@@ -254,7 +254,7 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   .intro-loader-text .t-think-text::before { display: none !important; }
   .intro-progress-bar { animation-duration: 3.9s; }
   .intro-stripe { transition: none; }
-  html.intro-lock-scroll .site-header .mark { opacity: 1 !important; transform: none !important; }
+  .site-header .mark { transition: color 0.25s var(--ease) !important; transform: none !important; }
 }
 
 /* ---------- Grain overlay ---------- */
@@ -313,17 +313,16 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   font-size: 1.05rem;
   letter-spacing: -0.01em;
   color: #EAE8E1;
-  transition: color 0.25s var(--ease), opacity 0.6s ease, transform 0.6s ease;
-}
-/* Hidden while the intro loader is up (same lifecycle as the scroll lock —
-   see intro-lock-scroll in index.html), so "Muskan Jain" visibly arrives
-   in the nav the moment finish() unlocks scroll and removes the loader,
-   reading as the name settling into the navbar rather than just appearing.
-   On a repeat visit the loader never runs and this class is never added,
-   so the mark is just visible from the start — no flash. */
-html.intro-lock-scroll .site-header .mark {
   opacity: 0;
   transform: translateY(-10px);
+  transition: color 0.25s var(--ease), opacity 0.6s ease, transform 0.6s ease;
+}
+/* Hidden at the top of the page (hero already carries the name) — only
+   fades/slides in once .is-scrolled is toggled on (see the scrollY > 10
+   check in updateHeaderTheme). */
+.site-header.is-scrolled .mark {
+  opacity: 1;
+  transform: none;
 }
 .header-right { display: flex; align-items: center; gap: 1.75rem; }
 .site-header .cta {
@@ -470,13 +469,12 @@ html.intro-lock-scroll .site-header .mark {
   letter-spacing: -0.02em;
   color: #EAE8E1;
 }
-#top.hero h1 .line1 { display: block; font-weight: 700; font-style: normal; color: #EFE9E2; }
-#top.hero h1 .line2 {
+#top.hero h1 .line1 {
   display: block;
   font-family: var(--font-serif);
-  font-style: italic;
   font-weight: 400;
-  color: rgba(239, 233, 226, 0.85); /* solid, high-contrast — was 0.6, which let the busy pleat background bleed through unevenly */
+  font-style: normal;
+  color: #EFE9E2; /* full opacity — no alpha */
 }
 #top.hero p {
   color: #EFE9E2;
