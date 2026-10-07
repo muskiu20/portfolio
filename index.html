@@ -17,8 +17,8 @@
 <div class="intro-loader" id="introLoader" aria-hidden="true">
   <div class="intro-loader-stripes" id="introStripes"></div>
   <span class="intro-loader-text" role="status">
-    <span class="t-think-sizer" aria-hidden="true">Product Designer from Bengaluru</span>
-    <span class="t-think-text" id="introText" data-text="Meet Muskan Jain,">Meet Muskan Jain,</span>
+    <span class="t-think-sizer" aria-hidden="true">Curious, slightly obsessive.</span>
+    <span class="t-think-text" id="introText" data-text="Curious, slightly obsessive.">Curious, slightly obsessive.</span>
   </span>
   <div class="intro-progress" aria-hidden="true"><div class="intro-progress-bar"></div></div>
   <button class="intro-skip" id="introSkip" type="button">Skip →</button>
@@ -50,13 +50,13 @@
   <section class="hero hero-gradient" id="top">
     <div class="pleat" aria-hidden="true"><canvas></canvas></div>
     <div class="wrap">
-      <h1><span class="line0 hero-fade">Muskan Jain designs</span> <span class="line1 hero-fade">decisions,</span> <span class="line2 hero-fade">not decoration.</span></h1>
+      <h1><span class="line1 hero-fade">decisions,</span> <span class="line2 hero-fade">not decoration.</span></h1>
       <p class="hero-fade">Product designer from Bengaluru. I untangle complex workflows and shape the details that make products feel right, from research and IA to polished UI.</p>
+      <div class="meta-row hero-fade">Open to full-time roles</div>
       <div class="cta-row hero-fade">
         <a class="hero-cta-primary" href="#voice">See case studies ↓</a>
         <a class="hero-cta-secondary" href="https://drive.google.com/file/d/1b-tqPKzSWMeB06n6GI_zYxItHj281vK_/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume</a>
       </div>
-      <div class="meta-row hero-fade">Open to full-time roles <span aria-hidden="true">·</span> Bengaluru, India</div>
     </div>
   </section>
 
@@ -396,16 +396,14 @@
     const SWAP_MS = 150, GAP_MS = 50; // must match --think-swap / --think-gap
     const states = reduce
       ? [
-          { text: 'Meet Muskan Jain,', hold: 1600 },
-          { text: 'Product Designer from Bengaluru', hold: 800 },
-          { text: 'Curious, slightly obsessive.', hold: 800 },
-          { text: 'Overthinker', hold: 800, aside: '(in a good way)', asideDelay: 300 }
+          { text: 'Curious, slightly obsessive.', hold: 1400 },
+          { text: 'Overthinker', hold: 1350, aside: '(in a good way).', asideDelay: 300 },
+          { text: 'Meet Muskan Jain.', hold: 1150 }
         ]
       : [
-          { text: 'Meet Muskan Jain,', hold: 4000 },
-          { text: 'Product Designer from Bengaluru', hold: 2500 },
-          { text: 'Curious, slightly obsessive.', hold: 2500 },
-          { text: 'Overthinker', hold: 1900, aside: '(in a good way)', asideDelay: 500 }
+          { text: 'Curious, slightly obsessive.', hold: 2800 },
+          { text: 'Overthinker', hold: 2700, aside: '(in a good way).', asideDelay: 500 },
+          { text: 'Meet Muskan Jain.', hold: 2300 }
         ];
 
     function swapTo(state) {

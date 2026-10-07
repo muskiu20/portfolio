@@ -224,7 +224,7 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
 .intro-progress-bar {
   width: 0%; height: 100%;
   background: #A32F23;
-  animation: introProgressFill 10.9s linear forwards;
+  animation: introProgressFill 7.8s linear forwards; /* must match the sum of the non-reduced states' hold times in index.html */
 }
 @keyframes introProgressFill {
   from { width: 0%; }
@@ -252,8 +252,9 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
 @media (prefers-reduced-motion: reduce) {
   .intro-loader-text .t-think-text { transition: none !important; transform: none !important; filter: none !important; }
   .intro-loader-text .t-think-text::before { display: none !important; }
-  .intro-progress-bar { animation-duration: 4s; }
+  .intro-progress-bar { animation-duration: 3.9s; }
   .intro-stripe { transition: none; }
+  html.intro-lock-scroll .site-header .mark { opacity: 1 !important; transform: none !important; }
 }
 
 /* ---------- Grain overlay ---------- */
@@ -312,7 +313,17 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   font-size: 1.05rem;
   letter-spacing: -0.01em;
   color: #EAE8E1;
-  transition: color 0.25s var(--ease);
+  transition: color 0.25s var(--ease), opacity 0.6s ease, transform 0.6s ease;
+}
+/* Hidden while the intro loader is up (same lifecycle as the scroll lock —
+   see intro-lock-scroll in index.html), so "Muskan Jain" visibly arrives
+   in the nav the moment finish() unlocks scroll and removes the loader,
+   reading as the name settling into the navbar rather than just appearing.
+   On a repeat visit the loader never runs and this class is never added,
+   so the mark is just visible from the start — no flash. */
+html.intro-lock-scroll .site-header .mark {
+  opacity: 0;
+  transform: translateY(-10px);
 }
 .header-right { display: flex; align-items: center; gap: 1.75rem; }
 .site-header .cta {
@@ -460,14 +471,6 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   text-transform: lowercase;
   color: #EAE8E1;
 }
-#top.hero h1 .line0 {
-  display: block;
-  font-weight: 700;
-  font-style: normal;
-  font-size: 50%; /* relative to the h1's own clamp(), so it scales with line1/line2 at every width instead of needing its own breakpoints */
-  color: #EFE9E2;
-  margin-bottom: 0.25em;
-}
 #top.hero h1 .line1 { display: block; font-weight: 700; font-style: normal; color: #EFE9E2; }
 #top.hero h1 .line2 {
   display: block;
@@ -527,16 +530,13 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
 }
 
 #top.hero .meta-row {
-  display: block; /* overrides the base .hero .meta-row flex layout — plain
-    text flow lets " · " wrap naturally with its neighbouring words instead
-    of being orphaned on its own line */
+  display: block; /* overrides the base .hero .meta-row flex layout — a single line of text now, no items to lay out */
   font-family: var(--font-label);
   font-size: 12px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: rgba(239, 233, 226, 0.75);
 }
-#top.hero .meta-row span { opacity: 0.7; }
 
 /* Restrained load-in: fade + slide-up, staggered per line via JS class toggle */
 #top .hero-fade {
@@ -547,9 +547,6 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
 #top .hero-fade.is-visible { opacity: 1; transform: translateY(0); }
 
 @media (max-width: 640px) {
-  /* 56px base so "decisions," reads ~56px and "Muskan Jain designs" (50%
-     of the h1's own size) comes out to ~28px, matching the redesign spec
-     without needing a separate breakpoint for line0. */
   #top.hero h1 { font-size: 56px; }
   #top .cta-row { flex-direction: column; align-items: stretch; }
   .hero-cta-primary, .hero-cta-secondary { width: 100%; justify-content: center; text-align: center; }
