@@ -315,13 +315,6 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   transition: color 0.25s var(--ease);
 }
 .header-right { display: flex; align-items: center; gap: 1.75rem; }
-.local-time {
-  font-family: var(--font-label);
-  font-size: 0.78rem;
-  color: #8A877E;
-  letter-spacing: 0.03em;
-  transition: color 0.25s var(--ease);
-}
 .site-header .cta {
   font-family: var(--font-label);
   font-size: 0.78rem;
@@ -337,7 +330,6 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
 /* Still no background — only the text darkens when a light (.theme-sheet)
    section is scrolled behind the header, so it stays legible there too. */
 .site-header.on-light .mark { color: #171613; }
-.site-header.on-light .local-time { color: #4A4841; }
 .site-header.on-light .cta { color: #171613; border-bottom-color: #171613; }
 .site-header.on-light .cta:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
@@ -345,7 +337,6 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   .site-header { padding: 0.85rem 1rem; }
   .site-header .mark { font-size: 0.95rem; white-space: nowrap; }
   .header-right { gap: 1rem; }
-  .local-time { display: none; }
 }
 
 /* ---------- Hero ---------- */
@@ -469,21 +460,78 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   text-transform: lowercase;
   color: #EAE8E1;
 }
-#top.hero h1 .line1 { display: block; font-weight: 700; font-style: normal; color: #EAE8E1; }
+#top.hero h1 .line0 {
+  display: block;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 50%; /* relative to the h1's own clamp(), so it scales with line1/line2 at every width instead of needing its own breakpoints */
+  color: #EFE9E2;
+  margin-bottom: 0.25em;
+}
+#top.hero h1 .line1 { display: block; font-weight: 700; font-style: normal; color: #EFE9E2; }
 #top.hero h1 .line2 {
   display: block;
   font-family: var(--font-serif);
   font-style: italic;
   font-weight: 400;
-  color: rgba(234, 232, 225, 0.6);
+  color: rgba(239, 233, 226, 0.85); /* solid, high-contrast — was 0.6, which let the busy pleat background bleed through unevenly */
 }
 #top.hero p {
-  color: #EAE8E1; /* match "decisions," (line1) */
+  color: #EFE9E2;
+  max-width: 560px;
 }
-#top.hero .meta-row {
+
+#top .cta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 32px;
+}
+.hero-cta-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  background: #EFE9E2;
+  color: #5C1712;
   font-family: var(--font-label);
-  color: #C9C7BE;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 14px 24px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: transform 0.2s var(--ease), background 0.2s var(--ease);
 }
+.hero-cta-primary:hover { background: #fff; transform: translateY(-1px); }
+.hero-cta-secondary {
+  color: #EFE9E2;
+  font-family: var(--font-label);
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: opacity 0.2s var(--ease);
+}
+.hero-cta-secondary:hover { opacity: 0.8; }
+.hero-cta-primary:focus-visible,
+.hero-cta-secondary:focus-visible {
+  outline: 2px solid #EFE9E2;
+  outline-offset: 3px;
+}
+
+#top.hero .meta-row {
+  display: block; /* overrides the base .hero .meta-row flex layout — plain
+    text flow lets " · " wrap naturally with its neighbouring words instead
+    of being orphaned on its own line */
+  font-family: var(--font-label);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(239, 233, 226, 0.75);
+}
+#top.hero .meta-row span { opacity: 0.7; }
 
 /* Restrained load-in: fade + slide-up, staggered per line via JS class toggle */
 #top .hero-fade {
@@ -492,6 +540,15 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 #top .hero-fade.is-visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 640px) {
+  /* 56px base so "decisions," reads ~56px and "Muskan Jain designs" (50%
+     of the h1's own size) comes out to ~28px, matching the redesign spec
+     without needing a separate breakpoint for line0. */
+  #top.hero h1 { font-size: 56px; }
+  #top .cta-row { flex-direction: column; align-items: stretch; }
+  .hero-cta-primary { width: 100%; justify-content: center; text-align: center; }
+}
 
 /* ---------- Section shell ---------- */
 section { padding: var(--section-gap) 0; background: var(--paper); color: var(--ink); transition: background 0.4s var(--ease), color 0.4s var(--ease); }

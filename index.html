@@ -40,7 +40,6 @@
 <header class="site-header">
   <a class="mark" href="#top">Muskan Jain</a>
   <div class="header-right">
-    <span class="local-time" id="localTime">Local time — <span id="clock">--:--</span></span>
     <a class="cta" href="https://drive.google.com/file/d/1b-tqPKzSWMeB06n6GI_zYxItHj281vK_/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume</a>
     <a class="cta" href="#footer-contact">Contact</a>
   </div>
@@ -52,13 +51,13 @@
   <section class="hero hero-gradient" id="top">
     <div class="pleat" aria-hidden="true"><canvas></canvas></div>
     <div class="wrap">
-      <h1><span class="line1 hero-fade">decisions,</span><span class="line2 hero-fade">not decoration.</span></h1>
-      <p class="hero-fade">I design products and websites, from untangling complex workflows to shaping the details that make an experience feel right.</p>
-      <div class="meta-row hero-fade">
-        <span>Bengaluru, India</span>
-        <span>2 case studies</span>
-        <span>Available from October</span>
+      <h1><span class="line0 hero-fade">Muskan Jain designs</span> <span class="line1 hero-fade">decisions,</span> <span class="line2 hero-fade">not decoration.</span></h1>
+      <p class="hero-fade">Product designer from Bengaluru. I untangle complex workflows and shape the details that make products feel right, from research and IA to polished UI.</p>
+      <div class="cta-row hero-fade">
+        <a class="hero-cta-primary" href="#voice">See case studies ↓</a>
+        <a class="hero-cta-secondary" href="https://drive.google.com/file/d/1b-tqPKzSWMeB06n6GI_zYxItHj281vK_/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume ↗</a>
       </div>
+      <div class="meta-row hero-fade">Open to full-time roles <span aria-hidden="true">·</span> Bengaluru, India</div>
     </div>
   </section>
 
@@ -543,20 +542,6 @@
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(setHeaderHeight);
   })();
 
-  // ---------- Local time readout ----------
-  // REPLACE 'Asia/Kolkata' with your own timezone
-  function updateClock() {
-    const el = document.getElementById('clock');
-    if (!el) return;
-    const now = new Date();
-    el.textContent = new Intl.DateTimeFormat('en-GB', {
-      hour: '2-digit', minute: '2-digit', hour12: false,
-      timeZone: 'Asia/Kolkata'
-    }).format(now);
-  }
-  updateClock();
-  setInterval(updateClock, 15000);
-
   // ---------- Testimonials: single-slide carousel, manual navigation only ----------
   (function () {
     const carousel = document.querySelector('.testimonial-carousel');
@@ -739,11 +724,14 @@
   }
 
   // ---------- Hero background: pleated reveal ----------
-  // A wordmark is drawn complete on a hidden canvas, then covered by vertical
-  // "pleats" in the accent color. Pleats nearest the cursor lift and slide
-  // aside (touch/no-pointer: scroll drives a travelling reveal band instead),
-  // uncovering slices of the wordmark underneath — cloth pulled back, not a
-  // fade. Fully static under prefers-reduced-motion.
+  // Vertical "pleats" in the accent color, laid over a violet/black base
+  // gradient. Pleats nearest the cursor lift and slide aside (touch/no-
+  // pointer: scroll drives a travelling reveal band instead) — cloth
+  // pulled back, not a fade. Fully static under prefers-reduced-motion.
+  // (This used to also uncover a hidden wordmark underneath the pleats;
+  // the wordmark is no longer painted now that the hero's own heading
+  // carries the name, but the sizing math it drove is kept as-is below
+  // so the pleat proportions/animation are unchanged.)
   (function () {
     const band = document.querySelector('#top .pleat');
     if (!band) return;
@@ -759,7 +747,7 @@
 
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const fine = window.matchMedia('(hover: hover)').matches;
-    const WORDMARK = 'design portfolio';
+    const WORDMARK = 'design portfolio'; // no longer painted — kept only as the metric string that sizes the pleats (see build())
     const WORDMARK_SIZE = 48; // fixed px size — only shrinks further on very narrow screens
 
     let N = 34;
@@ -817,15 +805,14 @@
         size *= maxTextWidth / rawWidth;
         m.font = '600 ' + size + 'px "Instrument Sans", system-ui, sans-serif';
       }
+      // The wordmark itself is no longer painted (the hero's own heading
+      // now carries the name — see WORDMARK comment above), but MW/MH stay
+      // sized from its metrics so the pleat spacing/proportions below are
+      // unchanged and the mark-less draw() below still has a non-zero MW
+      // to work with.
       MW = Math.ceil(m.measureText(WORDMARK).width) + 8;
       MH = Math.ceil(size * 1.24);
       mark.width = Math.round(MW * dpr); mark.height = Math.round(MH * dpr);
-      m = mark.getContext('2d');
-      m.setTransform(dpr, 0, 0, dpr, 0, 0);
-      m.font = '600 ' + size + 'px "Instrument Sans", system-ui, sans-serif';
-      m.fillStyle = '#EAE8E1';
-      m.textBaseline = 'middle';
-      m.fillText(WORDMARK, 4, MH / 2);
     }
 
     function draw() {
