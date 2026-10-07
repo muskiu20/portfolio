@@ -409,11 +409,11 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
    bold/italic contrast) kept from the prior pass; only colors flip back
    to light-on-dark so text reads over the dark canvas. */
 #top.hero {
-  min-height: 80vh; /* was 100vh — flex-centered content left a lot of empty
+  min-height: 90vh; /* was 100vh — flex-centered content left a lot of empty
     space above/below at full viewport height; this section has no literal
     top/bottom padding (see the padding:0 note below), so shrinking the
     min-height is what reduces that space */
-  min-height: 80dvh;
+  min-height: 90dvh;
   padding: 0; /* horizontal gutter now comes only from .wrap, matching every
     other section — the base .hero rule's padding (which also added a
     second gutter here) is fully overridden, not just its vertical part */
