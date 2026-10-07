@@ -536,6 +536,7 @@ html.intro-lock-scroll .site-header .mark {
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: rgba(239, 233, 226, 0.75);
+  margin-bottom: 1rem; /* now sits above the h1, needs its own gap instead of relying on the cta-row's margin-top */
 }
 
 /* Restrained load-in: fade + slide-up, staggered per line via JS class toggle */
