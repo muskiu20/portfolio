@@ -469,11 +469,12 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   letter-spacing: -0.02em;
   color: #EAE8E1;
 }
-#top.hero h1 .line1 {
+#top.hero h1 .line1 { display: block; font-weight: 700; font-style: normal; color: #EFE9E2; }
+#top.hero h1 .line2 {
   display: block;
   font-family: var(--font-serif);
   font-weight: 400;
-  font-style: normal;
+  font-style: italic;
   color: #EFE9E2; /* full opacity — no alpha */
 }
 #top.hero p {
