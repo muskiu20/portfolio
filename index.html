@@ -394,12 +394,12 @@
     const SWAP_MS = 150, GAP_MS = 50; // must match --think-swap / --think-gap
     const states = reduce
       ? [
-          { text: 'Curious, slightly obsessive.', hold: 2250 },
-          { text: 'Overthinker', hold: 2250, aside: '(in a good way).', asideDelay: 300 }
+          { text: 'Curious, slightly obsessive.', hold: 1750 },
+          { text: 'Overthinker', hold: 1750, aside: '(in a good way).', asideDelay: 300 }
         ]
       : [
-          { text: 'Curious, slightly obsessive.', hold: 4500 },
-          { text: 'Overthinker', hold: 4500, aside: '(in a good way).', asideDelay: 500 }
+          { text: 'Curious, slightly obsessive.', hold: 3500 },
+          { text: 'Overthinker', hold: 3500, aside: '(in a good way).', asideDelay: 500 }
         ];
 
     function swapTo(state) {
