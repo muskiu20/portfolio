@@ -505,16 +505,21 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
 }
 .hero-cta-primary:hover { background: #fff; transform: translateY(-1px); }
 .hero-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
   color: #EFE9E2;
   font-family: var(--font-label);
   font-size: 0.85rem;
+  font-weight: 600;
   letter-spacing: 0.02em;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  transition: opacity 0.2s var(--ease);
+  padding: 13px 23px; /* 1px less than the primary's 14px/24px to compensate for the added 1px border, so both pills read the same size */
+  border: 1px solid #EFE9E2;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 0.2s var(--ease), transform 0.2s var(--ease);
 }
-.hero-cta-secondary:hover { opacity: 0.8; }
+.hero-cta-secondary:hover { background: rgba(239, 233, 226, 0.12); transform: translateY(-1px); }
 .hero-cta-primary:focus-visible,
 .hero-cta-secondary:focus-visible {
   outline: 2px solid #EFE9E2;
@@ -547,7 +552,7 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
      without needing a separate breakpoint for line0. */
   #top.hero h1 { font-size: 56px; }
   #top .cta-row { flex-direction: column; align-items: stretch; }
-  .hero-cta-primary { width: 100%; justify-content: center; text-align: center; }
+  .hero-cta-primary, .hero-cta-secondary { width: 100%; justify-content: center; text-align: center; }
 }
 
 /* ---------- Section shell ---------- */
