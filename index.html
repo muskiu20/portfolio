@@ -301,8 +301,8 @@
              stack below it, widest-to-narrowest: LinkedIn, then Resume. -->
         <div class="footer-top-row">
           <p class="footer-heading">let's work together</p>
-          <a class="footer-pill" href="mailto:uxdesigner.muskan@gmail.com">
-            <span>uxdesigner.muskan@gmail.com</span>
+          <a class="footer-pill footer-pill-email" href="mailto:uxdesigner.muskan@gmail.com">
+            <span class="footer-pill-email-label">uxdesigner.muskan@gmail.com</span>
             <span class="footer-pill-arrow" aria-hidden="true">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7 17L17 7M17 7H9M17 7V15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
@@ -982,6 +982,23 @@
   }
 
   document.querySelectorAll('.pool-canvas').forEach(initPoolCanvas);
+
+  // ---------- Footer email pill: copy address instead of opening mail client ----------
+  (function () {
+    const pill = document.querySelector('.footer-pill-email');
+    const label = document.querySelector('.footer-pill-email-label');
+    if (!pill || !label || !navigator.clipboard) return; // no Clipboard API: leave the plain mailto: link working
+    const email = label.textContent;
+    let revertTimer = null;
+    pill.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigator.clipboard.writeText(email).then(() => {
+        clearTimeout(revertTimer);
+        label.textContent = 'Copied!';
+        revertTimer = setTimeout(() => { label.textContent = email; }, 1600);
+      });
+    });
+  })();
 
   // ---------- Work list: hovering a row previews it in the thumbnail frame ----------
   // Rows with a data-thumb-img show that image; rows without one (no real
