@@ -743,7 +743,29 @@ section + section { border-top: 1px solid var(--line); }
   transition: opacity 0.5s var(--ease);
 }
 .visual-main-img.is-visible { opacity: 1; }
-.visual-caption { margin-top: 1rem; }
+.visual-caption-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.visual-annotation {
+  display: flex; align-items: center; gap: 0.5rem;
+  flex: none;
+  color: var(--accent-soft);
+}
+.visual-annotation-arrow { display: block; flex: none; }
+.visual-annotation-text {
+  font-family: var(--font-label); font-size: 0.72rem;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--accent-soft);
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .visual-caption-row { flex-wrap: wrap; }
+  .visual-annotation-text { white-space: normal; }
+}
 .visual-caption-title {
   display: block;
   font-family: var(--font-serif); font-weight: 400; font-size: 1.3rem;
