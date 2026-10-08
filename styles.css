@@ -1024,15 +1024,28 @@ section + section { border-top: 1px solid var(--line); }
   color: var(--ink);
   margin: 0;
 }
-/* All three pills (email, LinkedIn, Resume) share this one flex parent —
-   a column, spaced out vertically between each other to fill the height
-   .footer-top's stretch gives it. The whole group's right edge lines up
-   with .footer-bottom's right edge (same max-width/gutter), where the
-   quick-links nav sits. */
+/* LinkedIn/Resume are normal flex children, anchored to the bottom. The
+   email pill is taken out of that flow and absolutely centered instead —
+   an auto-margin trick only centers an item relative to the free space
+   immediately around it in flex flow, which (with two more items stacked
+   below it) isn't the same as centering it in the box overall; absolute
+   positioning guarantees it sits exactly on the shared box's vertical
+   center, matching the heading's own centered position next to it. The
+   min-height is sized so that centered band and the LinkedIn/Resume block
+   never collide even when the heading is a single short line (which
+   otherwise wouldn't leave enough room). The whole group's right edge
+   lines up with .footer-bottom's right edge (same max-width/gutter),
+   where the quick-links nav sits. */
 .footer-pills {
-  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative;
+  display: flex; flex-direction: column; justify-content: flex-end;
   align-items: flex-end;
+  min-height: 320px;
   gap: 1rem;
+}
+.footer-pill-email {
+  position: absolute; top: 50%; right: 0;
+  transform: translateY(-50%);
 }
 .footer-pill {
   display: inline-flex; align-items: center; gap: 0.85rem;
