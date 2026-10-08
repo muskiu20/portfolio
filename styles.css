@@ -712,24 +712,27 @@ section + section { border-top: 1px solid var(--line); }
    and caption switch to. Click the main frame or any rail thumbnail to
    open the fullscreen viewer (see .lightbox below). */
 .visual-showcase {
+  --visual-h: 66.67vh;
   display: flex;
+  align-items: flex-start; /* the main-col's caption extends below --visual-h;
+    without this the rail would stretch to match that taller sibling instead
+    of lining up its own top/bottom edges with the frame's */
   gap: 1.5rem;
-  height: 66.67vh;
 }
 .visual-main-col {
-  flex: 2.2;
+  flex: 4; /* 80% */
   min-width: 0;
   display: flex;
   flex-direction: column;
 }
 .visual-main {
-  flex: 1;
-  min-height: 0;
+  height: var(--visual-h);
   position: relative;
   display: block;
   width: 100%;
   margin: 0; padding: 0; border: none;
   overflow: hidden;
+  border-radius: 14px;
   background: var(--paper-dim);
   cursor: pointer;
 }
@@ -754,7 +757,8 @@ section + section { border-top: 1px solid var(--line); }
 }
 
 .visual-rail {
-  flex: 1;
+  flex: 1; /* 20% */
+  height: var(--visual-h);
   min-width: 0;
   overflow: hidden;
   position: relative;
@@ -769,6 +773,7 @@ section + section { border-top: 1px solid var(--line); }
   width: 100%;
   position: relative;
   overflow: hidden;
+  border-radius: 10px;
   background: var(--paper-dim);
   cursor: pointer;
   border: none; margin: 0; padding: 0;
@@ -787,9 +792,9 @@ section + section { border-top: 1px solid var(--line); }
      main frame over a short rail instead of splitting the viewport
      height. The rail stays a vertical (not horizontal) strip so the same
      translateY-based JS drives it unchanged at every width. */
-  .visual-showcase { height: auto; flex-direction: column; }
-  .visual-main { aspect-ratio: 4 / 3; flex: none; }
-  .visual-rail { flex: none; height: 160px; }
+  .visual-showcase { flex-direction: column; }
+  .visual-main { height: auto; aspect-ratio: 4 / 3; }
+  .visual-rail { height: 200px; }
 }
 
 /* ---------- Lightbox ---------- */
