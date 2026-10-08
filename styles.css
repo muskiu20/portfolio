@@ -1024,28 +1024,15 @@ section + section { border-top: 1px solid var(--line); }
   color: var(--ink);
   margin: 0;
 }
-/* LinkedIn/Resume are normal flex children, anchored to the bottom. The
-   email pill is taken out of that flow and absolutely centered instead —
-   an auto-margin trick only centers an item relative to the free space
-   immediately around it in flex flow, which (with two more items stacked
-   below it) isn't the same as centering it in the box overall; absolute
-   positioning guarantees it sits exactly on the shared box's vertical
-   center, matching the heading's own centered position next to it. The
-   min-height is sized so that centered band and the LinkedIn/Resume block
-   never collide even when the heading is a single short line (which
-   otherwise wouldn't leave enough room). The whole group's right edge
+/* All three pills (email, LinkedIn, Resume) share this one flex parent —
+   a column, equidistant from each other via space-between across the
+   height .footer-top's stretch gives it. The whole group's right edge
    lines up with .footer-bottom's right edge (same max-width/gutter),
    where the quick-links nav sits. */
 .footer-pills {
-  position: relative;
-  display: flex; flex-direction: column; justify-content: flex-end;
+  display: flex; flex-direction: column; justify-content: space-between;
   align-items: flex-end;
-  min-height: 320px;
   gap: 1rem;
-}
-.footer-pill-email {
-  position: absolute; top: 50%; right: 0;
-  transform: translateY(-50%);
 }
 .footer-pill {
   display: inline-flex; align-items: center; gap: 0.85rem;
@@ -1106,6 +1093,7 @@ section + section { border-top: 1px solid var(--line); }
 #footer-contact .footer-main {
   min-height: 0;
   flex-direction: column;
+  padding-top: 64px; /* was the shared clamp(2.5rem, 6vw, 4rem) */
   padding-bottom: 4rem; /* 64px, was the shared 2rem */
 }
 #footer-contact .footer-bottom {
