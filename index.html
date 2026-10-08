@@ -160,21 +160,17 @@
            main frame or any rail thumbnail to open the fullscreen viewer. -->
       <div class="visual-showcase reveal">
         <div class="visual-main-col">
-          <button class="visual-main" id="visualMain" type="button">
+          <button class="visual-main" id="visualMain" type="button" aria-label="Open fullscreen">
             <img class="visual-main-img" id="visualMainImg" src="" alt="" />
-          </button>
-          <div class="visual-caption-row">
-            <div class="visual-caption">
-              <span class="visual-caption-title" id="visualCaptionTitle"></span>
-              <span class="visual-caption-tag" id="visualCaptionTag"></span>
-            </div>
-            <div class="visual-annotation" aria-hidden="true">
-              <svg class="visual-annotation-arrow" width="46" height="26" viewBox="0 0 46 26" fill="none">
-                <path d="M44 23C19 23 8 16 2 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
-                <path d="M1 11L2 3L9 5.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" />
+            <span class="visual-fullscreen-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 3H5a2 2 0 0 0-2 2v4M15 3h4a2 2 0 0 1 2 2v4M21 15v4a2 2 0 0 1-2 2h-4M3 15v4a2 2 0 0 0 2 2h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
-              <span class="visual-annotation-text">click here for fullscreen</span>
-            </div>
+            </span>
+          </button>
+          <div class="visual-caption">
+            <span class="visual-caption-title" id="visualCaptionTitle"></span>
+            <span class="visual-caption-tag" id="visualCaptionTag"></span>
           </div>
         </div>
         <div class="visual-rail" id="visualRail">
