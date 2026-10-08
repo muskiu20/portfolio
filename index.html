@@ -1067,6 +1067,29 @@
     });
   })();
 
+  // ---------- Footer: keep LinkedIn/Resume equidistant from the email pill ----------
+  // .footer-pills-rest's margin-top is measured from .footer-top-row's own
+  // bottom edge, but that row is as tall as the heading (which is centered
+  // against — and usually taller than — the email pill), so the gap from
+  // the row's edge overshoots the gap from the email pill's actual bottom
+  // edge by however much the heading overhangs it. Measured and corrected
+  // here instead of guessed in CSS, since that overhang depends on the
+  // heading's responsive font-size and whether it wraps.
+  (function () {
+    const emailEl = document.querySelector('#footer-contact .footer-pill-email');
+    const topRow = document.querySelector('#footer-contact .footer-top-row');
+    const pillsRest = document.querySelector('#footer-contact .footer-pills-rest');
+    if (!emailEl || !topRow || !pillsRest) return;
+    const TARGET_GAP = 16; // matches .footer-pills-rest's own gap: 1rem, so all three pills land equidistant
+    function align() {
+      const overhang = topRow.getBoundingClientRect().bottom - emailEl.getBoundingClientRect().bottom;
+      pillsRest.style.marginTop = (TARGET_GAP - overhang) + 'px';
+    }
+    align();
+    window.addEventListener('resize', align);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(align);
+  })();
+
   // ---------- Work list: hovering a row previews it in the thumbnail frame ----------
   // Rows with a data-thumb-img show that image; rows without one (no real
   // imagery yet) fall back to just surfacing the project name as a label.
