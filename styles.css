@@ -704,77 +704,92 @@ section + section { border-top: 1px solid var(--line); }
   color: var(--ink);
 }
 
-/* ---------- Graphics Gallery: "takes" grid ----------
-   Edge-to-edge 3-up grid of clickable tiles. Hover reveals a title/tag
-   overlay over the image; click opens a fullscreen viewer that pages
-   through every piece. */
-.takes-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
+/* ---------- Graphics Gallery: main frame + auto-advancing rail ----------
+   Left: a large frame (2/3 of the viewport height) showing the current
+   piece, with its title/category below. Right: a column of smaller
+   frames that auto-scrolls through every piece on a timer — the item
+   that lands at the top of the rail each step is what the main frame
+   and caption switch to. Click the main frame or any rail thumbnail to
+   open the fullscreen viewer (see .lightbox below). */
+.visual-showcase {
+  display: flex;
+  gap: 1.5rem;
+  height: 66.67vh;
 }
-@media (max-width: 900px) { .takes-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) { .takes-grid { grid-template-columns: 1fr; } }
-
-.takes-tile {
+.visual-main-col {
+  flex: 2.2;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.visual-main {
+  flex: 1;
+  min-height: 0;
   position: relative;
-  display: block; width: 100%; margin: 0; padding: 0; border: none;
-  aspect-ratio: 4 / 3;
+  display: block;
+  width: 100%;
+  margin: 0; padding: 0; border: none;
   overflow: hidden;
   background: var(--paper-dim);
   cursor: pointer;
 }
-.takes-placeholder {
-  display: flex; align-items: center; justify-content: center;
-  cursor: default;
-  border: 1px dashed var(--line);
-}
-.takes-placeholder-label {
-  font-family: var(--font-label); font-size: 0.72rem;
-  text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);
-}
-.takes-img {
+.visual-main-img {
   position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover;
-  filter: blur(1.5px) grayscale(1) brightness(1.12) contrast(1.05);
-  transition: filter 0.5s var(--ease), transform 0.6s var(--ease);
-}
-.takes-tile:hover .takes-img, .takes-tile:focus-visible .takes-img {
-  filter: blur(0) grayscale(0) brightness(1) contrast(1);
-  transform: scale(1.045);
-}
-/* Halftone dot screen sitting over every thumbnail, at rest and on hover —
-   a repeating radial-gradient tiled at 3px, same trick a print halftone uses. */
-.takes-dots {
-  position: absolute; inset: 0;
-  background-image: radial-gradient(var(--ink) 30%, transparent 32%);
-  background-size: 3px 3px;
-  opacity: 0.5;
-  pointer-events: none;
-}
-.takes-overlay {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 1rem 1.15rem;
-  background: linear-gradient(180deg, rgba(13, 13, 12, 0) 45%, rgba(13, 13, 12, 0.88) 100%);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
   opacity: 0;
-  transition: opacity 0.35s var(--ease), backdrop-filter 0.35s var(--ease);
+  transition: opacity 0.5s var(--ease);
 }
-.takes-tile:hover .takes-overlay, .takes-tile:focus-visible .takes-overlay { opacity: 1; }
-.takes-overlay-title {
+.visual-main-img.is-visible { opacity: 1; }
+.visual-caption { margin-top: 1rem; }
+.visual-caption-title {
   display: block;
-  font-family: var(--font-serif); font-weight: 400; font-size: 1.15rem;
-  color: var(--ink); text-align: left;
+  font-family: var(--font-serif); font-weight: 400; font-size: 1.3rem;
+  color: var(--ink);
 }
-.takes-overlay-tag {
+.visual-caption-tag {
   display: block;
-  font-family: var(--font-label); font-size: 0.72rem;
-  text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted);
-  margin-top: 0.2rem;
+  font-family: var(--font-label); font-size: 0.78rem;
+  text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);
+  margin-top: 0.3rem;
+}
+
+.visual-rail {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+}
+.visual-rail-track {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.visual-rail-item {
+  flex: 0 0 auto;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: var(--paper-dim);
+  cursor: pointer;
+  border: none; margin: 0; padding: 0;
+  opacity: 0.5;
+  transition: opacity 0.4s var(--ease);
+}
+.visual-rail-item.is-active { opacity: 1; }
+.visual-rail-item img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 760px) {
+  /* Side-by-side stops making sense at this width — stack a fixed-height
+     main frame over a short rail instead of splitting the viewport
+     height. The rail stays a vertical (not horizontal) strip so the same
+     translateY-based JS drives it unchanged at every width. */
+  .visual-showcase { height: auto; flex-direction: column; }
+  .visual-main { aspect-ratio: 4 / 3; flex: none; }
+  .visual-rail { flex: none; height: 160px; }
 }
 
 /* ---------- Lightbox ---------- */

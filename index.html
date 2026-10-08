@@ -154,9 +154,24 @@
         </div>
       </div>
 
-      <!-- Tiles are rendered from the takesItems array in the script below —
-           hover reveals the title/tag, click opens the fullscreen viewer. -->
-      <div class="takes-grid reveal" id="takesGrid"></div>
+      <!-- Rendered from the takesItems array in the script below. The rail
+           auto-advances through every piece; the main frame and caption
+           below it stay in sync with whichever one is current. Click the
+           main frame or any rail thumbnail to open the fullscreen viewer. -->
+      <div class="visual-showcase reveal">
+        <div class="visual-main-col">
+          <button class="visual-main" id="visualMain" type="button">
+            <img class="visual-main-img" id="visualMainImg" src="" alt="" />
+          </button>
+          <div class="visual-caption">
+            <span class="visual-caption-title" id="visualCaptionTitle"></span>
+            <span class="visual-caption-tag" id="visualCaptionTag"></span>
+          </div>
+        </div>
+        <div class="visual-rail" id="visualRail">
+          <div class="visual-rail-track" id="visualRailTrack"></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -609,7 +624,7 @@
     });
   })();
 
-  // ---------- Graphics: takes grid + fullscreen viewer ----------
+  // ---------- Graphics: main frame + auto-advancing rail + fullscreen viewer ----------
   (function () {
     const takesItems = [
       { title: 'Watch Me Grow', tag: 'Poster, Day 10 · Build 2.0', file: 'graphics/B1.webp' },
@@ -623,35 +638,84 @@
       { title: 'Event Backdrop', tag: 'PyCon India 2025, Bengaluru', file: 'graphics/C3.webp' }
     ];
 
-    const grid = document.getElementById('takesGrid');
-    if (!grid) return;
+    const mainBtn = document.getElementById('visualMain');
+    const mainImg = document.getElementById('visualMainImg');
+    const captionTitle = document.getElementById('visualCaptionTitle');
+    const captionTag = document.getElementById('visualCaptionTag');
+    const rail = document.getElementById('visualRail');
+    const track = document.getElementById('visualRailTrack');
+    if (!mainBtn || !mainImg || !rail || !track) return;
 
-    // Placeholders hold their grid position but carry no image and open
-    // nothing — they're skipped when wiring up the lightbox entirely.
-    const openableItems = takesItems.filter((item) => !item.placeholder);
-    let openableIndex = 0;
+    const VISIBLE = 3; // thumbnails visible in the rail at once
+    const ADVANCE_MS = 2800;
+    const STEP_MS = 650; // must match the transition duration below
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    grid.innerHTML = takesItems.map((item) => {
-      if (item.placeholder) {
-        return `
-          <div class="takes-tile takes-placeholder" aria-hidden="true">
-            <span class="takes-placeholder-label">${item.title}</span>
-          </div>
-        `;
+    // Rendered twice back-to-back so advancing past the end can keep
+    // scrolling in the same direction — once the track has moved exactly
+    // one full set, it snaps back to 0 with no transition, landing on an
+    // identical-looking frame so the loop reads as seamless.
+    const renderList = takesItems.concat(takesItems);
+    track.innerHTML = renderList.map((item, i) => `
+      <button class="visual-rail-item" type="button" data-index="${i % takesItems.length}" aria-label="Show ${item.title} — ${item.tag}">
+        <img src="${item.file}" alt="" loading="lazy" />
+      </button>
+    `).join('');
+    const railEls = [...track.children];
+
+    let step = 0; // how many thumbnail-heights the track has advanced
+    let itemH = 0;
+
+    function layout() {
+      const gap = parseFloat(getComputedStyle(track).rowGap) || 0;
+      itemH = (rail.clientHeight - gap * (VISIBLE - 1)) / VISIBLE;
+      railEls.forEach((el) => { el.style.height = itemH + 'px'; });
+      track.style.transition = 'none';
+      track.style.transform = `translateY(-${step * (itemH + gap)}px)`;
+    }
+
+    function setActive(index) {
+      railEls.forEach((el) => el.classList.toggle('is-active', Number(el.dataset.index) === index));
+      const item = takesItems[index];
+      mainImg.classList.remove('is-visible');
+      mainImg.src = item.file;
+      mainImg.alt = `${item.title} — ${item.tag}`;
+      requestAnimationFrame(() => mainImg.classList.add('is-visible'));
+      captionTitle.textContent = item.title;
+      captionTag.textContent = item.tag;
+    }
+
+    function goTo(nextStep) {
+      step = nextStep;
+      const gap = parseFloat(getComputedStyle(track).rowGap) || 0;
+      track.style.transition = reduceMotion ? 'none' : `transform ${STEP_MS}ms cubic-bezier(.65,0,.35,1)`;
+      track.style.transform = `translateY(-${step * (itemH + gap)}px)`;
+      setActive(step % takesItems.length);
+      if (step >= takesItems.length) {
+        setTimeout(() => {
+          step -= takesItems.length;
+          track.style.transition = 'none';
+          track.style.transform = `translateY(-${step * (itemH + gap)}px)`;
+        }, STEP_MS);
       }
-      const idx = openableIndex++;
-      return `
-        <button class="takes-tile" type="button" data-index="${idx}" aria-label="Open ${item.title} — ${item.tag}">
-          <img class="takes-img" src="${item.file}" alt="${item.title} — ${item.tag}" loading="lazy" />
-          <span class="takes-dots" aria-hidden="true"></span>
-          <span class="takes-overlay">
-            <span class="takes-overlay-title">${item.title}</span>
-            <span class="takes-overlay-tag">${item.tag}</span>
-          </span>
-        </button>
-      `;
-    }).join('');
+    }
 
+    let timer = null;
+    function startAuto() {
+      if (reduceMotion) return;
+      stopAuto();
+      timer = setInterval(() => goTo(step + 1), ADVANCE_MS);
+    }
+    function stopAuto() { if (timer) { clearInterval(timer); timer = null; } }
+
+    window.addEventListener('resize', layout);
+    layout();
+    setActive(0);
+    startAuto();
+    rail.addEventListener('mouseenter', stopAuto);
+    rail.addEventListener('mouseleave', startAuto);
+
+    // ---- fullscreen viewer ----
     const lightbox = document.getElementById('lightbox');
     const lbImg = document.getElementById('lightboxImg');
     const lbTitle = document.getElementById('lightboxTitle');
@@ -663,13 +727,13 @@
     let lastFocused = null;
 
     function render(index) {
-      current = (index + openableItems.length) % openableItems.length;
-      const item = openableItems[current];
+      current = (index + takesItems.length) % takesItems.length;
+      const item = takesItems[current];
       lbImg.src = item.file;
       lbImg.alt = `${item.title} — ${item.tag}`;
       lbTitle.textContent = item.title;
       lbTag.textContent = item.tag;
-      lbCount.textContent = `${current + 1} / ${openableItems.length}`;
+      lbCount.textContent = `${current + 1} / ${takesItems.length}`;
     }
 
     function openLightbox(index) {
@@ -688,8 +752,9 @@
       if (lastFocused) lastFocused.focus();
     }
 
-    grid.querySelectorAll('.takes-tile').forEach((tile) => {
-      tile.addEventListener('click', () => openLightbox(Number(tile.dataset.index)));
+    mainBtn.addEventListener('click', () => openLightbox(step % takesItems.length));
+    railEls.forEach((el) => {
+      el.addEventListener('click', () => openLightbox(Number(el.dataset.index)));
     });
     document.getElementById('lightboxPrev').addEventListener('click', () => render(current - 1));
     document.getElementById('lightboxNext').addEventListener('click', () => render(current + 1));
