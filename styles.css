@@ -1097,7 +1097,7 @@ section + section { border-top: 1px solid var(--line); }
     to its content width instead of stretching it to match .wrap above,
     throwing its left/right edges out of alignment with the heading and
     the pills */
-  margin-top: 2.5rem;
+  margin-top: 3.75rem; /* 60px — was 2.5rem/40px, +20px */
   align-items: flex-end;
 }
 
