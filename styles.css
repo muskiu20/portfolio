@@ -1010,11 +1010,6 @@ section + section { border-top: 1px solid var(--line); }
   transition: background 0.4s var(--ease), color 0.4s var(--ease);
 }
 .footer-main > .wrap { width: 100%; position: relative; z-index: 2; }
-/* Top row: heading left, widest (email) button right — bottom-aligned with
-   the heading. The rest stack below it, right-aligned, widest-to-narrowest
-   (LinkedIn, Resume), and the whole block's right edge lines up with
-   .footer-bottom's right edge (same max-width/gutter), where the quick-links
-   nav sits. */
 .footer-top-row {
   display: flex; align-items: center; justify-content: space-between;
   flex-wrap: wrap; gap: 1.5rem 2rem;
@@ -1025,9 +1020,13 @@ section + section { border-top: 1px solid var(--line); }
   color: var(--ink);
   margin: 0;
 }
-.footer-pills-rest {
-  display: flex; flex-direction: column; align-items: flex-end; gap: 1rem;
-  margin-top: 1rem;
+/* All three pills (email, LinkedIn, Resume) share this one flex parent,
+   spaced out between each other — the whole row's right edge lines up
+   with .footer-bottom's right edge (same max-width/gutter), where the
+   quick-links nav sits. */
+.footer-pills {
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  margin-top: 1.5rem;
 }
 .footer-pill {
   display: inline-flex; align-items: center; gap: 0.85rem;
