@@ -1060,6 +1060,20 @@ section + section { border-top: 1px solid var(--line); }
 .footer-bottom a:hover { color: var(--accent-soft); }
 .footer-bottom-contact { display: flex; gap: 1.5rem; }
 
+/* This page's footer only — the case-study footer (.cs-site-footer) keeps
+   its full-height pool-canvas ripple and the .footer-bottom positioning
+   tuned around it. Here the canvas element is removed entirely, so
+   .footer-bottom no longer needs to be pinned to where its dot band used
+   to start; it just flows normally after the pills with its own gap. */
+#footer-contact .footer-main {
+  min-height: 0;
+  flex-direction: column;
+}
+#footer-contact .footer-bottom {
+  position: static;
+  margin-top: 2.5rem;
+}
+
 @media (max-width: 640px) {
   .process-step, .process-step.meta-row { grid-template-columns: 1fr; gap: 0.5rem; }
   .hero .meta-row { flex-direction: column; gap: 0.5rem; }
