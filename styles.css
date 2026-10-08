@@ -1013,9 +1013,10 @@ section + section { border-top: 1px solid var(--line); }
 /* Top row: heading left, widest (email) button right — bottom-aligned with
    the heading. The rest stack below it, right-aligned, widest-to-narrowest
    (LinkedIn, Resume), and the whole block's right edge lines up with
-   .footer-bottom's right edge (same max-width/gutter), where "back to top" sits. */
+   .footer-bottom's right edge (same max-width/gutter), where the quick-links
+   nav sits. */
 .footer-top-row {
-  display: flex; align-items: flex-end; justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between;
   flex-wrap: wrap; gap: 1.5rem 2rem;
 }
 .footer-heading {
@@ -1087,10 +1088,16 @@ section + section { border-top: 1px solid var(--line); }
 #footer-contact .footer-main {
   min-height: 0;
   flex-direction: column;
+  padding-bottom: 4rem; /* 64px, was the shared 2rem */
 }
 #footer-contact .footer-bottom {
   position: static;
+  width: 100%; /* .footer-main's align-items:flex-start otherwise shrinks this
+    to its content width instead of stretching it to match .wrap above,
+    throwing its left/right edges out of alignment with the heading and
+    the pills */
   margin-top: 2.5rem;
+  align-items: flex-end;
 }
 
 @media (max-width: 640px) {
