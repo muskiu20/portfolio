@@ -865,21 +865,23 @@ section + section { border-top: 1px solid var(--line); }
 }
 
 @media (max-width: 760px) {
-  /* Side-by-side stops making sense at this width — stack a fixed-height
-     main frame over a short rail instead of splitting the viewport
-     height. The rail stays a vertical (not horizontal) strip so the same
-     translateY-based JS drives it unchanged at every width.
-     Both columns also need their desktop flex-grow ratios (4 / 1)
-     neutralized here: left at "flex: 4"/"flex: 1" (flex-basis 0%), a
-     column-direction .visual-showcase has no defined height to grow
-     into, so the browser ignores .visual-rail's explicit height and
-     blows its box up to an enormous size — which was in turn handed to
-     the rail's JS layout() as rail.clientHeight, producing absurd
-     per-thumbnail heights. */
+  /* Side-by-side stops making sense at this width — and the rail (a
+     thumbnail strip meant to sit beside a tall frame) doesn't translate
+     to a narrow stacked layout, so it's dropped entirely here; the main
+     frame still auto-advances through every piece on its own. */
   .visual-showcase { flex-direction: column; }
   .visual-main-col { flex: none; width: 100%; }
   .visual-main { height: auto; aspect-ratio: 4 / 3; }
-  .visual-rail { flex: none; width: 100%; height: 200px; }
+  .visual-rail { display: none; }
+
+  /* #graphics/#testimonials normally share a fixed 108px gap either side
+     of their shared border — sized for the desktop showcase, which is
+     much taller with the rail in it. With the rail gone and the main
+     frame alone, that fixed amount reads as a disproportionately large
+     gap, so both sides drop to the section's own baseline --section-gap
+     minimum (56px) for a tighter, symmetrical transition instead. */
+  #graphics { padding-bottom: 56px; }
+  #testimonials { padding-top: 56px; }
 }
 
 /* ---------- Lightbox ---------- */
@@ -1168,6 +1170,26 @@ section + section { border-top: 1px solid var(--line); }
 }
 
 @media (max-width: 640px) {
+  /* Pills left-align instead of right/space-between; quick links become a
+     centered 2-column grid; the copyright line moves to the very bottom
+     (after the links, not before) with an explicit 36px gap above it. */
+  #footer-contact .footer-top-row { flex-direction: column; align-items: flex-start; }
+  #footer-contact .footer-pills-rest { align-items: flex-start; }
+  #footer-contact .footer-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    gap: 1.5rem;
+    width: 100%;
+  }
+  #footer-contact .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+  #footer-contact .footer-bottom .footer-links { order: 1; }
+  #footer-contact .footer-bottom > span { order: 2; margin-top: 36px; }
+
   .process-step, .process-step.meta-row { grid-template-columns: 1fr; gap: 0.5rem; }
   .hero .meta-row { flex-direction: column; gap: 0.5rem; }
 }
