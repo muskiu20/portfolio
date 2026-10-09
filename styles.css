@@ -661,6 +661,7 @@ section + section { border-top: 1px solid var(--line); }
   text-decoration: none;
 }
 .case-card:hover .case-card-cta { text-decoration: underline; }
+.case-card--cta-close .case-card-cta { margin-top: 0; padding-top: 36px; }
 .case-card-thumb {
   position: relative;
   min-width: 0;
