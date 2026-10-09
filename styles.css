@@ -618,12 +618,15 @@ section + section { border-top: 1px solid var(--line); }
   padding: 48px;
   min-width: 0;
 }
+.case-card-eyebrow-row { margin: 0; }
 .case-card-eyebrow {
   margin: 0;
   font-family: var(--font-label); font-size: 11px;
   text-transform: uppercase; letter-spacing: 2px;
   color: #a32f23;
 }
+.case-card-year { display: none; }
+.case-card-divider { display: none; }
 .case-card-body {
   margin-top: 36px;
   display: flex; flex-direction: column;
@@ -652,6 +655,8 @@ section + section { border-top: 1px solid var(--line); }
   font-size: 16px; font-weight: 400; line-height: 1.5;
   color: #efe9e2;
 }
+.case-card-field.case-card-scope,
+.case-card-field.case-card-context { display: none; }
 .case-card-cta {
   margin-top: auto;
   align-self: flex-start;
@@ -696,9 +701,68 @@ section + section { border-top: 1px solid var(--line); }
 @media (max-width: 900px) {
   /* Stacked instead of side-by-side: thumbnail on top, content below,
      regardless of the desktop left/right order. */
-  .case-card { grid-template-columns: 1fr; min-height: 0; }
-  .case-card-content { padding: 32px; order: 2 !important; }
-  .case-card-thumb { aspect-ratio: 16 / 10; order: 1 !important; }
+  .case-card { grid-template-columns: 1fr; min-height: 0; border-radius: 14px; }
+  .case-card-content { padding: 24px 24px 28px; order: 2 !important; }
+  .case-card-thumb {
+    aspect-ratio: 16 / 9;
+    border-radius: 14px 14px 0 0;
+    order: 1 !important;
+  }
+  .case-card-thumb img { object-position: center top; }
+
+  .case-card-eyebrow-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .case-card-eyebrow {
+    font-size: 11px; letter-spacing: 1.8px;
+    color: rgba(255, 255, 255, 0.35);
+  }
+  .case-card-year {
+    display: inline-block;
+    font-family: var(--font-label); font-size: 11px; letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .case-card-body { margin-top: 0; gap: 0; }
+  .case-card-heading {
+    order: 1; margin-top: 12px;
+    font-size: 28px; line-height: 1.15;
+  }
+  .case-card-tags {
+    order: 2; margin-top: 8px;
+    font-size: 11px; letter-spacing: 1.4px;
+    color: rgba(255, 255, 255, 0.4);
+  }
+  .case-card-divider {
+    display: block; order: 3; margin: 20px 0;
+    border: none; border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .case-card-field { gap: 6px; }
+  .case-card-label {
+    font-size: 11px; letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.35);
+  }
+  .case-card-outcome { order: 4; margin-top: 0; font-size: 15px; }
+  .case-card-field.case-card-scope,
+  .case-card-field.case-card-context { display: flex; }
+  .case-card-scope { order: 5; margin-top: 16px; font-size: 15px; color: #efe9e2; }
+  .case-card-context { order: 6; margin-top: 16px; font-size: 13px; color: rgba(255, 255, 255, 0.5); }
+
+  .case-card-cta {
+    margin-top: 24px;
+    align-self: stretch;
+    justify-content: center;
+    width: 100%; height: 48px;
+    padding: 0;
+    font-size: 13px; letter-spacing: 1px;
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+  }
+  .case-card:hover .case-card-cta,
+  .case-card:active .case-card-cta {
+    background: rgba(255, 255, 255, 0.06);
+    transform: none;
+  }
 }
 
 /* ---------- AI Experiments: project list ----------
