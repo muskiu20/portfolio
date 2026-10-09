@@ -646,14 +646,6 @@ section + section { border-top: 1px solid var(--line); }
   font-size: 16px; font-weight: 400; line-height: 1.5;
   color: #efe9e2;
 }
-.case-card-scope {
-  font-size: 14px; line-height: 1.5;
-  color: rgba(239, 233, 226, 0.75);
-}
-.case-card-context {
-  font-size: 13px; line-height: 1.5;
-  color: rgba(239, 233, 226, 0.55);
-}
 .case-card-cta {
   margin-top: auto; padding-top: 28px;
   align-self: flex-start;
