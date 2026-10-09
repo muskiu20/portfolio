@@ -641,7 +641,7 @@ section + section { border-top: 1px solid var(--line); }
   text-transform: uppercase; letter-spacing: 0.04em;
   color: rgba(255, 255, 255, 0.5);
 }
-.case-card-field { margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.case-card-field { margin: 0; display: flex; flex-direction: column; gap: 4px; }
 .case-card-label {
   font-family: var(--font-label); font-size: 11px;
   text-transform: uppercase; letter-spacing: 2px;
