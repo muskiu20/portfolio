@@ -591,9 +591,11 @@ section + section { border-top: 1px solid var(--line); }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
 /* ---------- Work (case studies) ----------
-   Two full-width rectangular cards, each exactly half as tall as it is
-   wide. Content (heading first, in descending importance) sits on the
-   left; the thumbnail fills the right half. */
+   Two full-width rectangular cards. Content (heading first, in
+   descending importance) sits on the left; the thumbnail fills the
+   right half — reversed on .case-card--thumb-left. Height tracks the
+   card's own width (container query units, so it stays fluid) minus
+   a flat 100px, rather than a strict half-width ratio. */
 #voice {
   padding-top: 120px;
   padding-bottom: 120px;
@@ -601,12 +603,13 @@ section + section { border-top: 1px solid var(--line); }
 .case-grid {
   display: flex; flex-direction: column;
   gap: clamp(1.5rem, 3vw, 2.5rem);
+  container-type: inline-size;
 }
 .case-card {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 100%;
-  aspect-ratio: 2 / 1;
+  height: calc(50cqw - 100px);
   border-radius: 20px;
   border: 1px solid var(--line);
   overflow: hidden;
@@ -632,7 +635,12 @@ section + section { border-top: 1px solid var(--line); }
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
+  transition: transform 0.4s var(--ease);
 }
+.case-card--thumb-left .case-card-content { order: 2; }
+.case-card--thumb-left .case-card-thumb { order: 1; }
+.case-card--thumb-left .case-card-thumb img { transform: scale(1.25); }
+.case-card--thumb-left:hover .case-card-thumb img { transform: scale(1.32); }
 .case-card-heading {
   font-family: var(--font-serif); font-size: clamp(1.4rem, 2.6vw, 2rem);
   font-weight: 400;
@@ -655,13 +663,24 @@ section + section { border-top: 1px solid var(--line); }
   line-height: 1.5;
   color: var(--muted);
 }
+.case-card-cta {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: var(--font-label); font-size: 0.78rem;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--accent);
+}
+.case-card-cta svg { flex: none; transition: transform 0.25s var(--ease); }
+.case-card:hover .case-card-cta svg { transform: translate(2px, -2px); }
 
 @media (max-width: 900px) {
   /* Stacked instead of side-by-side: content first, thumbnail below it,
-     and the fixed 2:1 ratio is dropped so content can set its own height. */
-  .case-card { grid-template-columns: 1fr; aspect-ratio: auto; }
-  .case-card-content { order: 1; padding: 1.75rem; }
-  .case-card-thumb { order: 2; aspect-ratio: 16 / 10; }
+     and the fluid width-based height is dropped so content can set its
+     own height. */
+  .case-card { grid-template-columns: 1fr; height: auto; }
+  .case-card-content { order: 1 !important; padding: 1.75rem; }
+  .case-card-thumb { order: 2 !important; aspect-ratio: 16 / 10; }
+  .case-card--thumb-left .case-card-thumb img { transform: none; }
+  .case-card--thumb-left:hover .case-card-thumb img { transform: none; }
 }
 
 /* ---------- AI Experiments: project list ----------
