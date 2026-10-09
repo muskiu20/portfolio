@@ -643,7 +643,7 @@ section + section { border-top: 1px solid var(--line); }
 }
 .case-card-field { margin: 0; display: flex; flex-direction: column; gap: 4px; }
 .case-card-label {
-  font-family: var(--font-label); font-size: 11px;
+  font-family: var(--font-label); font-size: 11px; font-weight: 500;
   text-transform: uppercase; letter-spacing: 2px;
   color: rgba(255, 255, 255, 0.4);
 }
