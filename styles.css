@@ -753,7 +753,7 @@ section + section { border-top: 1px solid var(--line); }
 .ai-card-media {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 3 / 2;
   background: var(--paper-dim);
   overflow: hidden;
 }
