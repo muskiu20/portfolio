@@ -661,7 +661,8 @@ section + section { border-top: 1px solid var(--line); }
   text-decoration: none;
 }
 .case-card:hover .case-card-cta { text-decoration: underline; }
-.case-card--cta-close .case-card-cta { margin-top: 0; padding-top: 36px; }
+.case-card--cta-close .case-card-body { margin-top: auto; }
+.case-card--cta-close .case-card-cta { margin-top: 48px; }
 .case-card-thumb {
   position: relative;
   min-width: 0;
