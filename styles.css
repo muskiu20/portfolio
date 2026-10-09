@@ -786,21 +786,23 @@ section + section { border-top: 1px solid var(--line); }
   color: var(--ink-soft);
 }
 .ai-card-cta {
-  display: inline-flex; align-items: center; justify-content: center;
-  gap: 0.5rem;
+  display: inline-flex; align-items: center;
+  align-self: flex-start;
   margin-top: 1.25rem;
-  padding: 0.95rem 1.5rem;
+  padding: 13px 23px;
   border-radius: 999px;
-  background: var(--ink);
-  color: var(--paper);
-  font-family: var(--font-label); font-size: 0.85rem; font-weight: 600;
-  text-transform: uppercase; letter-spacing: 0.04em;
-  transition: background 0.25s var(--ease);
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-label); font-size: 1rem; font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background 0.2s var(--ease), transform 0.2s var(--ease);
 }
-.ai-card:hover .ai-card-cta { background: var(--accent); }
+.ai-card:hover .ai-card-cta { background: rgba(23, 22, 19, 0.06); transform: translateY(-1px); }
 
 @media (max-width: 760px) {
   .ai-list { grid-template-columns: 1fr; }
+  .ai-card-cta { padding: 14px 22px; border-width: 1.5px; font-size: 13px; letter-spacing: 1px; }
 }
 
 /* ---------- Graphics Gallery: main frame + auto-advancing rail ----------
