@@ -590,81 +590,78 @@ section + section { border-top: 1px solid var(--line); }
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
-/* ---------- Work (full-fold intro) ----------
-   The section is as tall as the viewport: heading up top, and a bottom-
-   aligned stage below it — a 3/4-width thumbnail placeholder beside a
-   1/4-width project list pinned to half the fold's own height. */
+/* ---------- Work (case studies) ----------
+   Two full-width rectangular cards, each exactly half as tall as it is
+   wide. Content (heading first, in descending importance) sits on the
+   left; the thumbnail fills the right half. */
 #voice {
-  min-height: 100vh; min-height: 100dvh;
+  padding-top: 120px;
+  padding-bottom: 120px;
+}
+.case-grid {
   display: flex; flex-direction: column;
-  padding-top: clamp(6rem, 16vh, 9rem);
-  padding-bottom: clamp(2rem, 5vh, 3.5rem);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
 }
-#voice .wrap { width: 100%; flex: 1; display: flex; flex-direction: column; min-height: 0; }
-.work-stage {
-  flex: 1; min-height: 0;
+.case-card {
   display: grid;
-  grid-template-columns: 3fr 1fr;
-  align-items: end;
-  gap: clamp(1.5rem, 3vw, 3rem);
-}
-.work-thumb {
-  position: relative;
-  width: 100%; height: 100%;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  aspect-ratio: 2 / 1;
   border-radius: 20px;
-  background: var(--line);
   border: 1px solid var(--line);
-  display: flex; align-items: center; justify-content: center;
   overflow: hidden;
-}
-.work-thumb-image {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  opacity: 0;
-}
-.work-thumb.has-image .work-thumb-image { opacity: 1; }
-.work-thumb-label {
-  position: relative; z-index: 1;
-  font-family: var(--font-label); font-size: 0.8rem;
-  text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--muted);
-  opacity: 0;
-  transition: opacity 0.25s var(--ease);
-}
-.work-thumb.is-active .work-thumb-label { opacity: 1; }
-.work-list {
-  height: 50vh; height: 50dvh; /* half the fold, as specified */
-  max-height: 100%;
-  display: flex; flex-direction: column; justify-content: flex-end; gap: 1.25rem;
-}
-.work-list-row {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 1rem; padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--line);
   text-decoration: none; color: inherit;
   transition: border-color 0.25s var(--ease);
 }
-.work-list-row:hover { border-color: var(--accent); }
-.work-list-name {
-  font-family: var(--font-serif); font-size: clamp(1.1rem, 2vw, 1.4rem);
+.case-card:hover { border-color: var(--accent); }
+.case-card-content {
+  order: 1;
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 0.9rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  min-width: 0;
+}
+.case-card-thumb {
+  order: 2;
+  position: relative;
+  min-width: 0; height: 100%;
+  background: var(--line);
+  overflow: hidden;
+}
+.case-card-thumb img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.case-card-heading {
+  font-family: var(--font-serif); font-size: clamp(1.4rem, 2.6vw, 2rem);
+  font-weight: 400;
   color: var(--ink);
 }
-.work-list-arrow {
-  display: flex; align-items: center; justify-content: center;
-  width: 2.25rem; height: 2.25rem; flex: none;
-  border: 1px solid var(--line); border-radius: 50%;
+.case-card-field { display: flex; flex-direction: column; gap: 0.3rem; }
+.case-card-label {
+  font-family: var(--font-label); font-size: 0.72rem;
+  text-transform: uppercase; letter-spacing: 0.08em;
   color: var(--muted);
-  transition: border-color 0.25s var(--ease), color 0.25s var(--ease), transform 0.25s var(--ease);
 }
-.work-list-row:hover .work-list-arrow { border-color: var(--accent); color: var(--accent); transform: translate(2px, -2px); }
+.case-card-outcome {
+  font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+  line-height: 1.5;
+  color: var(--ink);
+}
+.case-card-scope,
+.case-card-context {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
 
 @media (max-width: 900px) {
-  /* Stacked instead of side-by-side: thumbnail on top (fills remaining
-     space), list sized to its own content below it. */
-  .work-stage { display: flex; flex-direction: column; gap: 1.5rem; }
-  .work-thumb { flex: 1; width: 100%; height: auto; min-height: 220px; }
-  .work-list { height: auto; width: 100%; }
+  /* Stacked instead of side-by-side: content first, thumbnail below it,
+     and the fixed 2:1 ratio is dropped so content can set its own height. */
+  .case-card { grid-template-columns: 1fr; aspect-ratio: auto; }
+  .case-card-content { order: 1; padding: 1.75rem; }
+  .case-card-thumb { order: 2; aspect-ratio: 16 / 10; }
 }
 
 /* ---------- AI Experiments: project list ----------
