@@ -604,7 +604,7 @@ section + section { border-top: 1px solid var(--line); }
 }
 .case-card {
   display: grid;
-  grid-template-columns: 5fr 7fr;
+  grid-template-columns: 1fr 1fr;
   width: 100%;
   min-height: 520px;
   background: #111;
@@ -670,8 +670,6 @@ section + section { border-top: 1px solid var(--line); }
   transition: background 0.2s var(--ease), transform 0.2s var(--ease);
 }
 .case-card:hover .case-card-cta { background: rgba(239, 233, 226, 0.12); transform: translateY(-1px); }
-.case-card--cta-close .case-card-body { margin-top: auto; }
-.case-card--cta-close .case-card-cta { margin-top: 48px; }
 .case-card-thumb {
   position: relative;
   min-width: 0;
@@ -688,12 +686,19 @@ section + section { border-top: 1px solid var(--line); }
   background: linear-gradient(to right, rgba(17, 17, 17, 0.3), transparent);
   z-index: 1;
 }
+.case-card--reverse .case-card-content { order: 2; }
+.case-card--reverse .case-card-thumb { order: 1; }
+.case-card--reverse .case-card-thumb::before {
+  left: auto; right: 0;
+  background: linear-gradient(to left, rgba(17, 17, 17, 0.3), transparent);
+}
 
 @media (max-width: 900px) {
-  /* Stacked instead of side-by-side: content first, image below it. */
+  /* Stacked instead of side-by-side: content first, image below it,
+     regardless of the desktop left/right order. */
   .case-card { grid-template-columns: 1fr; min-height: 0; }
-  .case-card-content { padding: 32px; }
-  .case-card-thumb { aspect-ratio: 16 / 10; }
+  .case-card-content { padding: 32px; order: 1 !important; }
+  .case-card-thumb { aspect-ratio: 16 / 10; order: 2 !important; }
 }
 
 /* ---------- AI Experiments: project list ----------
