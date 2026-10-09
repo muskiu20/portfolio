@@ -360,10 +360,10 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
    sections would just read as a stray line rather than a real boundary. */
 .hero + section { border-top: none; }
 #graphics + #testimonials { border-top: none; }
-/* Space between these two sections specifically reduced 30% (both sides
-   scaled down together so the combined gap drops by the same amount). */
-#graphics { padding-bottom: calc(var(--section-gap) * 0.7); }
-#testimonials { padding-top: calc(var(--section-gap) * 0.7); }
+/* Space between these two sections set to a fixed value on each side,
+   rather than scaling with --section-gap. */
+#graphics { padding-bottom: 108px; }
+#testimonials { padding-top: 108px; }
 .hero::after {
   content: "";
   position: absolute; inset: 0;
