@@ -653,14 +653,23 @@ section + section { border-top: 1px solid var(--line); }
   color: #efe9e2;
 }
 .case-card-cta {
-  margin-top: auto; padding-top: 28px;
+  margin-top: auto;
   align-self: flex-start;
-  font-family: var(--font-label); font-size: 14px;
-  text-transform: uppercase; letter-spacing: 1px;
-  color: #a32f23;
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  color: #efe9e2;
+  font-family: var(--font-label);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 13px 23px;
+  border: 1px solid #efe9e2;
+  border-radius: 999px;
   text-decoration: none;
+  transition: background 0.2s var(--ease), transform 0.2s var(--ease);
 }
-.case-card:hover .case-card-cta { text-decoration: underline; }
+.case-card:hover .case-card-cta { background: rgba(239, 233, 226, 0.12); transform: translateY(-1px); }
 .case-card--cta-close .case-card-body { margin-top: auto; }
 .case-card--cta-close .case-card-cta { margin-top: 48px; }
 .case-card-thumb {
