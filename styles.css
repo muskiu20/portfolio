@@ -694,11 +694,11 @@ section + section { border-top: 1px solid var(--line); }
 }
 
 @media (max-width: 900px) {
-  /* Stacked instead of side-by-side: content first, image below it,
+  /* Stacked instead of side-by-side: thumbnail on top, content below,
      regardless of the desktop left/right order. */
   .case-card { grid-template-columns: 1fr; min-height: 0; }
-  .case-card-content { padding: 32px; order: 1 !important; }
-  .case-card-thumb { aspect-ratio: 16 / 10; order: 2 !important; }
+  .case-card-content { padding: 32px; order: 2 !important; }
+  .case-card-thumb { aspect-ratio: 16 / 10; order: 1 !important; }
 }
 
 /* ---------- AI Experiments: project list ----------
