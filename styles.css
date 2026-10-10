@@ -329,9 +329,8 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   display: inline-flex; align-items: center; min-height: 40px;
   transition: color 0.25s var(--ease);
 }
-.header-right .nav-link:hover { color: var(--accent-soft); }
+.header-right .nav-link:hover { text-decoration: underline; text-underline-offset: 4px; }
 .site-header.on-light .nav-link { color: #171613; }
-.site-header.on-light .nav-link:hover { color: var(--accent); }
 
 /* Still no background — only the text darkens when a light (.theme-sheet)
    section is scrolled behind the header, so it stays legible there too. */
