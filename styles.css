@@ -24,12 +24,11 @@
   --muted-on-sheet: #8A877E;
   --line-on-sheet: rgba(13, 13, 12, 0.14);
 
+  /* The one accent colour. --accent-soft/--accent-lighter are kept only as
+     aliases so existing rules keep working — they must not diverge. */
   --accent: #C33F27;
-  --accent-soft: #D9563C;
-  /* Lighter still — #C33F27 on #0D0D0C is only ~3.8:1, under the 4.5:1 text
-     minimum; used where accent sits directly on the black testimonial
-     cards as a thin border/line-art stroke and needs to read clearly. */
-  --accent-lighter: #E3806D;
+  --accent-soft: var(--accent);
+  --accent-lighter: var(--accent);
 
   --font-display: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
   --font-serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
@@ -138,7 +137,7 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   --think-distance: 8px;
   --think-blur: 2px;
   --think-shimmer: 2000ms;
-  --think-base: #A32F23;
+  --think-base: var(--accent);
   --think-highlight: var(--ink);
   --think-ease: ease-in-out;
 }
@@ -217,14 +216,14 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   opacity: 1;
   transition: opacity 0.3s ease;
   width: 200px; height: 2px;
-  background: rgba(163, 47, 35, 0.25);
+  background: rgba(195, 63, 39, 0.25);
   overflow: hidden;
 }
 .intro-progress.is-exit { opacity: 0; }
 .intro-progress-bar {
   width: 0%; height: 100%;
-  background: #A32F23;
-  animation: introProgressFill 7s linear forwards; /* must match the sum of the non-reduced states' hold times in index.html */
+  background: var(--accent);
+  animation: introProgressFill 4s linear forwards; /* must match the sum of the non-reduced states' hold times in index.html */
 }
 @keyframes introProgressFill {
   from { width: 0%; }
@@ -234,7 +233,7 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
 .intro-skip {
   position: absolute; right: 24px; bottom: 24px; z-index: 2;
   background: none; border: none; cursor: pointer;
-  color: #A32F23;
+  color: var(--accent);
   font-family: var(--font-label); font-size: 13px; letter-spacing: 1px;
   padding: 0.5rem;
   transition: opacity 0.2s ease;
@@ -519,24 +518,7 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   transition: transform 0.2s var(--ease), background 0.2s var(--ease);
 }
 .hero-cta-primary:hover { background: #fff; transform: translateY(-1px); }
-.hero-cta-secondary {
-  display: inline-flex;
-  align-items: center;
-  background: transparent;
-  color: #EFE9E2;
-  font-family: var(--font-label);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  padding: 13px 23px; /* 1px less than the primary's 14px/24px to compensate for the added 1px border, so both pills read the same size */
-  border: 1px solid #EFE9E2;
-  border-radius: 999px;
-  text-decoration: none;
-  transition: background 0.2s var(--ease), transform 0.2s var(--ease);
-}
-.hero-cta-secondary:hover { background: rgba(239, 233, 226, 0.12); transform: translateY(-1px); }
-.hero-cta-primary:focus-visible,
-.hero-cta-secondary:focus-visible {
+.hero-cta-primary:focus-visible {
   outline: 2px solid #EFE9E2;
   outline-offset: 3px;
 }
@@ -562,7 +544,7 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
 @media (max-width: 640px) {
   #top.hero h1 { font-size: 44px; }
   #top .cta-row { flex-direction: column; align-items: stretch; }
-  .hero-cta-primary, .hero-cta-secondary { width: 100%; justify-content: center; text-align: center; }
+  .hero-cta-primary { width: 100%; justify-content: center; text-align: center; }
 }
 
 /* ---------- Section shell ---------- */
@@ -631,7 +613,7 @@ section + section { border-top: 1px solid var(--line); }
   margin: 0;
   font-family: var(--font-label); font-size: 11px;
   text-transform: uppercase; letter-spacing: 2px;
-  color: #a32f23;
+  color: var(--accent);
 }
 .case-card-body {
   margin-top: 36px;

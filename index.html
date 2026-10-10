@@ -57,7 +57,6 @@
       <p class="hero-fade">Product designer from Bengaluru. I untangle complex workflows and shape the details that make products feel right, from research and IA to polished UI.</p>
       <div class="cta-row hero-fade">
         <a class="hero-cta-primary" href="#voice">See case studies ↓</a>
-        <a class="hero-cta-secondary" href="https://drive.google.com/file/d/1b-tqPKzSWMeB06n6GI_zYxItHj281vK_/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume</a>
       </div>
     </div>
   </section>
@@ -423,12 +422,12 @@
     const SWAP_MS = 150, GAP_MS = 50; // must match --think-swap / --think-gap
     const states = reduce
       ? [
-          { text: 'Curious, slightly obsessive.', hold: 1750 },
-          { text: 'Overthinker', hold: 1750, aside: '(in a good way).', asideDelay: 300 }
+          { text: 'Curious, slightly obsessive.', hold: 2000 },
+          { text: 'Overthinker', hold: 2000, aside: '(in a good way).', asideDelay: 300 }
         ]
       : [
-          { text: 'Curious, slightly obsessive.', hold: 3500 },
-          { text: 'Overthinker', hold: 3500, aside: '(in a good way).', asideDelay: 500 }
+          { text: 'Curious, slightly obsessive.', hold: 2000 },
+          { text: 'Overthinker', hold: 2000, aside: '(in a good way).', asideDelay: 500 }
         ];
 
     function swapTo(state) {
@@ -1038,7 +1037,7 @@
           const influence = Math.max(0, 1 - dist / 220);
           const r = 1.2 + influence * 3.2 + Math.sin(t + x * 0.02 + y * 0.02) * 0.3;
           ctx.beginPath();
-          ctx.fillStyle = `rgba(217,86,60,${0.15 + influence * 0.5})`;
+          ctx.fillStyle = `rgba(195,63,39,${0.15 + influence * 0.5})`;
           ctx.arc(x, y, r, 0, Math.PI * 2);
           ctx.fill();
         }
