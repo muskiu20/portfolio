@@ -584,31 +584,6 @@
     const slides = document.querySelectorAll('.testimonial-slide');
     if (!carousel || !slides.length) return;
 
-    // Slides are stacked with position:absolute so they can cross-fade, which
-    // means the container's height can't come from content directly — quotes
-    // vary a lot in length, so measure each slide's natural height and size
-    // the carousel to the tallest one instead of guessing a fixed value.
-    function sizeCarousel() {
-      let max = 0;
-      slides.forEach((s) => {
-        s.style.position = 'relative';
-        s.style.opacity = '0';
-        max = Math.max(max, s.scrollHeight);
-        s.style.position = '';
-        s.style.opacity = '';
-      });
-      carousel.style.minHeight = (max + 12) + 'px'; // small buffer for font-metric rounding across browsers
-    }
-    sizeCarousel();
-    window.addEventListener('resize', sizeCarousel);
-    // Re-measure once the Instrument Serif/Sans webfonts finish loading — if
-    // sizeCarousel() ran before they swapped in, it measured fallback-font
-    // metrics, and the real fonts can reflow the quote taller and overflow
-    // the box it already fixed a height on.
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(sizeCarousel);
-    }
-
     if (slides.length < 2) return;
 
     const arrows = document.querySelectorAll('.testimonial-arrow');

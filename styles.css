@@ -997,8 +997,8 @@ section + section { border-top: 1px solid var(--line); }
    right. Slides are stacked and cross-fade on an interval (see script). */
 .testimonial-carousel {
   position: relative;
+  display: grid; /* every slide shares one cell, so the card is always as tall as the tallest quote */
   width: 100%;
-  min-height: 460px;
   border-radius: 24px;
   border: 1.5px solid var(--accent-soft); /* #C33F27 on black is only ~3.8:1 — use the lighter tone */
   background: var(--paper); /* black */
@@ -1006,7 +1006,7 @@ section + section { border-top: 1px solid var(--line); }
 }
 
 .testimonial-slide {
-  position: absolute; inset: 0;
+  grid-area: 1 / 1;
   display: grid;
   grid-template-columns: 1.15fr 1fr;
   pointer-events: none;
@@ -1063,7 +1063,6 @@ section + section { border-top: 1px solid var(--line); }
 .testimonial-slide:nth-child(2) .testimonial-photo { transform: scale(1.0625); }
 
 @media (max-width: 760px) {
-  .testimonial-carousel { min-height: 420px; }
   .testimonial-slide { grid-template-columns: 1fr; grid-template-rows: 1fr; }
   .testimonial-slide-text { padding-bottom: 1rem; }
   .testimonial-slide-media { display: none; }
