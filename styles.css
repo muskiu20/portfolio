@@ -291,7 +291,7 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
 .site-header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 30;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 1.1rem var(--gutter);
+  padding: 1.1rem max(var(--gutter), calc((100% - 1400px) / 2 + var(--gutter)));
   background: transparent;
   transition: background 0.3s var(--ease), backdrop-filter 0.3s var(--ease), border-color 0.3s var(--ease);
   border-bottom: 1px solid transparent;
@@ -325,9 +325,17 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
   transform: none;
 }
 .header-right { display: flex; align-items: center; gap: 1.75rem; }
+.header-right .nav-link {
+  font-family: var(--font-label); font-size: 0.875rem; color: #EAE8E1;
+  display: inline-flex; align-items: center; min-height: 40px;
+  transition: color 0.25s var(--ease);
+}
+.header-right .nav-link:hover { color: var(--accent-soft); }
+.site-header.on-light .nav-link { color: #171613; }
+.site-header.on-light .nav-link:hover { color: var(--accent); }
 .site-header .cta {
   font-family: var(--font-label);
-  font-size: 0.78rem;
+  font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #EAE8E1;
@@ -536,10 +544,10 @@ html.intro-lock-scroll, html.intro-lock-scroll body { overflow: hidden; height: 
 #top.hero .meta-row {
   display: block; /* overrides the base .hero .meta-row flex layout — a single line of text now, no items to lay out */
   font-family: var(--font-label);
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: rgba(239, 233, 226, 0.75);
+  color: #EFE9E2;
   margin-bottom: 1rem; /* now sits above the h1, needs its own gap instead of relying on the cta-row's margin-top */
 }
 
@@ -568,6 +576,7 @@ section + section { border-top: 1px solid var(--line); }
 .section-head .index {
   font-family: var(--font-label); font-size: 0.78rem;
   color: var(--accent-soft); letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 .section-head h2 {
   font-family: var(--font-serif);
@@ -587,7 +596,7 @@ section + section { border-top: 1px solid var(--line); }
   .section-head h2 { white-space: normal; max-width: none; }
 }
 
-.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+.reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.4s var(--ease), transform 0.4s var(--ease); }
 .reveal.is-visible { opacity: 1; transform: translateY(0); }
 
 /* ---------- Work (case studies) ----------
@@ -765,6 +774,7 @@ section + section { border-top: 1px solid var(--line); }
 }
 .ai-card:hover .ai-card-media img { transform: scale(1.03); }
 .ai-card-body {
+  flex: 1;
   display: flex; flex-direction: column;
   padding: clamp(1.5rem, 3vw, 2rem);
   gap: 0.5rem;
@@ -776,19 +786,19 @@ section + section { border-top: 1px solid var(--line); }
 }
 .ai-card-tags {
   margin: 0;
-  font-family: var(--font-label); font-size: 0.72rem;
+  font-family: var(--font-label); font-size: 12px;
   text-transform: uppercase; letter-spacing: 0.06em;
   color: var(--accent);
 }
 .ai-card-idea {
-  margin: 0; margin-top: 0.3rem;
+  margin: 0; margin-top: 0.3rem; margin-bottom: 1.25rem;
   font-size: 0.98rem; line-height: 1.55;
   color: var(--ink-soft);
 }
 .ai-card-cta {
   display: inline-flex; align-items: center;
   align-self: flex-start;
-  margin-top: 1.25rem;
+  margin-top: auto;
   padding: 13px 23px;
   border-radius: 999px;
   border: 1px solid var(--ink);
@@ -1067,9 +1077,9 @@ section + section { border-top: 1px solid var(--line); }
 }
 .testimonial-arrow {
   display: flex; align-items: center; justify-content: center;
-  width: 32px; height: 32px; flex: none;
-  border: 1px solid var(--line); border-radius: 50%;
-  background: none; color: var(--muted); cursor: pointer;
+  width: 44px; height: 44px; flex: none;
+  border: 1.5px solid var(--line); border-radius: 50%;
+  background: none; color: var(--ink); cursor: pointer;
   transition: border-color 0.25s var(--ease), color 0.25s var(--ease);
 }
 .testimonial-arrow:hover { border-color: var(--accent); color: var(--accent); }
@@ -1198,6 +1208,8 @@ section + section { border-top: 1px solid var(--line); }
   padding-top: 48px; /* was 64px, before that the shared clamp(2.5rem, 6vw, 4rem) */
   padding-bottom: 4rem; /* 64px, was the shared 2rem */
 }
+#footer-contact .footer-bottom { color: #5E5B53; }
+#footer-contact .footer-bottom a { color: #5E5B53; }
 #footer-contact .footer-bottom {
   position: static;
   width: 100%; /* .footer-main's align-items:flex-start otherwise shrinks this
