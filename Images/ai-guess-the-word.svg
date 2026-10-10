@@ -8,6 +8,7 @@
   <rect width="600" height="400" fill="#DEDCD3" />
   <rect width="600" height="400" fill="url(#dotgrid)" />
 
+  <g transform="translate(0 14)">
   <!-- Row 1: GUESS — cream tiles, ink letters -->
   <g font-family="Georgia, 'Iowan Old Style', 'Times New Roman', serif" font-weight="700" font-size="40" text-anchor="middle">
     <g transform="rotate(-5 132 106)">
@@ -59,6 +60,5 @@
     </g>
   </g>
 
-  <!-- caption -->
-  <text x="300" y="358" font-family="'Helvetica Neue', Arial, sans-serif" font-size="13" letter-spacing="3" text-anchor="middle" fill="#171613" fill-opacity="0.45">GUESS THE WORD</text>
+  </g>
 </svg>
